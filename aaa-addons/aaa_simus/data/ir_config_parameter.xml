@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <record model="ir.config_parameter" id="simus_file_path_resources" forcecreate="True">
+            <field name="key">simus.file.path.resources</field>
+            <field name="value">/home/odoo/simus/CLARK_export_ressources.csv</field>
+        </record>
+
+        <record model="ir.config_parameter" id="simus_file_path_projects" forcecreate="True">
+            <field name="key">simus.file.path.projects</field>
+            <field name="value">/home/odoo/simus/CLARK_export_affectation_consultant_mission.csv</field>
+        </record>
+
+        <record model="ir.config_parameter" id="simus_mail_sender_o365" forcecreate="True">
+            <field name="key">simus.mail.sender.o365</field>
+            <field name="value">crm@alan-allman.com</field>
+        </record>
+
+        <record model="ir.config_parameter" id="simus_mailing_list" forcecreate="True">
+            <field name="key">simus.mailing.list</field>
+            <field name="value">odoo@alan-allman.com</field>
+        </record>
+
+        <record model="ir.config_parameter" id="simus_project_date_min" forcecreate="True">
+            <field name="key">simus.project.date.minimum</field>
+            <field name="value">2019-01-01</field>
+        </record>
+        <record model="ir.config_parameter" id="simus_domain_name" forcecreate="True">
+            <field name="key">simus.domain.ip</field>
+            <field name="value">51.75.192.210</field>
+        </record>
+        <record model="ir.config_parameter" id="simus_user" forcecreate="True">
+            <field name="key">simus.sftp.user</field>
+            <field name="value">simus</field>
+        </record>
+        <record model="ir.config_parameter" id="simus_password" forcecreate="True">
+            <field name="key">simus.user.password</field>
+            <field name="value">password</field>
+        </record>
+        <record model="ir.config_parameter" id="simus_origin_path" forcecreate="True">
+            <field name="key">simus.origin.path</field>
+            <field name="value">password</field>
+        </record>
+
+    </data>
+</odoo>

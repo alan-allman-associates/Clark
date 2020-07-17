@@ -1,0 +1,404 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* aaa_base
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 12.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-11-29 16:22+0000\n"
+"PO-Revision-Date: 2019-11-29 16:22+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: aaa_base
+#: code:addons/aaa_base/models/base.py:17
+#, python-format
+msgid "%s is not a stored compute/function field"
+msgstr "%s n'est pas un champ fonction stocké"
+
+#. module: aaa_base
+#: model:ir.model.fields,field_description:aaa_base.field_res_company__island_code
+msgid "4-Island ID"
+msgstr "Identifiant 4-Island"
+
+#. module: aaa_base
+#: model:ir.model.fields,field_description:aaa_base.field_res_company__api_version
+msgid "API_VERSION"
+msgstr ""
+
+#. module: aaa_base
+#: model:ir.model.fields,field_description:aaa_base.field_res_company__authority_host_url
+msgid "AUTHORITY_HOST_URL"
+msgstr ""
+
+#. module: aaa_base
+#: model:ir.model.fields,field_description:aaa_base.field_res_company__authorize_endpoint
+msgid "AUTHORIZE_ENDPOINT"
+msgstr ""
+
+#. module: aaa_base
+#: model:ir.model.fields,field_description:aaa_base.field_res_users__concerning
+msgid "About"
+msgstr "Concernant"
+
+#. module: aaa_base
+#: selection:res.users,level:0
+msgid "Advanced"
+msgstr "Avancé"
+
+#. module: aaa_base
+#: selection:res.users,synchronization_outlook_calendar:0
+msgid "All "
+msgstr "Tout dans les deux sens"
+
+#. module: aaa_base
+#: model:ir.model.fields,field_description:aaa_base.field_res_company__year_turnover_target
+msgid "Annual CA target"
+msgstr "Objectif de C.A. annuel"
+
+#. module: aaa_base
+#: model:ir.model.fields,field_description:aaa_base.field_res_company__year_margin_target
+msgid "Annual Margin target"
+msgstr "Objectif de Marge annuel"
+
+#. module: aaa_base
+#: model:ir.model.fields,field_description:aaa_base.field_res_users__annual_target_k2
+msgid "Annual target k2"
+msgstr "Objectif k2 Annuel"
+
+#. module: aaa_base
+#: selection:res.users,synchronization_outlook_mail:0
+msgid "Automatic"
+msgstr "Automatique"
+
+#. module: aaa_base
+#: model:ir.model.fields,field_description:aaa_base.field_res_company__coefficient
+msgid "Average Annual Margin target"
+msgstr "Objectif de Marge moyenne annuel"
+
+#. module: aaa_base
+#: model:ir.model,name:aaa_base.model_base
+msgid "Base"
+msgstr ""
+
+#. module: aaa_base
+#: selection:res.users,level:0
+msgid "Beginner"
+msgstr "Débutant"
+
+#. module: aaa_base
+#: model:ir.model.fields,field_description:aaa_base.field_res_company__billable_days
+msgid "Billable Days"
+msgstr "Nombre de jours facturables"
+
+#. module: aaa_base
+#: model:ir.model.fields,field_description:aaa_base.field_res_users__is_buddy
+msgid "Buddy"
+msgstr "Ami"
+
+#. module: aaa_base
+#: model:ir.model.fields,field_description:aaa_base.field_res_company__client_code
+msgid "CLIENT_ID"
+msgstr ""
+
+#. module: aaa_base
+#: model:ir.model.fields,field_description:aaa_base.field_res_company__client_secret
+msgid "CLIENT_SECRET"
+msgstr ""
+
+#. module: aaa_base
+#: model:ir.model.fields,field_description:aaa_base.field_res_users__career_builder_trigram
+msgid "Career builder trigam"
+msgstr "Trigramme Career builder"
+
+#. module: aaa_base
+#: model:ir.model.fields,field_description:aaa_base.field_res_company__careerbuilder_code
+msgid "CareerBuilder ID"
+msgstr "Identifiant CareerBuilder"
+
+#. module: aaa_base
+#: model:ir.model.fields,field_description:aaa_base.field_res_partner__partner_clone_ids
+#: model:ir.model.fields,field_description:aaa_base.field_res_users__partner_clone_ids
+#: model_terms:ir.ui.view,arch_db:aaa_base.view_partner_clones_form
+msgid "Clones"
+msgstr ""
+
+#. module: aaa_base
+#: model:ir.model.fields,field_description:aaa_base.field_res_company__coefficient_k2
+msgid "Coefficient K2"
+msgstr "Coefficient k2"
+
+#. module: aaa_base
+#: model:ir.model,name:aaa_base.model_res_company
+msgid "Companies"
+msgstr "Sociétés"
+
+#. module: aaa_base
+#: model:ir.model.fields,field_description:aaa_base.field_res_partner_clone__company_name
+msgid "Company"
+msgstr "Société"
+
+#. module: aaa_base
+#: model:ir.model.fields,field_description:aaa_base.field_res_partner_clone__company
+msgid "Company id"
+msgstr "Société id"
+
+#. module: aaa_base
+#: model:ir.model,name:aaa_base.model_res_partner
+msgid "Contact"
+msgstr ""
+
+#. module: aaa_base
+#: model:ir.model.fields,field_description:aaa_base.field_res_partner_clone__create_uid
+msgid "Created by"
+msgstr "Créé par"
+
+#. module: aaa_base
+#: model:ir.model.fields,field_description:aaa_base.field_res_partner_clone__create_date
+msgid "Created on"
+msgstr "Créé le"
+
+#. module: aaa_base
+#: model:ir.model.fields,field_description:aaa_base.field_res_partner__birthday
+#: model:ir.model.fields,field_description:aaa_base.field_res_users__birthday
+msgid "Date of Birth"
+msgstr "Date de naissance"
+
+#. module: aaa_base
+#: model:ir.model.fields,field_description:aaa_base.field_res_partner_clone__display_name
+msgid "Display Name"
+msgstr "Nom affiché"
+
+#. module: aaa_base
+#: selection:res.users,level:0
+msgid "Expert"
+msgstr ""
+
+#. module: aaa_base
+#: selection:res.partner,gender:0
+msgid "Female"
+msgstr "Féminin"
+
+#. module: aaa_base
+#: model:ir.model.fields,field_description:aaa_base.field_res_partner__gender
+#: model:ir.model.fields,field_description:aaa_base.field_res_users__gender
+msgid "Gender"
+msgstr "Genre"
+
+#. module: aaa_base
+#: model_terms:ir.ui.view,arch_db:aaa_base.view_company_form
+#: model_terms:ir.ui.view,arch_db:aaa_base.view_users_form
+msgid "General Configuration"
+msgstr "Configuration générale"
+
+#. module: aaa_base
+#: model:ir.model.fields,field_description:aaa_base.field_res_partner_clone__id
+msgid "ID"
+msgstr ""
+
+#. module: aaa_base
+#: model:ir.model.fields,field_description:aaa_base.field_res_partner__is_business_manager
+#: model:ir.model.fields,field_description:aaa_base.field_res_users__is_business_manager
+msgid "Is business manager"
+msgstr "Est un business manager"
+
+#. module: aaa_base
+#: model:ir.model.fields,field_description:aaa_base.field_res_partner__is_cloned
+#: model:ir.model.fields,field_description:aaa_base.field_res_users__is_cloned
+msgid "Is cloned"
+msgstr "Est cloné"
+
+#. module: aaa_base
+#: model:ir.model.fields,field_description:aaa_base.field_res_partner__is_office
+#: model:ir.model.fields,field_description:aaa_base.field_res_users__is_office
+msgid "Is office"
+msgstr "Est un cabinet"
+
+#. module: aaa_base
+#: model:ir.model.fields,field_description:aaa_base.field_res_partner_clone____last_update
+msgid "Last Modified on"
+msgstr "Dernière modification le"
+
+#. module: aaa_base
+#: model:ir.model.fields,field_description:aaa_base.field_res_partner_clone__write_uid
+msgid "Last Updated by"
+msgstr "Dernière mise à jour par"
+
+#. module: aaa_base
+#: model:ir.model.fields,field_description:aaa_base.field_res_partner_clone__write_date
+msgid "Last Updated on"
+msgstr "Dernière mise à jour le"
+
+#. module: aaa_base
+#: model:ir.model.fields,field_description:aaa_base.field_res_users__level
+msgid "Level"
+msgstr "Niveau"
+
+#. module: aaa_base
+#: model:ir.model.fields,field_description:aaa_base.field_res_partner__linkedin_link
+#: model:ir.model.fields,field_description:aaa_base.field_res_users__linkedin_link
+msgid "LinkedIn link"
+msgstr "Lien linkedIn"
+
+#. module: aaa_base
+#: selection:res.partner,gender:0
+msgid "Male"
+msgstr "Masculin"
+
+#. module: aaa_base
+#: model:ir.model.fields,field_description:aaa_base.field_res_company__careerbuilder_director_code
+msgid "Manager CareerBuilder ID"
+msgstr "Identifiant Directeur Cabinet CareerBuilder"
+
+#. module: aaa_base
+#: selection:res.users,synchronization_outlook_calendar:0
+#: selection:res.users,synchronization_outlook_mail:0
+msgid "Manual"
+msgstr "Manuel"
+
+#. module: aaa_base
+#: model:ir.model.fields,field_description:aaa_base.field_res_partner__mobility
+#: model:ir.model.fields,field_description:aaa_base.field_res_users__mobility
+msgid "Mobility"
+msgstr "Mobilité"
+
+#. module: aaa_base
+#: model:ir.model.fields,field_description:aaa_base.field_res_company__month
+msgid "Number of Month"
+msgstr "Nombre de mois"
+
+#. module: aaa_base
+#: selection:res.partner,gender:0
+msgid "Other"
+msgstr "Autre"
+
+#. module: aaa_base
+#: model:ir.model.fields,field_description:aaa_base.field_res_users__outlook_ident
+msgid "Outlook identify"
+msgstr "Identifiant outlook"
+
+#. module: aaa_base
+#: model:ir.model.fields,field_description:aaa_base.field_res_users__outlook_password
+msgid "Outlook password"
+msgstr "Mot de passe outlook"
+
+#. module: aaa_base
+#: model:ir.model.fields,field_description:aaa_base.field_res_users__outlook_server
+msgid "Outlook server"
+msgstr "Serveur outlook"
+
+#. module: aaa_base
+#: model:ir.model.fields,field_description:aaa_base.field_res_users__outlook_token
+msgid "Outlook token"
+msgstr "Jeton outlook"
+
+#. module: aaa_base
+#: model:ir.actions.server,name:aaa_base.ir_cron_partner_clones_ir_actions_server
+#: model:ir.cron,cron_name:aaa_base.ir_cron_partner_clones
+#: model:ir.cron,name:aaa_base.ir_cron_partner_clones
+msgid "Partner clones update"
+msgstr "Mise à jour des partenaires clones"
+
+#. module: aaa_base
+#: model:ir.model.fields,field_description:aaa_base.field_res_company__site_publication
+msgid "Place of publication by default"
+msgstr "Lieu de publication par defaut"
+
+#. module: aaa_base
+#: model:ir.model.fields,field_description:aaa_base.field_res_company__presentation
+msgid "Presentation"
+msgstr "Présentation"
+
+#. module: aaa_base
+#: model:ir.model.fields,field_description:aaa_base.field_res_company__redirect_uri
+msgid "REDIRECT_URI"
+msgstr ""
+
+#. module: aaa_base
+#: model:ir.model.fields,field_description:aaa_base.field_res_company__resource
+msgid "RESOURCE"
+msgstr ""
+
+#. module: aaa_base
+#: model:ir.model.fields,field_description:aaa_base.field_res_users__rank
+msgid "Rank"
+msgstr "Classement"
+
+#. module: aaa_base
+#: model:ir.model.fields,field_description:aaa_base.field_res_users__is_refresh_token
+msgid "Refresh Token"
+msgstr "Rafraîchir jeton"
+
+#. module: aaa_base
+#: model:ir.model.fields,field_description:aaa_base.field_res_company__simus_code
+#: model:ir.model.fields,field_description:aaa_base.field_res_partner__simus_code
+#: model:ir.model.fields,field_description:aaa_base.field_res_users__simus_code
+msgid "Simus code"
+msgstr "Code simus"
+
+#. module: aaa_base
+#: selection:res.users,level:0
+msgid "Superman"
+msgstr ""
+
+#. module: aaa_base
+#: model:ir.model.fields,field_description:aaa_base.field_res_users__synchronization_outlook_calendar
+msgid "Synchronization calendar outlook"
+msgstr "Synchronisation calendrier outlook"
+
+#. module: aaa_base
+#: model:ir.model.fields,field_description:aaa_base.field_res_users__synchronization_outlook_mail
+msgid "Synchronization mail outlook"
+msgstr "Synchronisation courriel outlook"
+
+#. module: aaa_base
+#: model:ir.model.fields,field_description:aaa_base.field_res_company__tenant
+msgid "TENANT"
+msgstr ""
+
+#. module: aaa_base
+#: model:ir.model.fields,field_description:aaa_base.field_res_company__token_endpoint
+msgid "TOKEN_ENDPOINT"
+msgstr ""
+
+#. module: aaa_base
+#: selection:res.users,synchronization_outlook_calendar:0
+msgid "Tagged only "
+msgstr "Synchro seulement les taguées"
+
+#. module: aaa_base
+#: model:ir.model.fields,field_description:aaa_base.field_res_partner_clone__user_name
+msgid "User"
+msgstr "Utilisateur"
+
+#. module: aaa_base
+#: model:ir.model.fields,field_description:aaa_base.field_res_partner_clone__user
+msgid "User id"
+msgstr "Utilisateur id"
+
+#. module: aaa_base
+#: model:ir.model,name:aaa_base.model_res_users
+msgid "Users"
+msgstr "Utilisateurs"
+
+#. module: aaa_base
+#: model:ir.model.fields,field_description:aaa_base.field_res_partner__viadeo_link
+#: model:ir.model.fields,field_description:aaa_base.field_res_users__viadeo_link
+msgid "Viadeo Link"
+msgstr "Lien viadeo"
+
+#. module: aaa_base
+#: selection:res.users,level:0
+msgid "intermediate"
+msgstr "Intermédiaire"
+
+#. module: aaa_base
+#: model:ir.model,name:aaa_base.model_res_partner_clone
+msgid "res.partner.clone"
+msgstr ""
+

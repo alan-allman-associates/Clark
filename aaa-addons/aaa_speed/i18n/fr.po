@@ -1,0 +1,200 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* aaa_speed
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 12.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-11-29 16:42+0000\n"
+"PO-Revision-Date: 2019-11-29 16:42+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: aaa_speed
+#: selection:calendar.event.type,speed_type:0
+#: model:ir.model.fields,field_description:aaa_speed.field_res_partner__candidate
+#: model:ir.model.fields,field_description:aaa_speed.field_res_users__candidate
+#: model:ir.model.fields,field_description:aaa_speed.field_speed__candidate
+msgid "Candidate"
+msgstr "Candidat"
+
+#. module: aaa_speed
+#: model:ir.model.fields,field_description:aaa_speed.field_calendar_event__coefficient
+#: model:ir.model.fields,field_description:aaa_speed.field_calendar_event_type__coefficient
+msgid "Coefficient"
+msgstr ""
+
+#. module: aaa_speed
+#: selection:calendar.event.type,speed_type:0
+#: model:ir.model.fields,field_description:aaa_speed.field_res_partner__commercial
+#: model:ir.model.fields,field_description:aaa_speed.field_res_users__commercial
+#: model:ir.model.fields,field_description:aaa_speed.field_speed__commercial
+msgid "Commercial"
+msgstr ""
+
+#. module: aaa_speed
+#: model:ir.model,name:aaa_speed.model_res_partner
+msgid "Contact"
+msgstr ""
+
+#. module: aaa_speed
+#: model:ir.model.fields,field_description:aaa_speed.field_speed__create_uid
+msgid "Created by"
+msgstr "Créé par"
+
+#. module: aaa_speed
+#: model:ir.model.fields,field_description:aaa_speed.field_speed__create_date
+msgid "Created on"
+msgstr "Créé le"
+
+#. module: aaa_speed
+#: model:ir.model,name:aaa_speed.model_speed
+msgid "Datas speed"
+msgstr "Données vitesses"
+
+#. module: aaa_speed
+#: model:ir.model.fields,field_description:aaa_speed.field_speed__display_name
+msgid "Display Name"
+msgstr "Nom affiché"
+
+#. module: aaa_speed
+#: model:ir.model,name:aaa_speed.model_calendar_event
+msgid "Event"
+msgstr "Évènement"
+
+#. module: aaa_speed
+#: model:ir.model,name:aaa_speed.model_calendar_event_type
+msgid "Event Meeting Type"
+msgstr "Type d'évènement"
+
+#. module: aaa_speed
+#: model:ir.model.fields,field_description:aaa_speed.field_speed__id
+msgid "ID"
+msgstr ""
+
+#. module: aaa_speed
+#: model:ir.model.fields,field_description:aaa_speed.field_speed____last_update
+msgid "Last Modified on"
+msgstr "Dernière modification le"
+
+#. module: aaa_speed
+#: model:ir.model.fields,field_description:aaa_speed.field_speed__write_uid
+msgid "Last Updated by"
+msgstr "Dernière mise à jour par"
+
+#. module: aaa_speed
+#: model:ir.model.fields,field_description:aaa_speed.field_speed__write_date
+msgid "Last Updated on"
+msgstr "Dernière mise à jour le"
+
+#. module: aaa_speed
+#: model:ir.model.fields,field_description:aaa_speed.field_speed__month
+msgid "Month"
+msgstr "Mois"
+
+#. module: aaa_speed
+#: model:ir.model.fields,field_description:aaa_speed.field_speed__partner_id
+msgid "Partner"
+msgstr "Partenaire"
+
+#. module: aaa_speed
+#: model:ir.model.fields,help:aaa_speed.field_speed__partner_id
+msgid "Partner-related data of the user"
+msgstr "Données du partenaire lié à l'utilisateur"
+
+#. module: aaa_speed
+#: selection:calendar.event.type,speed_type:0
+#: model:ir.model.fields,field_description:aaa_speed.field_res_partner__project
+#: model:ir.model.fields,field_description:aaa_speed.field_res_users__project
+#: model:ir.model.fields,field_description:aaa_speed.field_speed__project
+msgid "Project"
+msgstr "Projet"
+
+#. module: aaa_speed
+#: selection:calendar.event.type,speed_type:0
+#: model:ir.model.fields,field_description:aaa_speed.field_speed__prospecting
+msgid "Prospecting"
+msgstr "Prospection"
+
+#. module: aaa_speed
+#: selection:calendar.event.type,speed_type:0
+msgid "Qualification"
+msgstr ""
+
+#. module: aaa_speed
+#: model:ir.model.fields,field_description:aaa_speed.field_res_partner__is_date_current
+#: model:ir.model.fields,field_description:aaa_speed.field_res_users__is_date_current
+msgid "Set current date"
+msgstr "Renseigne la date du jour"
+
+#. module: aaa_speed
+#: model:ir.model.fields,field_description:aaa_speed.field_calendar_event__speed_id
+#: model:ir.model.fields,field_description:aaa_speed.field_speed__speed_week
+msgid "Speed"
+msgstr "Vitesse"
+
+#. module: aaa_speed
+#: model:ir.model.fields,field_description:aaa_speed.field_res_partner__speed_date
+#: model:ir.model.fields,field_description:aaa_speed.field_res_users__speed_date
+msgid "Speed date"
+msgstr "Date vitesse"
+
+#. module: aaa_speed
+#: model:ir.model.fields,field_description:aaa_speed.field_res_partner__speed_max
+#: model:ir.model.fields,field_description:aaa_speed.field_res_users__speed_max
+msgid "Speed maximum rate"
+msgstr "Valeur de Vitesse maximum"
+
+#. module: aaa_speed
+#: model:ir.model.fields,field_description:aaa_speed.field_calendar_event_type__speed_type
+msgid "Speed type"
+msgstr "Type de vitesse"
+
+#. module: aaa_speed
+#: model:ir.model.fields,field_description:aaa_speed.field_res_partner__speed_week
+#: model:ir.model.fields,field_description:aaa_speed.field_res_users__speed_week
+msgid "Speed week"
+msgstr "Vitesse semaine"
+
+#. module: aaa_speed
+#: model:ir.actions.act_window,name:aaa_speed.open_view_speed
+#: model:ir.model.fields,field_description:aaa_speed.field_res_partner__speed_ids
+#: model:ir.model.fields,field_description:aaa_speed.field_res_users__speed_ids
+#: model:ir.model.fields,field_description:aaa_speed.field_speed__event_ids
+#: model:ir.ui.menu,name:aaa_speed.menu_open_view_speed
+msgid "Speeds"
+msgstr "Vitesses"
+
+#. module: aaa_speed
+#: model:ir.model.fields,field_description:aaa_speed.field_speed__user_id
+msgid "User"
+msgstr "Utilisateur"
+
+#. module: aaa_speed
+#: model:ir.model.fields,field_description:aaa_speed.field_speed__week
+msgid "Week"
+msgstr "Semaine"
+
+#. module: aaa_speed
+#: model:ir.model.fields,field_description:aaa_speed.field_speed__year
+msgid "Year"
+msgstr "Année"
+
+#. module: aaa_speed
+#: model:ir.model.fields,field_description:aaa_speed.field_res_partner__prospecting
+#: model:ir.model.fields,field_description:aaa_speed.field_res_users__prospecting
+msgid "prospecting"
+msgstr "Prospection"
+
+#. module: aaa_speed
+#: model:ir.model.fields,field_description:aaa_speed.field_res_partner__qualification
+#: model:ir.model.fields,field_description:aaa_speed.field_res_users__qualification
+#: model:ir.model.fields,field_description:aaa_speed.field_speed__qualification
+msgid "qualification"
+msgstr "Qualification"
+

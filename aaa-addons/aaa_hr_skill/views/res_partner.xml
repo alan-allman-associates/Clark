@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_employee_skill_form" model="ir.ui.view">
+        <field name="name">res.partner.skill.form.cis</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+             <xpath expr="//field[@name='vat']" position="after">
+                <label for="consultant" />
+                    <div class="o_row">
+                         <field name="consultant" />
+                         <field name="type_consultant" attrs="{'invisible': [('consultant', '=', False)]}"/>
+                    </div>
+             </xpath>
+             <xpath expr="//notebook" position="inside">
+                <page string="Compétences" attrs="{'invisible':[('consultant', '=', False)]}" >
+                    <field name="consultant_skill_ids">
+                        <tree editable="bottom">
+                            <field name="skill_id" string="Compétences"/>
+                            <field name="validate_partner_id"/>
+                            <field name="level_validate"/>
+                        </tree>
+                    </field>
+                </page>
+             </xpath>
+                 
+        </field>
+    </record>
+
+    <record id="view_res_partner_consultants_filter" model="ir.ui.view">
+        <field name="name">res.partner.consultants.filter</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_res_partner_filter"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='category_id']" position="before">
+                <separator/>
+                <filter name="consultant" string="Tous les consultants" domain="[('consultant','=',True)]"/>
+                <filter name="internes" string="Consultants internes" domain="[('type_consultant','=','interne')]"/>
+                <filter name="pro" string="Consultants pro" domain="[('type_consultant','=','pro')]"/>
+                <filter name="sous_traitant" string="Sous-traitants" domain="[('type_consultant','=','straitant')]"/>
+                <filter name="candidat" string="Consultants candidats" domain="[('type_consultant','=','candidat')]"/>
+                <separator/>
+                <field name="consultant_skill_ids"/>
+            </xpath>
+            <xpath expr="//group" position="inside">
+                <filter name="type_consultants" string="Type de consultants" domain="[]" context="{'group_by' : 'type_consultant'}" />
+            </xpath>
+        </field>
+    </record>
+    
+    <record id="open_search_consultants" model="ir.actions.act_window">
+        <field name="name">Consultants</field>
+        <field name="res_model">res.partner</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">kanban,tree,form,activity</field>
+        <field name="view_id" eval="False"/>
+        <field name="context">{'search_default_consultant':1}</field>
+    </record>
+              
+    <menuitem name="Contacts"
+              parent="contacts.res_partner_menu_contacts"
+              id="menu_open_search_contacts"
+              action="contacts.action_contacts"
+              sequence="1"
+              />
+              
+    <menuitem name="Consultants"
+          parent="contacts.res_partner_menu_contacts"
+          id="menu_open_search_consultants"
+          action="open_search_consultants"
+          sequence="2"
+          />
+</odoo>

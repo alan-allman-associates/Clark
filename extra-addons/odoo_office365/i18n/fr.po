@@ -1,0 +1,860 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* odoo_office365
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 12.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-07-15 08:20+0000\n"
+"PO-Revision-Date: 2020-07-15 11:59+0200\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: \n"
+"Language: fr\n"
+"X-Generator: Poedit 2.3.1\n"
+
+#. module: odoo_office365
+#: model_terms:ir.ui.view,arch_db:odoo_office365.token_redirect_fail_page
+msgid ""
+"<span class=\"tick\" style=\"font-size: 90px;                             line-height: 1;                             margin-bottom: -11px\">\n"
+"                  ✕\n"
+"              </span>\n"
+"              <span>Failed! please see the details in logs</span>"
+msgstr ""
+
+#. module: odoo_office365
+#: model_terms:ir.ui.view,arch_db:odoo_office365.token_redirect_success_page
+msgid ""
+"<span class=\"tick\" style=\"font-size: 90px;                             line-height: 1;                             margin-bottom: -30px;\">\n"
+"                  ✔\n"
+"              </span>\n"
+"              <span>Successfully generated token!</span>"
+msgstr ""
+
+#. module: odoo_office365
+#: model_terms:ir.ui.view,arch_db:odoo_office365.office365_sync_form_view
+msgid "<strong>Calendar</strong>"
+msgstr "<strong>Calendrier</strong>"
+
+#. module: odoo_office365
+#: model_terms:ir.ui.view,arch_db:odoo_office365.office365_sync_form_view
+msgid "<strong>Contact</strong>"
+msgstr "<strong>Contact</strong>"
+
+#. module: odoo_office365
+#: model_terms:ir.ui.view,arch_db:odoo_office365.office365_sync_form_view
+msgid "<strong>Email</strong>"
+msgstr "<strong>Messagerie électronique</strong>"
+
+#. module: odoo_office365
+#: model_terms:ir.ui.view,arch_db:odoo_office365.office365_sync_form_view
+msgid "<strong>Task</strong>"
+msgstr "<strong>Tâche</strong>"
+
+#. module: odoo_office365
+#: model:ir.model.fields,field_description:odoo_office365.field_office_sync__is_active
+msgid "Active Office365 Account"
+msgstr "Activer le  compte Office365"
+
+#. module: odoo_office365
+#: model:ir.model,name:odoo_office365.model_mail_activity
+msgid "Activity"
+msgstr "Activité"
+
+#. module: odoo_office365
+#: model:ir.model.fields,field_description:odoo_office365.field_office_sync__all_event
+msgid "All categories events"
+msgstr "Toutes les catégories d’événements"
+
+#. module: odoo_office365
+#: selection:export.history,sync_type:0 selection:sync.history,sync_type:0
+msgid "Auto"
+msgstr "Auto"
+
+#. module: odoo_office365
+#: model:ir.actions.server,name:odoo_office365.office365_cron_do_tasts_import_ir_actions_server
+#: model:ir.cron,cron_name:odoo_office365.office365_cron_do_tasts_import
+#: model:ir.cron,name:odoo_office365.office365_cron_do_tasts_import
+msgid "Auto Office365 tasks import"
+msgstr "Importation de tâches Office365 automatiques"
+
+#. module: odoo_office365
+#: model:ir.model.fields,field_description:odoo_office365.field_office_sync__is_auto_sync
+msgid "Auto Scheduler"
+msgstr "Planificateur automatique"
+
+#. module: odoo_office365
+#: model:ir.actions.server,name:odoo_office365.office365_cron_do_export_contact_ir_actions_server
+#: model:ir.cron,cron_name:odoo_office365.office365_cron_do_export_contact
+#: model:ir.cron,name:odoo_office365.office365_cron_do_export_contact
+msgid "Auto export Office365 contacts"
+msgstr "Exporter automatiquement des contacts Office365"
+
+#. module: odoo_office365
+#: model:ir.actions.server,name:odoo_office365.office365_cron_do_calendar_import_ir_actions_server
+#: model:ir.cron,cron_name:odoo_office365.office365_cron_do_calendar_import
+#: model:ir.cron,name:odoo_office365.office365_cron_do_calendar_import
+msgid "Auto import Office365 Calendar"
+msgstr "Importer automatiquement le calendrier Office365"
+
+#. module: odoo_office365
+#: model:ir.actions.server,name:odoo_office365.office365_cron_do_import_contact_ir_actions_server
+#: model:ir.cron,cron_name:odoo_office365.office365_cron_do_import_contact
+#: model:ir.cron,name:odoo_office365.office365_cron_do_import_contact
+msgid "Auto import Office365 contacts"
+msgstr "Importer automatiquement des contacts Office365"
+
+#. module: odoo_office365
+#: model:ir.actions.server,name:odoo_office365.office365_cron_do_calendar_export_ir_actions_server
+#: model:ir.cron,cron_name:odoo_office365.office365_cron_do_calendar_export
+#: model:ir.cron,name:odoo_office365.office365_cron_do_calendar_export
+msgid "Auto office365 calendar export"
+msgstr "Exportation de calendrier Office365 automatique"
+
+#. module: odoo_office365
+#: model:ir.actions.server,name:odoo_office365.office365_cron_do_tasts_export_ir_actions_server
+#: model:ir.cron,cron_name:odoo_office365.office365_cron_do_tasts_export
+#: model:ir.cron,name:odoo_office365.office365_cron_do_tasts_export
+msgid "Auto office365 tasks export"
+msgstr "Exportation de tâches Office365 automatique"
+
+#. module: odoo_office365
+#: model:ir.model.fields,field_description:odoo_office365.field_office_calendars__name
+msgid "Calendar Name"
+msgstr "Nom du calendrier"
+
+#. module: odoo_office365
+#: model:ir.model.fields,field_description:odoo_office365.field_office_sync__calender_import
+msgid "Calender"
+msgstr "Calendrier"
+
+#. module: odoo_office365
+#: model:ir.model.fields,field_description:odoo_office365.field_calendar_event__category_name
+msgid "Categories"
+msgstr "Catégories"
+
+#. module: odoo_office365
+#: model:ir.model.fields,field_description:odoo_office365.field_office_settings__client_id
+#: model:ir.model.fields,field_description:odoo_office365.field_res_users__client_id
+msgid "Client Id"
+msgstr "ID Client"
+
+#. module: odoo_office365
+#: model:ir.model.fields,field_description:odoo_office365.field_calendar_event_type__color
+msgid "Color"
+msgstr "Couleur"
+
+#. module: odoo_office365
+#: model:ir.model,name:odoo_office365.model_res_partner
+msgid "Contact"
+msgstr "Contact"
+
+#. module: odoo_office365
+#: model:ir.model.fields,field_description:odoo_office365.field_office_sync__contact_import
+msgid "Contacts"
+msgstr "Contacts"
+
+#. module: odoo_office365
+#: model:ir.model.fields,field_description:odoo_office365.field_res_users__event_create_flag
+msgid "Create events in Office365 calendar when create in Odoo."
+msgstr "Créez des événements dans le calendrier Office365 lors de la création dans Odoo."
+
+#. module: odoo_office365
+#: model:ir.model.fields,field_description:odoo_office365.field_export_history__create_uid
+#: model:ir.model.fields,field_description:odoo_office365.field_message_wizard__create_uid
+#: model:ir.model.fields,field_description:odoo_office365.field_office_calendars__create_uid
+#: model:ir.model.fields,field_description:odoo_office365.field_office_settings__create_uid
+#: model:ir.model.fields,field_description:odoo_office365.field_office_sync__create_uid
+#: model:ir.model.fields,field_description:odoo_office365.field_office_usersettings__create_uid
+#: model:ir.model.fields,field_description:odoo_office365.field_sync_history__create_uid
+msgid "Created by"
+msgstr "Créé par"
+
+#. module: odoo_office365
+#: model:ir.model.fields,field_description:odoo_office365.field_export_history__create_date
+#: model:ir.model.fields,field_description:odoo_office365.field_message_wizard__create_date
+#: model:ir.model.fields,field_description:odoo_office365.field_office_calendars__create_date
+#: model:ir.model.fields,field_description:odoo_office365.field_office_settings__create_date
+#: model:ir.model.fields,field_description:odoo_office365.field_office_sync__create_date
+#: model:ir.model.fields,field_description:odoo_office365.field_office_usersettings__create_date
+#: model:ir.model.fields,field_description:odoo_office365.field_sync_history__create_date
+msgid "Created on"
+msgstr "Créé le"
+
+#. module: odoo_office365
+#: model:ir.model.fields,field_description:odoo_office365.field_office_sync__is_manual_sync
+msgid "Custom Date Range"
+msgstr "Plage de dates personnalisée"
+
+#. module: odoo_office365
+#: selection:office.sync,interval_unit:0
+msgid "Days"
+msgstr "Jours"
+
+#. module: odoo_office365
+#: model:ir.model.fields,field_description:odoo_office365.field_res_users__office365_event_del_flag
+msgid "Delete event from Odoo, if the event is deleted from Office 365."
+msgstr "Supprimez l’événement d’Odoo, si l’événement est supprimé d’Office 365."
+
+#. module: odoo_office365
+#: model:ir.model.fields,field_description:odoo_office365.field_res_users__event_del_flag
+msgid "Delete events from Office365 calendar when delete in Odoo."
+msgstr "Supprimez les événements du calendrier Office365 lorsqu’ils sont supprimés dans Odoo."
+
+#. module: odoo_office365
+#: model:ir.model.fields,field_description:odoo_office365.field_export_history__display_name
+#: model:ir.model.fields,field_description:odoo_office365.field_message_wizard__display_name
+#: model:ir.model.fields,field_description:odoo_office365.field_office_calendars__display_name
+#: model:ir.model.fields,field_description:odoo_office365.field_office_settings__display_name
+#: model:ir.model.fields,field_description:odoo_office365.field_office_sync__display_name
+#: model:ir.model.fields,field_description:odoo_office365.field_office_usersettings__display_name
+#: model:ir.model.fields,field_description:odoo_office365.field_sync_history__display_name
+msgid "Display Name"
+msgstr "Nom affiché"
+
+#. module: odoo_office365
+#: model:ir.model.fields,field_description:odoo_office365.field_office_sync__mail_import
+msgid "Emails"
+msgstr "Courriels"
+
+#. module: odoo_office365
+#: code:addons/odoo_office365/models/models.py:116
+#: code:addons/odoo_office365/models/models.py:493
+#: code:addons/odoo_office365/models/models.py:507
+#: code:addons/odoo_office365/models/models.py:590
+#: code:addons/odoo_office365/models/office354_sync.py:1088
+#: code:addons/odoo_office365/models/office354_sync.py:1128
+#: code:addons/odoo_office365/models/office354_sync.py:1425
+#: code:addons/odoo_office365/models/office354_sync.py:1440
+#: code:addons/odoo_office365/models/office354_sync.py:1618
+#, python-format
+msgid "Error!"
+msgstr "Erreur!"
+
+#. module: odoo_office365
+#: code:addons/odoo_office365/models/models.py:625
+#, python-format
+msgid "Error: "
+msgstr "Erreur: "
+
+#. module: odoo_office365
+#: model:ir.model,name:odoo_office365.model_calendar_event
+msgid "Event"
+msgstr "Évènement"
+
+#. module: odoo_office365
+#: model:ir.model,name:odoo_office365.model_calendar_event_type
+msgid "Event Meeting Type"
+msgstr "Type d'évènement réunion"
+
+#. module: odoo_office365
+#: model:ir.model.fields,field_description:odoo_office365.field_office_sync__ex_history_line
+msgid "Ex History Line"
+msgstr "Ligne d’histoire ex"
+
+#. module: odoo_office365
+#: model:ir.model.fields,field_description:odoo_office365.field_res_users__expires_in
+msgid "Expires IN"
+msgstr "Expire EN"
+
+#. module: odoo_office365
+#: model_terms:ir.ui.view,arch_db:odoo_office365.office365_sync_form_view
+msgid "Export"
+msgstr "Exporter"
+
+#. module: odoo_office365
+#: model_terms:ir.ui.view,arch_db:odoo_office365.office365_sync_form_view
+msgid "Export History"
+msgstr "Historique de l'export"
+
+#. module: odoo_office365
+#: model_terms:ir.ui.view,arch_db:odoo_office365.office365_sync_form_view
+msgid "Export from ODOO to Office365."
+msgstr "Export de ODOO vers Office365."
+
+#. module: odoo_office365
+#: model:ir.model,name:odoo_office365.model_export_history
+msgid "Export/History"
+msgstr "Historique de l'export"
+
+#. module: odoo_office365
+#: model:ir.model.fields,field_description:odoo_office365.field_office_sync__from_date
+msgid "From Date"
+msgstr "À partir de la date"
+
+#. module: odoo_office365
+#: model:ir.model.fields,field_description:odoo_office365.field_office_sync__history_line
+msgid "History Line"
+msgstr "Ligne d'historique"
+
+#. module: odoo_office365
+#: selection:office.sync,interval_unit:0
+msgid "Hours"
+msgstr "Heures"
+
+#. module: odoo_office365
+#: model:ir.model.fields,field_description:odoo_office365.field_export_history__id
+#: model:ir.model.fields,field_description:odoo_office365.field_message_wizard__id
+#: model:ir.model.fields,field_description:odoo_office365.field_office_calendars__id
+#: model:ir.model.fields,field_description:odoo_office365.field_office_settings__id
+#: model:ir.model.fields,field_description:odoo_office365.field_office_sync__id
+#: model:ir.model.fields,field_description:odoo_office365.field_office_usersettings__id
+#: model:ir.model.fields,field_description:odoo_office365.field_sync_history__id
+msgid "ID"
+msgstr "ID"
+
+#. module: odoo_office365
+#: model_terms:ir.ui.view,arch_db:odoo_office365.office365_sync_form_view
+msgid "Import"
+msgstr "Import"
+
+#. module: odoo_office365
+#: model_terms:ir.ui.view,arch_db:odoo_office365.office365_sync_form_view
+msgid "Import History"
+msgstr "Historique des imports"
+
+#. module: odoo_office365
+#: model_terms:ir.ui.view,arch_db:odoo_office365.office365_sync_form_view
+msgid "Import from Office365 to ODOO."
+msgstr "Import de Office365 vers ODOO."
+
+#. module: odoo_office365
+#: model:ir.model.fields,field_description:odoo_office365.field_office_sync__interval_unit
+msgid "Interval Unit"
+msgstr "Unité de l'intervalle"
+
+#. module: odoo_office365
+#: model:ir.model.fields,field_description:odoo_office365.field_office_sync__is_export_calendar
+msgid "Is Export Calendar"
+msgstr "Est le calendrier d’export"
+
+#. module: odoo_office365
+#: model:ir.model.fields,field_description:odoo_office365.field_office_sync__is_export_contact
+msgid "Is Export Contact"
+msgstr "Est le contact d'export"
+
+#. module: odoo_office365
+#: model:ir.model.fields,field_description:odoo_office365.field_office_sync__is_export_task
+msgid "Is Export Task"
+msgstr "Est la tâche d'export"
+
+#. module: odoo_office365
+#: model:ir.model.fields,field_description:odoo_office365.field_office_sync__is_import_calendar
+msgid "Is Import Calendar"
+msgstr "Est le calendrier d'import"
+
+#. module: odoo_office365
+#: model:ir.model.fields,field_description:odoo_office365.field_office_sync__is_import_contact
+msgid "Is Import Contact"
+msgstr "Est le contact d'import"
+
+#. module: odoo_office365
+#: model:ir.model.fields,field_description:odoo_office365.field_office_sync__is_import_email
+msgid "Is Import Email"
+msgstr "Est l'adresse mail d'import"
+
+#. module: odoo_office365
+#: model:ir.model.fields,field_description:odoo_office365.field_office_sync__is_import_task
+msgid "Is Import Task"
+msgstr "Est la tâche d'import"
+
+#. module: odoo_office365
+#: model:ir.model.fields,field_description:odoo_office365.field_calendar_event__is_update
+#: model:ir.model.fields,field_description:odoo_office365.field_mail_activity__is_update
+msgid "Is Updated"
+msgstr "A été modifié"
+
+#. module: odoo_office365
+#: model:ir.model.fields,field_description:odoo_office365.field_res_partner__is_update
+#: model:ir.model.fields,field_description:odoo_office365.field_res_users__is_update
+msgid "Is update"
+msgstr "Est modifié"
+
+#. module: odoo_office365
+#: model:ir.model.fields,field_description:odoo_office365.field_office_sync__calender_export
+#: model:ir.model.fields,field_description:odoo_office365.field_office_sync__contact_export
+#: model:ir.model.fields,field_description:odoo_office365.field_office_sync__task_export
+msgid "Last Export"
+msgstr "Dernier Export"
+
+#. module: odoo_office365
+#: model:ir.model.fields,field_description:odoo_office365.field_res_users__last_calender_import
+#: model:ir.model.fields,field_description:odoo_office365.field_res_users__last_contact_import
+#: model:ir.model.fields,field_description:odoo_office365.field_res_users__last_mail_import
+#: model:ir.model.fields,field_description:odoo_office365.field_res_users__last_task_import
+msgid "Last Import"
+msgstr "Dernier Import"
+
+#. module: odoo_office365
+#: model:ir.model.fields,field_description:odoo_office365.field_export_history____last_update
+#: model:ir.model.fields,field_description:odoo_office365.field_message_wizard____last_update
+#: model:ir.model.fields,field_description:odoo_office365.field_office_calendars____last_update
+#: model:ir.model.fields,field_description:odoo_office365.field_office_settings____last_update
+#: model:ir.model.fields,field_description:odoo_office365.field_office_sync____last_update
+#: model:ir.model.fields,field_description:odoo_office365.field_office_usersettings____last_update
+#: model:ir.model.fields,field_description:odoo_office365.field_sync_history____last_update
+msgid "Last Modified on"
+msgstr "Dernière modification le"
+
+#. module: odoo_office365
+#: model:ir.model.fields,field_description:odoo_office365.field_export_history__last_sync
+#: model:ir.model.fields,field_description:odoo_office365.field_sync_history__last_sync
+msgid "Last Sync"
+msgstr "Dernière Synchronisation"
+
+#. module: odoo_office365
+#: model:ir.model.fields,field_description:odoo_office365.field_export_history__write_uid
+#: model:ir.model.fields,field_description:odoo_office365.field_message_wizard__write_uid
+#: model:ir.model.fields,field_description:odoo_office365.field_office_calendars__write_uid
+#: model:ir.model.fields,field_description:odoo_office365.field_office_settings__write_uid
+#: model:ir.model.fields,field_description:odoo_office365.field_office_sync__write_uid
+#: model:ir.model.fields,field_description:odoo_office365.field_office_usersettings__write_uid
+#: model:ir.model.fields,field_description:odoo_office365.field_sync_history__write_uid
+msgid "Last Updated by"
+msgstr "Dernière mise à jour par"
+
+#. module: odoo_office365
+#: model:ir.model.fields,field_description:odoo_office365.field_export_history__write_date
+#: model:ir.model.fields,field_description:odoo_office365.field_message_wizard__write_date
+#: model:ir.model.fields,field_description:odoo_office365.field_office_calendars__write_date
+#: model:ir.model.fields,field_description:odoo_office365.field_office_settings__write_date
+#: model:ir.model.fields,field_description:odoo_office365.field_office_sync__write_date
+#: model:ir.model.fields,field_description:odoo_office365.field_office_usersettings__write_date
+#: model:ir.model.fields,field_description:odoo_office365.field_sync_history__write_date
+msgid "Last Updated on"
+msgstr "Dernière mise à jour le"
+
+#. module: odoo_office365
+#: model_terms:ir.ui.view,arch_db:odoo_office365.user_token_get_form
+msgid "Login Office365"
+msgstr "Se connecter à Office365"
+
+#. module: odoo_office365
+#: model:ir.model.fields,field_description:odoo_office365.field_office_settings__login_url
+#: model:ir.model.fields,field_description:odoo_office365.field_office_usersettings__login_url
+#: model:ir.model.fields,field_description:odoo_office365.field_res_users__login_url
+msgid "Login URL"
+msgstr "URL de connection"
+
+#. module: odoo_office365
+#: model:ir.actions.act_window,name:odoo_office365.custom_message_wizard
+msgid "Lost Reason"
+msgstr "Motif de la perte"
+
+#. module: odoo_office365
+#: selection:export.history,sync_type:0 selection:sync.history,sync_type:0
+msgid "Manual"
+msgstr "Manuel"
+
+#. module: odoo_office365
+#: model:ir.model.fields,field_description:odoo_office365.field_office_sync__is_manual_execute
+msgid "Manual Execute"
+msgstr "Exécution manuel"
+
+#. module: odoo_office365
+#: model:ir.model,name:odoo_office365.model_mail_message
+#: model:ir.model.fields,field_description:odoo_office365.field_message_wizard__text
+#: model_terms:ir.ui.view,arch_db:odoo_office365.custom_message_wizard_form
+msgid "Message"
+msgstr "Message"
+
+#. module: odoo_office365
+#: model:ir.model,name:odoo_office365.model_message_wizard
+msgid "Message/Wizard"
+msgstr ""
+
+#. module: odoo_office365
+#: selection:office.sync,interval_unit:0
+msgid "Minutes"
+msgstr "Minutes"
+
+#. module: odoo_office365
+#: model:ir.model.fields,field_description:odoo_office365.field_calendar_event__modified_date
+#: model:ir.model.fields,field_description:odoo_office365.field_mail_activity__modified_date
+#: model:ir.model.fields,field_description:odoo_office365.field_res_partner__modified_date
+#: model:ir.model.fields,field_description:odoo_office365.field_res_users__modified_date
+msgid "Modified Date"
+msgstr "Modifié le"
+
+#. module: odoo_office365
+#: selection:office.sync,interval_unit:0
+msgid "Months"
+msgstr "Mois"
+
+#. module: odoo_office365
+#: model:ir.model.fields,field_description:odoo_office365.field_export_history__no_ex_contact
+#: model:ir.model.fields,field_description:odoo_office365.field_sync_history__no_im_contact
+msgid "New Contacts"
+msgstr "Nouveaux contacts"
+
+#. module: odoo_office365
+#: model:ir.model.fields,field_description:odoo_office365.field_export_history__no_ex_email
+#: model:ir.model.fields,field_description:odoo_office365.field_sync_history__no_im_email
+msgid "New Emails"
+msgstr "Nouvelles adresses mail"
+
+#. module: odoo_office365
+#: model:ir.model.fields,field_description:odoo_office365.field_export_history__no_ex_calender
+#: model:ir.model.fields,field_description:odoo_office365.field_sync_history__no_im_calender
+msgid "New Events"
+msgstr "Nouveaux évenements"
+
+#. module: odoo_office365
+#: model:ir.model.fields,field_description:odoo_office365.field_export_history__no_ex_task
+#: model:ir.model.fields,field_description:odoo_office365.field_sync_history__no_im_task
+msgid "New Tasks"
+msgstr "Nouvelles tâches"
+
+#. module: odoo_office365
+#: model_terms:ir.ui.view,arch_db:odoo_office365.office365_sync_form_view
+msgid "ODOO Office365 Connector"
+msgstr "Connecteur ODDO Office365"
+
+#. module: odoo_office365
+#: model_terms:ir.ui.view,arch_db:odoo_office365.office365_sync_form_view
+msgid "Object"
+msgstr "Objet"
+
+#. module: odoo_office365
+#: model:ir.model.fields,field_description:odoo_office365.field_office_calendars__calendar_id
+msgid "Office Calendar ID"
+msgstr "ID du calendrier Office"
+
+#. module: odoo_office365
+#: model:ir.model.fields,field_description:odoo_office365.field_calendar_event__calendar_id
+msgid "Office Calendar Id"
+msgstr "Id du calendrier Office"
+
+#. module: odoo_office365
+#: model:ir.model.fields,field_description:odoo_office365.field_mail_compose_message__office_id
+#: model:ir.model.fields,field_description:odoo_office365.field_mail_mail__office_id
+#: model:ir.model.fields,field_description:odoo_office365.field_mail_message__office_id
+msgid "Office Id"
+msgstr "Id Office"
+
+#. module: odoo_office365
+#: model_terms:ir.ui.view,arch_db:odoo_office365.office365_form_view
+msgid "Office Settings"
+msgstr "Configuration Office"
+
+#. module: odoo_office365
+#: model:ir.model,name:odoo_office365.model_office_sync
+msgid "Office/ Connector"
+msgstr "Office/Connecteur"
+
+#. module: odoo_office365
+#: model:ir.model,name:odoo_office365.model_office_usersettings
+msgid "Office/Usersttings"
+msgstr "Office/Configuration utilisateurs"
+
+#. module: odoo_office365
+#: model:ir.model.fields,field_description:odoo_office365.field_office_settings__field_name
+#: model:ir.ui.menu,name:odoo_office365.office365_sync_menu
+msgid "Office365"
+msgstr "Office365"
+
+#. module: odoo_office365
+#: model:ir.ui.menu,name:odoo_office365.main_office_menu
+msgid "Office365 "
+msgstr "Office365 "
+
+#. module: odoo_office365
+#: model:ir.model.fields,field_description:odoo_office365.field_office_sync__calendar_id
+#: model:ir.model.fields,field_description:odoo_office365.field_res_users__calendar_id
+msgid "Office365 Calendars"
+msgstr "Calendrier Office365"
+
+#. module: odoo_office365
+#: model:ir.ui.menu,name:odoo_office365.office365_menu
+msgid "Office365 Credential"
+msgstr "Identifiant Office365"
+
+#. module: odoo_office365
+#: model:ir.model.fields,field_description:odoo_office365.field_office_sync__office365_email
+#: model:ir.model.fields,field_description:odoo_office365.field_res_users__office365_email
+msgid "Office365 Email Address"
+msgstr "Adresse de messagerie Office365"
+
+#. module: odoo_office365
+#: model:ir.model.fields,field_description:odoo_office365.field_calendar_event__office_id
+#: model:ir.model.fields,field_description:odoo_office365.field_mail_activity__office_id
+#: model:ir.model.fields,field_description:odoo_office365.field_res_partner__office_contact_id
+#: model:ir.model.fields,field_description:odoo_office365.field_res_users__office_contact_id
+msgid "Office365 Id"
+msgstr "Id Office365"
+
+#. module: odoo_office365
+#: model:ir.model.fields,field_description:odoo_office365.field_office_sync__office365_id_address
+#: model:ir.model.fields,field_description:odoo_office365.field_res_users__office365_id_address
+msgid "Office365 Id Address"
+msgstr "Id de l'adresse Office365"
+
+#. module: odoo_office365
+#: code:addons/odoo_office365/models/models.py:625
+#, python-format
+msgid "Office365 SYNC ERROR"
+msgstr "Office365 Erreur SYNC"
+
+#. module: odoo_office365
+#: model:ir.actions.act_window,name:odoo_office365.office_action
+#: model_terms:ir.ui.view,arch_db:odoo_office365.office365_form_view
+#: model_terms:ir.ui.view,arch_db:odoo_office365.office365_sync_form_view
+msgid "Office365 Settings"
+msgstr "Configuration Office365"
+
+#. module: odoo_office365
+#: model:ir.model,name:odoo_office365.model_office_settings
+msgid "Office365/Credentials"
+msgstr "Office365/Identifiants"
+
+#. module: odoo_office365
+#: model:ir.model.fields,field_description:odoo_office365.field_office_usersettings__token
+msgid "Office_Token"
+msgstr "Jeton_Office"
+
+#. module: odoo_office365
+#: model_terms:ir.ui.view,arch_db:odoo_office365.custom_message_wizard_form
+msgid "Ok"
+msgstr "Ok"
+
+#. module: odoo_office365
+#: model:ir.model,name:odoo_office365.model_mail_mail
+msgid "Outgoing Mails"
+msgstr "Courriels à envoyer"
+
+#. module: odoo_office365
+#: model:ir.model.fields,field_description:odoo_office365.field_sync_history__sync_id
+msgid "Partner Reference"
+msgstr "Référence du partenaire"
+
+#. module: odoo_office365
+#: code:addons/odoo_office365/models/office354_sync.py:998
+#, python-format
+msgid "Please ! Generate Token and try Again"
+msgstr "S'il vous plaît! Générer un jeton et réessayer"
+
+#. module: odoo_office365
+#: code:addons/odoo_office365/models/models.py:50
+#, python-format
+msgid "Please Check your Credentials and try again"
+msgstr "Veuillez vérifier vos informations d’identification et réessayer"
+
+#. module: odoo_office365
+#: code:addons/odoo_office365/models/models.py:116
+#: code:addons/odoo_office365/models/models.py:493
+#: code:addons/odoo_office365/models/models.py:590
+#: code:addons/odoo_office365/models/office354_sync.py:1425
+#, python-format
+msgid "Please ask admin to add Office365 settings!"
+msgstr "Demandez à l’administrateur d’ajouter des paramètres Office365 !"
+
+#. module: odoo_office365
+#: model:ir.model.fields,field_description:odoo_office365.field_office_settings__redirect_url
+#: model:ir.model.fields,field_description:odoo_office365.field_res_users__redirect_url
+msgid "Redirect URL"
+msgstr "URL de redirection"
+
+#. module: odoo_office365
+#: model:ir.model.fields,field_description:odoo_office365.field_res_users__refresh_token
+msgid "Refresh Token"
+msgstr "Réinitialiser le jeton"
+
+#. module: odoo_office365
+#: model_terms:ir.ui.view,arch_db:odoo_office365.office365_sync_form_view
+msgid "Sales Order Lines"
+msgstr "Lignes du bon de commandes"
+
+#. module: odoo_office365
+#: model_terms:ir.ui.view,arch_db:odoo_office365.office365_form_view
+msgid "Save"
+msgstr "Sauvegarder"
+
+#. module: odoo_office365
+#: model:ir.model.fields,field_description:odoo_office365.field_office_settings__secret
+#: model:ir.model.fields,field_description:odoo_office365.field_res_users__secret
+msgid "Secret"
+msgstr "Secret"
+
+#. module: odoo_office365
+#: model:ir.model.fields,field_description:odoo_office365.field_office_sync__categories
+msgid "Select Event Category"
+msgstr "Sélectionner la catégorie d'évènement"
+
+#. module: odoo_office365
+#: model:ir.model.fields,field_description:odoo_office365.field_office_sync__send_mail_flag
+#: model:ir.model.fields,field_description:odoo_office365.field_res_users__send_mail_flag
+msgid "Send messages using office365 Mail"
+msgstr "Envoyer des messages à l’aide d’Office365 Mail"
+
+#. module: odoo_office365
+#: model_terms:ir.ui.view,arch_db:odoo_office365.office365_sync_form_view
+msgid "Start Execution"
+msgstr "Lancer la synchronisation"
+
+#. module: odoo_office365
+#: model:ir.model.fields,field_description:odoo_office365.field_export_history__status
+#: model:ir.model.fields,field_description:odoo_office365.field_sync_history__status
+msgid "Status"
+msgstr "État"
+
+#. module: odoo_office365
+#: model:ir.actions.server,name:odoo_office365.office365_cron_do_customer_mails_ir_actions_server
+#: model:ir.cron,cron_name:odoo_office365.office365_cron_do_customer_mails
+#: model:ir.cron,name:odoo_office365.office365_cron_do_customer_mails
+msgid "Sync Office365 Customers Mail"
+msgstr "Synchroniser les Mail Clients Office365"
+
+#. module: odoo_office365
+#: model:ir.model.fields,field_description:odoo_office365.field_office_sync__is_sent
+msgid "Sync Send"
+msgstr "Synchroniser l'envoi"
+
+#. module: odoo_office365
+#: model:ir.model.fields,field_description:odoo_office365.field_sync_history__sync_type
+msgid "Sync Type"
+msgstr "Type de synchronisation"
+
+#. module: odoo_office365
+#: model:ir.model.fields,field_description:odoo_office365.field_office_sync__is_inbox
+msgid "Sync inbox"
+msgstr "Boite de réception de  la synchronisation"
+
+#. module: odoo_office365
+#: model:ir.model.fields,field_description:odoo_office365.field_export_history__sync_export_id
+msgid "Sync reference"
+msgstr "Référence de la synchronisation"
+
+#. module: odoo_office365
+#: model:ir.model,name:odoo_office365.model_sync_history
+msgid "Sync/History"
+msgstr "Sync/historique"
+
+#. module: odoo_office365
+#: model:ir.model.fields,field_description:odoo_office365.field_export_history__sync_type
+msgid "Sync_type"
+msgstr "Type de synchronisation"
+
+#. module: odoo_office365
+#: model:ir.model.fields,field_description:odoo_office365.field_office_sync__task_import
+msgid "Tasks"
+msgstr "Tâches"
+
+#. module: odoo_office365
+#: model:ir.model.fields,field_description:odoo_office365.field_office_sync__interval_number
+msgid "Time Interval"
+msgstr "Intervalle de temps"
+
+#. module: odoo_office365
+#: model:ir.model.fields,field_description:odoo_office365.field_message_wizard__title
+msgid "Title"
+msgstr "Titre"
+
+#. module: odoo_office365
+#: model:ir.model.fields,field_description:odoo_office365.field_office_sync__to_date
+msgid "To Date"
+msgstr "Jusqu'à cette date"
+
+#. module: odoo_office365
+#: model:ir.model.fields,field_description:odoo_office365.field_res_users__token
+msgid "Token"
+msgstr "Jeton"
+
+#. module: odoo_office365
+#: model:ir.model.fields,field_description:odoo_office365.field_export_history__no_up_contact
+#: model:ir.model.fields,field_description:odoo_office365.field_sync_history__no_up_contact
+msgid "Updated Contacts"
+msgstr "Contacts modifiés"
+
+#. module: odoo_office365
+#: model:ir.model.fields,field_description:odoo_office365.field_export_history__no_up_calender
+#: model:ir.model.fields,field_description:odoo_office365.field_sync_history__no_up_calender
+msgid "Updated Events"
+msgstr "Evènements modifiés"
+
+#. module: odoo_office365
+#: model:ir.model.fields,field_description:odoo_office365.field_export_history__no_up_task
+#: model:ir.model.fields,field_description:odoo_office365.field_sync_history__no_up_task
+msgid "Updated Tasks"
+msgstr "Tâches modifiées"
+
+#. module: odoo_office365
+#: model:ir.model.fields,field_description:odoo_office365.field_office_calendars__res_user
+#: model:ir.model.fields,field_description:odoo_office365.field_office_sync__res_user
+msgid "User"
+msgstr "Utilisateur"
+
+#. module: odoo_office365
+#: model:ir.model,name:odoo_office365.model_res_users
+msgid "Users"
+msgstr "Utilisateurs"
+
+#. module: odoo_office365
+#: selection:office.sync,interval_unit:0
+msgid "Weeks"
+msgstr "Semaines"
+
+#. module: odoo_office365
+#: selection:office.sync,interval_unit:0
+msgid "Work Days"
+msgstr "Jours travaillés"
+
+#. module: odoo_office365
+#: code:addons/odoo_office365/models/models.py:50
+#, python-format
+msgid "Wrong Credentials!"
+msgstr "Mauvais identifiants!"
+
+#. module: odoo_office365
+#: model:ir.model.fields,field_description:odoo_office365.field_office_sync__code
+#: model:ir.model.fields,field_description:odoo_office365.field_office_usersettings__code
+#: model:ir.model.fields,field_description:odoo_office365.field_res_users__code
+msgid "code"
+msgstr "code"
+
+#. module: odoo_office365
+#: code:addons/odoo_office365/models/office354_sync.py:1088
+#: code:addons/odoo_office365/models/office354_sync.py:1618
+#, python-format
+msgid "error"
+msgstr "erreur"
+
+#. module: odoo_office365
+#: code:addons/odoo_office365/models/models.py:507
+#: code:addons/odoo_office365/models/office354_sync.py:1440
+#, python-format
+msgid "error error_description"
+msgstr "erreur"
+
+#. module: odoo_office365
+#: model:ir.model.fields,field_description:odoo_office365.field_res_users__is_task_sync_on
+msgid "is sync in progress"
+msgstr "synchronisation en cours"
+
+#. module: odoo_office365
+#: model:ir.model.fields,field_description:odoo_office365.field_calendar_event_type__categ_id
+msgid "o_category id"
+msgstr "o_category id"
+
+#. module: odoo_office365
+#: model:ir.model.fields,field_description:odoo_office365.field_office_usersettings__field_name
+msgid "office"
+msgstr "office"
+
+#. module: odoo_office365
+#: model:ir.model.fields,field_description:odoo_office365.field_office_sync__field_name
+msgid "office365"
+msgstr "office365"
+
+#. module: odoo_office365
+#: model:ir.actions.act_window,name:odoo_office365.sync_office_action
+msgid "office365 Sync Mail and Contact"
+msgstr "synchronisation des Mails et Contacts Office365"
+
+#. module: odoo_office365
+#: model:ir.model,name:odoo_office365.model_office_calendars
+msgid "office365/Calendars"
+msgstr "office365/Calendriers"

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+    <record id="edit_project_form_view" model="ir.ui.view">
+        <field name="name">edit.project.form</field>
+        <field name="model">project.project</field>
+        <field name="inherit_id" ref="project.edit_project"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook" position="before">
+                <group>
+	                <group>
+                       <field name="team_id"/>
+                       <field name="income"/>
+                       <field name="expenses"/>
+                       <field name="ca_ordered"/>
+                       <field name="result"/>
+	                </group>
+	                <group>
+	                   <field name="business_manager_user_id"/>
+                       <field name="annual_income"/>
+                       <field name="annual_expenses"/>
+                       <field name="ca_real"/>
+                       <field name="simus_code"/>
+	                </group>
+                </group>
+            </xpath>
+            <xpath expr="//notebook/page[1]" position="after">
+                <page name="description" string="Description">
+                    <field name="description"/>
+                </page>
+            </xpath>
+        </field>
+    </record>
+    </data>
+</odoo>

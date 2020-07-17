@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Copyright 2020 Auguria
+    License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
+-->
+<odoo>
+    <record id="view_company_simus" model="ir.ui.view">
+        <field name="name">res.company.form.simus.inherit</field>
+        <field name="model">res.company</field>
+        <field name="inherit_id" ref="base.view_company_form"/>
+        <field name="arch" type="xml">
+            <notebook position="inside">
+            <page name="simus_ftp" string="SIMUS FTP">
+                <page>
+                    <group>
+                        <field name="url"/>
+                        <field name="login"/>
+                        <field name="password"/>
+                        <field name="path_pull"/>
+                        <field name="ressource_file"/>
+                    </group>
+                </page>
+             </notebook>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+    <record id="crm_case_job_form_view" model="ir.ui.view">
+        <field name="name">crm.case.job.form</field>
+        <field name="model">hr.applicant</field>
+        <field name="inherit_id" ref="hr_recruitment.crm_case_form_view_job"/>
+        <field name="arch" type="xml">
+            
+            <field name="partner_id" position="before">
+                <field name="in_position"/>
+                <field name="gender"/>
+            </field>
+            <field name="type_id" position="after">
+                <field name="experience_level"/>
+                <field name="identified_task_ids" widget="many2many_tags"/>
+            </field>
+            <field name="availability" position="before">
+                <label for="current_salary"/>
+                <div>
+                    <field name="current_salary" class="oe_inline"/>
+                </div>
+                <field name="contract_type_id"/>
+            </field>
+            <field name="reference" position="after">
+                <field name="country_mobility"/>
+                <field name="region_mobility"/>
+                <field name="status"/>
+                <field name="birthday"/>
+            </field>
+            <field name="company_id" position="before">
+                <field name="team_id"/>
+            </field>
+            <field name="company_id" position="after">
+                <field name="careerbuilder_code"/>
+            </field>
+        </field>
+    </record>
+
+    </data>
+</odoo>

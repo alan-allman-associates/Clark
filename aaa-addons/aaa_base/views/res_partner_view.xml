@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+    <record id="view_partner_form" model="ir.ui.view">
+        <field name="name">partner.form</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <field name="function" position="before">
+                <field name="gender"/>
+                <field name="birthday"/>
+                <field name="mobility"/>
+                <field name="is_office" attrs="{'invisible': [('company_type','!=','company')]}"/>
+                <field name="is_business_manager"/>
+            </field>
+            <field name="vat" position="after">
+                <field name="linkedin_link" widget="url"/>
+                <field name="viadeo_link" widget="url"/>
+                <field name="simus_code"/>
+                <field name="is_cloned"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="view_partner_clones_form" model="ir.ui.view">
+        <field name="name">partner.clones.form</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="account.view_partner_property_form"/>
+        <field name="arch" type="xml">
+            <page name="accounting" position="after">
+                <page string="Clones" name="clones">
+                    <field name="partner_clone_ids">
+                        <tree>
+                            <field name="company_name"/>
+                            <field name="user_name"/>
+                        </tree>
+                    </field>
+                </page>
+            </page>
+        </field>
+    </record>
+
+    </data>
+</odoo>

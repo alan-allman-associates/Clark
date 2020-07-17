@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="res_config_settings_view_form" model="ir.ui.view">
+            <field name="name">res.config.settings.form</field>
+            <field name="model">res.config.settings</field>
+            <field name="priority" eval="100"/>
+            <field name="inherit_id" ref="base.res_config_settings_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//div[@id='business_documents']" position="before">
+	            
+		            <div id="aaa_configuration">
+		                <h2>AAA configuration</h2>
+		                <div class="row mt16 o_settings_container">
+		                    <!-- <div class="col-12 col-lg-6 o_setting_box">
+		                        <div class="o_setting_right_pane">
+		                            <span class="o_form_label">Careerbuilder configuration</span>
+		                            <div class="content-group">
+		                                <div class="mt16 row">
+		                                    <label for="careerbuilder_site_url" class="col-3 col-lg-3 o_light_label"/>
+		                                    <field name="careerbuilder_site_url" class="oe_inline"/>
+		                                </div>
+	                                    <div class="mt16 row">
+	                                        <label for="careerbuilder_api_url" class="col-3 col-lg-3 o_light_label"/>
+	                                        <field name="careerbuilder_api_url" class="oe_inline"/>
+	                                    </div>
+	                                    <div class="mt16 row">
+	                                        <label for="careerbuilder_api_user" class="col-3 col-lg-3 o_light_label"/>
+	                                        <field name="careerbuilder_api_user" class="oe_inline"/>
+	                                    </div>
+	                                    <div class="mt16 row">
+	                                        <label for="careerbuilder_api_password" class="col-3 col-lg-3 o_light_label"/>
+	                                        <field name="careerbuilder_api_password" class="oe_inline"/>
+	                                    </div>
+		                            </div>
+		                        </div>
+		                    </div>
+		                    <div class="col-12 col-lg-6 o_setting_box">
+		                        <div class="o_setting_right_pane">
+		                            <span class="o_form_label">Simus configuration</span>
+		                            <div class="content-group">
+		                                <div class="mt16">
+		                                    <label for="simus_url_api" class="col-3 col-lg-3 o_light_label"/>
+		                                    <field name="simus_url_api" class="oe_inline"/>
+		                                </div>
+	                                    <div class="mt16">
+	                                        <label for="simus_url_apikey" class="col-3 col-lg-3 o_light_label"/>
+	                                        <field name="simus_url_apikey" class="oe_inline"/>
+	                                    </div>
+		                            </div>
+		                        </div>
+		                    </div>
+	                        <div class="col-12 col-lg-6 o_setting_box">
+	                            <div class="o_setting_right_pane">
+	                                <span class="o_form_label">Mantis configuration</span>
+	                                <div class="content-group">
+	                                    <div class="mt16 row">
+	                                        <label for="mantis_user" class="col-3 col-lg-3 o_light_label"/>
+	                                        <field name="mantis_user" class="oe_inline"/>
+	                                    </div>
+	                                    <div class="mt16 row">
+	                                        <label for="mantis_password" class="col-3 col-lg-3 o_light_label"/>
+	                                        <field name="mantis_password" class="oe_inline"/>
+	                                    </div>
+	                                    <div class="mt16 row">
+	                                        <label for="mantis_url" class="col-3 col-lg-3 o_light_label"/>
+	                                        <field name="mantis_url" class="oe_inline"/>
+	                                    </div>
+	                                    <div class="mt16 row">
+	                                        <label for="mantis_project_code" class="col-3 col-lg-3 o_light_label"/>
+	                                        <field name="mantis_project_code" class="oe_inline"/>
+	                                    </div>
+	                                </div>
+	                            </div>
+	                        </div> -->
+	                        <div class="col-12 col-lg-6 o_setting_box">
+	                            <div class="o_setting_right_pane">
+	                                <span class="o_form_label">Company configuration</span>
+	                                <span class="fa fa-lg fa-building-o" title="Values set here are company-specific." aria-label="Values set here are company-specific."
+	                                      groups="base.group_multi_company" role="img"/>
+	                                <div class="content-group">
+	                                    <div class="mt16">
+	                                        <label for="billable_days" class="col-3 col-lg-3 o_light_label"/>
+	                                        <field name="billable_days" class="oe_inline" required="1"/>
+	                                    </div>
+	                                    <div class="mt16">
+	                                        <label for="coefficient_k2" class="col-3 col-lg-3 o_light_label"/>
+	                                        <field name="coefficient_k2" class="oe_inline" required="1"/>
+	                                    </div>
+	                                    <div class="mt16">
+	                                        <label for="month" class="col-3 col-lg-3 o_light_label"/>
+	                                        <field name="month" class="oe_inline" required="1"/>
+	                                    </div>
+	                                </div>
+	                            </div>
+	                        </div>
+		                </div>
+	                </div>
+            </xpath>
+        </field>
+    </record>
+
+    </data>
+</odoo>

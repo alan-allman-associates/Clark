@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+    <record id="view_employee_form" model="ir.ui.view">
+        <field name="name">employee.form</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_form"/>
+        <field name="arch" type="xml">
+            <field name="user_id" position="after">
+                <field name="last_interview"/>
+                <field name="is_business_manager" invisible="True"/>
+            </field>
+            <field name="department_id" position="before">
+                <field name="is_departure_probability"/>
+            </field>
+            <xpath expr="//page[@name='hr_settings']" position="after">
+                <page name="aaa_settings" string="General configuration">
+                    <group>
+                        <group>
+                            <field name="careerbuilder_code"/>
+                            <field name="careerbuilder_user_code"/>
+                        </group>
+                        <group>
+                            <field name="simus_code"/>
+                            <field name="simus_manager_code"/>
+                        </group>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="hr_employee_view_form_inherit_timesheet" model="ir.ui.view">
+        <field name="name">employee.form</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr_timesheet.hr_employee_view_form_inherit_timesheet"/>
+        <field name="arch" type="xml">
+            <label for="timesheet_cost" position="before">
+                <field name="cost_k2"/>
+                <field name="contract_ids" invisible="True"/>
+                <field name="annual_target_k2"/>
+                <label for="daily_fee"/>
+                <div>
+                    <field name="daily_fee" class="oe_inline"/> per day
+                </div>
+            </label>
+        </field>
+    </record>
+
+        <!-- <record id="view_employee_form_leave_inherit" model="ir.ui.view">
+            <field name="name">employee.form</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr_holidays.view_employee_form_leave_inherit"/>
+            <field name="arch" type="xml">
+                <xpath expr="//label[@for='remaining_leaves']" position="before">
+                    <label for="leaves_previous_year"/>
+                    <div>
+                        <field name="leaves_previous_year" class="oe_inline"/> days
+                    </div>
+                    <label for="leaves_current_year"/>
+                    <div>
+                        <field name="leaves_current_year" class="oe_inline"/> days
+                    </div>
+                    <label for="leaves_employer"/>
+                    <div>
+                        <field name="leaves_employer" class="oe_inline"/> days
+                    </div>
+                    <label for="leaves_employee"/>
+                    <div>
+                        <field name="leaves_employee" class="oe_inline"/> days
+                    </div>
+                </xpath>
+            </field>
+        </record> -->
+
+    </data>
+</odoo>

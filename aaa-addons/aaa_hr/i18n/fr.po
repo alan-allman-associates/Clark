@@ -1,0 +1,143 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* aaa_hr
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 12.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-11-29 16:05+0000\n"
+"PO-Revision-Date: 2019-11-29 16:05+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: aaa_hr
+#: model:ir.model.fields,field_description:aaa_hr.field_hr_employee__child_filter_ids
+msgid "Subordinates"
+msgstr "Subordonnés"
+
+#. module: aaa_hr
+#: model:ir.model.fields,field_description:aaa_hr.field_hr_employee__annual_target_k2
+msgid "Annual target K2"
+msgstr "Objectif K2 annuel"
+
+#. module: aaa_hr
+#: model:ir.model.fields,field_description:aaa_hr.field_hr_employee__daily_fee
+msgid "Average daily fee"
+msgstr "Honoraire journalier moyen "
+
+#. module: aaa_hr
+#: model:ir.model.fields,field_description:aaa_hr.field_hr_employee__careerbuilder_code
+msgid "Careerbuilder Id"
+msgstr "Identifiant Careerbuilder"
+
+#. module: aaa_hr
+#: model:ir.model.fields,field_description:aaa_hr.field_hr_employee__careerbuilder_user_code
+msgid "Careerbuilder user id"
+msgstr "Identifiant utulisateur Careerbuilder"
+
+#. module: aaa_hr
+#: model:ir.model.fields,field_description:aaa_hr.field_hr_employee__is_departure_probability
+msgid "Departure probability"
+msgstr "Probabilité de sortie"
+
+#. module: aaa_hr
+#: model:ir.model,name:aaa_hr.model_hr_employee
+msgid "Employee"
+msgstr "Employé"
+
+#. module: aaa_hr
+#: selection:hr.employee,time_job:0
+msgid "Full time"
+msgstr "Temps plein"
+
+#. module: aaa_hr
+#: model_terms:ir.ui.view,arch_db:aaa_hr.view_employee_form
+msgid "General configuration"
+msgstr "Configuration générale"
+
+#. module: aaa_hr
+#: model:ir.model.fields,field_description:aaa_hr.field_hr_employee__is_business_manager
+msgid "Is business manager"
+msgstr "Est un business manager"
+
+#. module: aaa_hr
+#: model:ir.model.fields,field_description:aaa_hr.field_hr_employee__cost_k2
+msgid "K2 cost"
+msgstr "Coût K2"
+
+#. module: aaa_hr
+#: model:ir.model.fields,field_description:aaa_hr.field_hr_employee__last_interview
+msgid "Last interview"
+msgstr "Dernier entretien"
+
+#. module: aaa_hr
+#: model:ir.model.fields,field_description:aaa_hr.field_hr_employee__leaves_employee
+msgid "Other Vacation employee"
+msgstr "Autres Congés employés"
+
+#. module: aaa_hr
+#: model:ir.model.fields,field_description:aaa_hr.field_hr_employee__leaves_employer
+msgid "Other Vacation employer"
+msgstr "Autres congés employeur"
+
+#. module: aaa_hr
+#: selection:hr.employee,time_job:0
+msgid "Part time"
+msgstr "Temps partiel"
+
+#. module: aaa_hr
+#: model:ir.model.fields,field_description:aaa_hr.field_hr_employee__remaining_leaves
+msgid "Remaining Legal Leaves"
+msgstr "Jours de congés restants"
+
+#. module: aaa_hr
+#: model:ir.model.fields,field_description:aaa_hr.field_hr_employee__simus_manager_code
+msgid "Simus Manager ID"
+msgstr "Identifiant Manager Simus"
+
+#. module: aaa_hr
+#: model:ir.model.fields,field_description:aaa_hr.field_hr_employee__simus_code
+msgid "Simus code"
+msgstr "Code simus"
+
+#. module: aaa_hr
+#: model:ir.model.fields,field_description:aaa_hr.field_hr_employee__time_job
+msgid "Time job"
+msgstr "Temps de travail"
+
+#. module: aaa_hr
+#: model:ir.model.fields,help:aaa_hr.field_hr_employee__remaining_leaves
+msgid "Total number of legal leaves allocated to this employee, change this value to create allocation/leave request. Total based on all the leave types without overriding limit."
+msgstr "Le nombre total de congés attribués à cet employé, pour modifier cette valeur créer une demande d'attribution de congés. Le total se base sur l'ensemble des types de congé sans limite."
+
+#. module: aaa_hr
+#: model:ir.model.fields,field_description:aaa_hr.field_hr_employee__leaves_current_year
+msgid "Vacation current year"
+msgstr "Congés année courante"
+
+#. module: aaa_hr
+#: model:ir.model.fields,field_description:aaa_hr.field_hr_employee__leaves_previous_year
+msgid "Vacation previous year"
+msgstr "Congés année précédente"
+
+#. module: aaa_hr
+#: code:addons/aaa_hr/models/hr.py:75
+#, python-format
+msgid "You can not change value of the company"
+msgstr "Vous ne pouvez pas changer la valeur de la société"
+
+#. module: aaa_hr
+#: model_terms:ir.ui.view,arch_db:aaa_hr.view_employee_form_leave_inherit
+msgid "days"
+msgstr "jours"
+
+#. module: aaa_hr
+#: model_terms:ir.ui.view,arch_db:aaa_hr.hr_employee_view_form_inherit_timesheet
+msgid "per day"
+msgstr "par jour"
+

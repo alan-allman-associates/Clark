@@ -1,0 +1,144 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* aaa_employee_firstname
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 12.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-02-25 21:34+0000\n"
+"PO-Revision-Date: 2020-02-25 21:34+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: aaa_employee_firstname
+#: code:addons/aaa_employee_firstname/models/res_users.py:65
+#: code:addons/aaa_employee_firstname/models/res_users.py:67
+#, python-format
+msgid "%s (copy)"
+msgstr "%s (copie)"
+
+#. module: aaa_employee_firstname
+#: model:ir.model,name:aaa_employee_firstname.model_res_config_settings
+msgid "Config Settings"
+msgstr "Paramètres de config"
+
+#. module: aaa_employee_firstname
+#: model:ir.model,name:aaa_employee_firstname.model_res_partner
+msgid "Contact"
+msgstr "Contact"
+
+#. module: aaa_employee_firstname
+#: sql_constraint:res.partner:0
+msgid "Contacts require a name."
+msgstr "Le nom est requis sur un contact."
+
+#. module: aaa_employee_firstname
+#: model:ir.model,name:aaa_employee_firstname.model_hr_employee
+msgid "Employee"
+msgstr "Employé"
+
+#. module: aaa_employee_firstname
+#: sql_constraint:hr.employee:0
+msgid "Employee requires a name."
+msgstr "un employé doit avoir un nom"
+
+#. module: aaa_employee_firstname
+#: code:addons/aaa_employee_firstname/exceptions.py:10
+#, python-format
+msgid "Error(s) with record %s, please set a lastname or firstname."
+msgstr "Erreur(s) avec l'enregistrement %s, veuillez renseigner un nom ou un prénom."
+
+#. module: aaa_employee_firstname
+#: model:ir.model.fields,field_description:aaa_employee_firstname.field_hr_employee__firstname
+#: model:ir.model.fields,field_description:aaa_employee_firstname.field_resource_resource__firstname
+#: model:ir.model.fields,field_description:aaa_employee_firstname.field_res_partner__firstname
+#: model:ir.model.fields,field_description:aaa_employee_firstname.field_res_users__firstname
+#: model_terms:ir.ui.view,arch_db:aaa_employee_firstname.view_partner_form
+#: model_terms:ir.ui.view,arch_db:aaa_employee_firstname.view_partner_simple_form
+#: model_terms:ir.ui.view,arch_db:aaa_employee_firstname.view_users_form
+msgid "First name"
+msgstr "Prénom"
+
+#. module: aaa_employee_firstname
+#: model:ir.model.fields,field_description:aaa_employee_firstname.field_hr_employee__lastname
+#: model:ir.model.fields,field_description:aaa_employee_firstname.field_res_partner__lastname
+#: model:ir.model.fields,field_description:aaa_employee_firstname.field_res_users__lastname
+#: model:ir.model.fields,field_description:aaa_employee_firstname.field_resource_resource__lastname
+#: model_terms:ir.ui.view,arch_db:aaa_employee_firstname.view_partner_form
+#: model_terms:ir.ui.view,arch_db:aaa_employee_firstname.view_partner_simple_form
+#: model_terms:ir.ui.view,arch_db:aaa_employee_firstname.view_users_form
+msgid "Last name"
+msgstr "Nom"
+
+#. module: aaa_employee_firstname
+#: model:ir.model.fields,field_description:aaa_employee_firstname.field_hr_employee__name
+#: model:ir.model.fields,field_description:aaa_employee_firstname.field_res_partner__name
+#: model:ir.model.fields,field_description:aaa_employee_firstname.field_res_users__name
+#: model:ir.model.fields,field_description:aaa_employee_firstname.field_resource_resource__name
+msgid "Name"
+msgstr "Nom"
+
+#. module: aaa_employee_firstname
+#: model:ir.model.fields,field_description:aaa_employee_firstname.field_hr_employee__is_modify_name
+#: model:ir.model.fields,field_description:aaa_employee_firstname.field_res_partner__is_modify_name
+#: model:ir.model.fields,field_description:aaa_employee_firstname.field_res_users__is_modify_name
+#: model:ir.model.fields,field_description:aaa_employee_firstname.field_resource_resource__is_modify_name
+msgid "Name modified"
+msgstr ""
+
+#. module: aaa_employee_firstname
+#: code:addons/aaa_employee_firstname/exceptions.py:7
+#, python-format
+msgid "No name is set."
+msgstr "Aucun nom renseigné"
+
+#. module: aaa_employee_firstname
+#: model:ir.model.fields,help:aaa_employee_firstname.field_res_config_settings__partner_names_order
+msgid "Order to compose partner fullname"
+msgstr "Ordre de la composition du nom complet"
+
+#. module: aaa_employee_firstname
+#: model_terms:ir.ui.view,arch_db:aaa_employee_firstname.view_general_configuration
+msgid "Partner Names Order"
+msgstr "Ordre des noms des partenaires"
+
+#. module: aaa_employee_firstname
+#: model:ir.model.fields,field_description:aaa_employee_firstname.field_res_config_settings__partner_names_order_changed
+msgid "Partner Names Order Changed"
+msgstr "Ordre des noms et prénoms des partenaires modifié"
+
+#. module: aaa_employee_firstname
+#: model:ir.model.fields,field_description:aaa_employee_firstname.field_res_config_settings__partner_names_order
+msgid "Partner names order"
+msgstr "Ordre des noms et prénoms des partenaires"
+
+#. module: aaa_employee_firstname
+#: model_terms:ir.ui.view,arch_db:aaa_employee_firstname.view_general_configuration
+msgid "Recalculate names"
+msgstr "Recalculer les noms et prénoms"
+
+#. module: aaa_employee_firstname
+#: model_terms:ir.ui.view,arch_db:aaa_employee_firstname.view_general_configuration
+msgid "Recalculate names for all partners. This process could take so much time if there are more than 10,000 active partners"
+msgstr "Calcul des noms et prénoms de tous les partenaires. Ce traitement peut prendre plusieurs minutes, voir plus si le nombre de partenaires actifs dépasse les 10000"
+
+#. module: aaa_employee_firstname
+#: sql_constraint:resource.resource:0
+msgid "Resource requires a name."
+msgstr "Une ressource doit avoir un nom renseigné"
+
+#. module: aaa_employee_firstname
+#: model:ir.model,name:aaa_employee_firstname.model_resource_resource
+msgid "Resources"
+msgstr "Ressources"
+
+#. module: aaa_employee_firstname
+#: model:ir.model,name:aaa_employee_firstname.model_res_users
+msgid "Users"
+msgstr "Utilisateurs"
+

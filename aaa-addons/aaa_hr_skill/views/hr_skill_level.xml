@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<record id="view_skill_level_form" model="ir.ui.view">
+        <field name="name">hr.skill.level.form</field>
+        <field name="model">hr.skill.level</field>
+        <field name="arch" type="xml">
+            <form string="Niveau">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="niveau"/>
+                            <field name="name"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    
+    
+    <!-- Menu and Actions -->
+
+    <record id="acion_menu_competences" model="ir.actions.act_window">
+        <field name="name">Niveaux de compétences</field>
+        <field name="res_model">hr.skill.level</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="menu_competences" name="Compétences"
+              parent="contacts.res_partner_menu_config"
+              sequence="4"/>
+              
+    <menuitem id="menu_skill_level"
+        action="acion_menu_competences"
+        name="Niveaux de compétences" parent="aaa_hr_skill.menu_competences"
+        sequence="3"/>
+</odoo>

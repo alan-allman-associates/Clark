@@ -1,0 +1,2 @@
+id,name,model_id/id,group_id/id,perm_read,perm_write,perm_create,perm_unlink
+access_manager_ftp,access.manager.ftp,model_res_ftp,base.group_user,1,1,1,1

@@ -1,0 +1,66 @@
+<?xml version="1.0"?>
+<odoo>
+    <data>
+
+    <record id="crm_axes_form_view" model="ir.ui.view">
+        <field name="name">crm.axes.form.</field>
+        <field name="model">crm.axes</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                <group>
+                    <group>
+                        <field name="name"/>
+                        <field name="axe_type"/>
+                    </group>
+                    <group>
+                    </group>
+                </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="crm_axes_tree_view" model="ir.ui.view">
+        <field name="name">crm.axes.tree.</field>
+        <field name="model">crm.axes</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="axe_type"/>
+            </tree>
+        </field>
+    </record>
+
+
+       <record id="action_crm_axe" model="ir.actions.act_window">
+           <field name="name">CRM axes</field>
+           <field name="res_model">crm.axes</field>
+           <field name="view_mode">tree,form</field>
+       </record>
+
+        <menuitem id="crm_axe_menu_config"
+            name="Axes"
+            parent="crm.crm_menu_config"
+            action="action_crm_axe"
+            sequence="10"/>
+
+    <record id="crm_case_form_view_oppor" model="ir.ui.view">
+        <field name="name">crm.lead.form.opportunity</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.crm_case_form_view_oppor"/>
+        <field name="arch" type="xml">
+            <field name="user_id" position="before">
+                <field name="end_answer">
+                <field name="axe1" widget="selection" required="True" domain="[('axe_type','=','axe1')]"/>
+                <field name="axe2" widget="selection" required="True" domain="[('axe_type','=','axe2')]"/>
+            </field>
+            <field name="priority" position="before">
+                <field name="axe3" widget="selection" required="True" domain="[('axe_type','=','axe3')]"/>
+                <field name="axe4" widget="selection" required="True" domain="[('axe_type','=','axe4')]"/>
+            </field>
+        </field>
+    </record>
+
+    </data>
+</odoo>

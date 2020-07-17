@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<odoo>
+    <data noupdate="1">
+
+        <record id="alarm_notif_aaa" model="calendar.alarm">
+            <field name="name">At time</field>
+            <field name="duration" eval="0" />
+            <field name="interval">minutes</field>
+            <field name="type">notification</field>
+        </record>
+
+    </data>
+</odoo>

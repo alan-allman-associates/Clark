@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <record model="ir.config_parameter" id="careerbuilder_site_url" forcecreate="True">
+            <field name="key">aaa_base.careerbuilder_site_url</field>
+            <field name="value">0</field>
+        </record>
+
+        <record model="ir.config_parameter" id="careerbuilder_api_url" forcecreate="True">
+            <field name="key">aaa_base.careerbuilder_api_url</field>
+            <field name="value">0</field>
+        </record>
+
+        <record model="ir.config_parameter" id="careerbuilder_api_user" forcecreate="True">
+            <field name="key">aaa_base.careerbuilder_api_user</field>
+            <field name="value">0</field>
+        </record>
+
+        <record model="ir.config_parameter" id="careerbuilder_api_password" forcecreate="True">
+            <field name="key">aaa_base.careerbuilder_api_password</field>
+            <field name="value">0</field>
+        </record>
+
+        <record model="ir.config_parameter" id="simus_url_api" forcecreate="True">
+            <field name="key">aaa_base.simus_url_api</field>
+            <field name="value">0</field>
+        </record>
+
+        <record model="ir.config_parameter" id="simus_url_apikey" forcecreate="True">
+            <field name="key">aaa_base.simus_url_apikey</field>
+            <field name="value">0</field>
+        </record>
+
+        <record model="ir.config_parameter" id="mantis_user" forcecreate="True">
+            <field name="key">aaa_base.mantis_user</field>
+            <field name="value">0</field>
+        </record>
+
+        <record model="ir.config_parameter" id="mantis_password" forcecreate="True">
+            <field name="key">aaa_base.mantis_password</field>
+            <field name="value">0</field>
+        </record>
+
+        <record model="ir.config_parameter" id="mantis_url" forcecreate="True">
+            <field name="key">aaa_base.mantis_url</field>
+            <field name="value">0</field>
+        </record>
+
+        <record model="ir.config_parameter" id="mantis_project_code" forcecreate="True">
+            <field name="key">aaa_base.mantis_project_code</field>
+            <field name="value">0</field>
+        </record>
+
+    </data>
+</odoo>

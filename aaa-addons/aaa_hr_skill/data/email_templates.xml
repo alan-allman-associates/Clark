@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data >
+		<!--Email alerte marge trop faible sur le devis -->
+		 <record id="mail_alerte_margin_devis" model="mail.template">
+			<field name="name">Mail margin inférieure à la cible</field>
+			<field name="email_from">${object.company_id.email}</field>
+			<field name="subject">Alerte sur devis : ${object.name} (marge insuffisante)</field>
+			<field name="model_id" ref="model_sale_order"/>
+			<field name="auto_delete" eval="True"/>
+			<field name="body_html">
+				<![CDATA[          
+					<p>Attention !</p>
+
+					<p>Le devis ${object.name} a été enregistré avec une marge de ${format_amount(object.margin, object.pricelist_id.currency_id)}. La marge cible de l'équipe de vente ${object.team_id.name} est de ${object.team_id.percent_marge_cible_team} %, soit ${format_amount(object.marge_k2_cible, object.pricelist_id.currency_id)}.</p>
+				]]>
+			</field>
+		</record>
+	</data>
+</odoo>

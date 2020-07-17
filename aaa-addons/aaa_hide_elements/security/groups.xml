@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<odoo>
+    <data>
+
+        <record model="res.groups" id="group_hide_elements">
+            <field name="name">Hide elements</field>
+        </record>
+
+    </data>
+</odoo>

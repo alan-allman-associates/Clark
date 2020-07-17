@@ -1,0 +1,6 @@
+"id","name","model_id:id","group_id:id","perm_read","perm_write","perm_create","perm_unlink"
+"access_hr_skill_all","hr.skill.all","model_hr_skill","base.group_user",1,1,1,1,
+"access_partner_skill_all","hr.skill.partner.all","model_hr_skill_partner","base.group_user",1,1,1,1
+"access_search_skill_all","hr.skill.search.all","model_hr_skill_search","base.group_user",1,1,1,1
+"access_skill_level_all","hr.skill.level.all","model_hr_skill_level","base.group_user",1,1,1,1
+

@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<odoo>
+    <data noupdate="1">
+
+        <record id="res_ftp_values" model="res.ftp" forcecreate="True">
+            <field name="name">FTP SIMUS</field>
+            <field name="url">files.aaa-clark.com</field>
+            <field name="login">simus</field>
+            <field name="password">test</field>
+            <field name="file_name">/home/odoo/src/user/aaa-addons/simus/test_ressources.csv</field>
+            <field name="file_source">CLARK_export_ressources.csv</field>
+            <field name="file_name_sec">/home/odoo/src/user/aaa-addons/simus/CLARK_export_affectation_consultant_mission.csv</field>
+            <field name="file_source_sec">CLARK_export_affectation_consultant_mission.csv</field>
+        </record>
+
+    </data>
+</odoo>

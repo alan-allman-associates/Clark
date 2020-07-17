@@ -1,0 +1,51 @@
+<odoo>
+    <data>
+    <record model="ir.ui.view" id="speed_form_view">
+            <field name="name">speed.form</field>
+            <field name="model">speed</field>
+            <field name="arch" type="xml">
+                <form string="Speed data">
+                    <sheet>
+                        <group>
+                            <group>
+                                <h1>Speed data</h1>
+                            </group>
+                        </group>
+                        <group>
+                            <group>
+                                <field name="user_id"/>
+                                <field name="partner_id" />
+                                <field name="year"/>
+                                <field name="month" />
+                                <field name="week"/>
+                                <field name="speed_week" />
+                                <field name="event_ids" widget="many2many_tags"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+       <record id="speed_tree_view" model="ir.ui.view">
+        <field name="name">speed.tree</field>
+        <field name="model">speed</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="partner_id"/>
+                <field name="team_id"/>
+                <field name="year"/>
+                <field name="month"/>
+                <field name="week"/>
+                <field name="speed_week"/>
+            </tree>
+        </field>
+    </record>
+     <record id="action_speed" model="ir.actions.act_window">
+           <field name="name">speed.action</field>
+           <field name="res_model">speed</field>
+           <field name="view_mode">tree,form</field>
+       </record>
+        <menuitem id="main_speed_menu" name="Speed history" groups="base.group_user" action="aaa_speed.action_speed" parent="contacts.menu_contacts"/>
+    </data>
+</odoo>
+    

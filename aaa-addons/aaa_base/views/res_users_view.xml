@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+    <record id="view_users_form" model="ir.ui.view">
+        <field name="name">users.form</field>
+        <field name="model">res.users</field>
+        <field name="inherit_id" ref="base.view_users_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook/page[2]" position="after">
+                <page string="General Configuration">
+                    <group>
+                        <group>
+                           <field name="outlook_ident"/>
+                           <field name="outlook_password"/>
+                           <field name="outlook_token"/>
+                           <field name="outlook_server"/>
+                           <field name="synchronization_outlook_mail"/>
+                           <field name="synchronization_outlook_calendar"/>
+                        </group>
+                        <group>
+                           <field name="career_builder_trigram"/>
+                           <field name="rank"/>
+                           <field name="annual_target_k2"/>
+                           <field name="level"/>
+                           <field name="is_buddy"/>
+                           <field name="is_refresh_token"/>
+                        </group>
+                    </group>
+                    <newline/>
+                    <group>
+                        <field name="concerning"/>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+    </data>
+</odoo>

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<record id="view_crm_skill_form" model="ir.ui.view">
+        <field name="name">aaa.crm.skill.form</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.crm_case_form_view_oppor"/>
+        <field name="arch" type="xml">
+         	<xpath expr="//field[@name='tag_ids']" position="after">
+         		<field name="ressources_identifiees" widget="many2many_tags" domain="[('consultant', '=', True)]"/>
+         		<field name="ressources_envoyees" widget="many2many_tags" domain="[('consultant', '=', True)]"/>
+         		<field name="ressources_non_retenues" widget="many2many_tags" domain="[('consultant', '=', True)]"/>
+         	</xpath>
+         	
+         	<xpath expr="//field[@name='team_id']" position="after">
+         		<field name="order_line_ids">
+         			<tree editable="bottom">
+                        <field name="order_name" string="N°"/>
+                        <field name="price_unit" string="HJM"/>
+                        <field name="employee_id"/>
+                        <field name="expenses"/>
+                        <field name="purchase_price" string="Coût K2"/>
+                        <field name="margin" string="Marge K2"/>
+                        <field name="percent_marge_unitaire_k2" string="% Marge K2"/>
+                        <field name="product_id" invisible="True"/>
+                        <field name="purchase_price" invisible="True"/>
+                        <field name="product_uom_qty" invisible="True"/>
+                        <field name="price_unit" invisible="True"/>
+                        <field name="price_subtotal" invisible="True"/>
+	                </tree>
+	           </field>
+         	</xpath>
+             
+             
+         	<!-- onglet Compétences demandées (hr.skill.search) -->
+         	<xpath expr="//notebook" position="inside">
+				<page string="Idées folles" >
+					<field name="idees_folles"/>
+				</page>
+				<page string="Compétences demandées" >
+					<field name="lead_skill_ids">
+						<tree editable="bottom">
+	                        <field name="skill_id" string="Compétences"/>
+	                        <field name="level_required"/>
+	                    </tree>
+					</field>
+				</page>
+         	</xpath>
+         		
+        </field>
+    </record>
+</odoo>

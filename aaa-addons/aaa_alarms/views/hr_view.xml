@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="view_employee_form" model="ir.ui.view">
+            <field name="name">employee.form</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="aaa_hr.view_employee_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//page[@name='aaa_settings']" position="after">
+                    <page name="aaa_limits" string="Alarms">
+                        <group>
+                           <field name="employee_max_hol_ids" readonly="True"/>
+                        </group>
+                        <group>
+                           <field name="employee_max_task_ids" readonly="True"/>
+                        </group>
+                        <group>
+                           <field name="employee_pro_ids" readonly="True"/>
+                        </group>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+
+
+    </data>
+</odoo>

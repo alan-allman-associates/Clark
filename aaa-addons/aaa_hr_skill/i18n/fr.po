@@ -1,0 +1,568 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* aaa_hr_skill
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 12.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-01-21 03:13+0000\n"
+"PO-Revision-Date: 2020-01-21 03:13+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: aaa_hr_skill
+#: model:mail.template,body_html:aaa_hr_skill.mail_alerte_margin_devis
+msgid "\n"
+"				          \n"
+"					<p>Attention !</p>\n"
+"\n"
+"					<p>Le devis ${object.name} a été enregistré avec une marge de ${format_amount(object.margin, object.pricelist_id.currency_id)}. La marge cible de l'équipe de vente ${object.team_id.name} est de ${object.team_id.percent_marge_cible_team} %, soit ${format_amount(object.marge_k2_cible, object.pricelist_id.currency_id)}.</p>\n"
+"				\n"
+"			"
+msgstr ""
+
+#. module: aaa_hr_skill
+#: model_terms:ir.ui.view,arch_db:aaa_hr_skill.view_crm_skill_form
+msgid "% Marge K2"
+msgstr ""
+
+#. module: aaa_hr_skill
+#: model:ir.model.fields,field_description:aaa_hr_skill.field_sale_order_line__percent_marge_unitaire_k2
+msgid "% Marge unitaire K2"
+msgstr ""
+
+#. module: aaa_hr_skill
+#: code:addons/aaa_hr_skill/models/hr_skill_partner.py:104
+#, python-format
+msgid "%(niveau)s - %(nom)s"
+msgstr ""
+
+#. module: aaa_hr_skill
+#: code:addons/aaa_hr_skill/models/hr_skill.py:52
+#, python-format
+msgid "%(parent)s / %(own)s"
+msgstr ""
+
+#. module: aaa_hr_skill
+#: model:ir.model.fields,field_description:aaa_hr_skill.field_hr_skill__active
+msgid "Active"
+msgstr "Actif"
+
+#. module: aaa_hr_skill
+#: model:mail.template,subject:aaa_hr_skill.mail_alerte_margin_devis
+msgid "Alerte sur devis : ${object.name} (marge insuffisante)"
+msgstr ""
+
+#. module: aaa_hr_skill
+#: model:ir.model.fields,help:aaa_hr_skill.field_hr_skill_partner__level
+msgid "Auto-évaluation"
+msgstr ""
+
+#. module: aaa_hr_skill
+#: selection:res.partner,type_consultant:0
+msgid "Candidat"
+msgstr ""
+
+#. module: aaa_hr_skill
+#: model:ir.model.fields,field_description:aaa_hr_skill.field_hr_skill__child_ids
+msgid "Children"
+msgstr ""
+
+#. module: aaa_hr_skill
+#: model:ir.model.fields,field_description:aaa_hr_skill.field_project_project__sale_order_projet
+msgid "Commandes liées"
+msgstr ""
+
+#. module: aaa_hr_skill
+#: model:ir.model,name:aaa_hr_skill.model_res_company
+msgid "Companies"
+msgstr "Sociétés"
+
+#. module: aaa_hr_skill
+#: model:ir.model.fields,field_description:aaa_hr_skill.field_hr_skill__complete_name
+#: model:ir.model.fields,field_description:aaa_hr_skill.field_hr_skill_search__complete_name
+msgid "Complete Name"
+msgstr "Nom Complet"
+
+#. module: aaa_hr_skill
+#: model:ir.model.fields,field_description:aaa_hr_skill.field_hr_skill_partner__skill_id
+#: model:ir.model.fields,field_description:aaa_hr_skill.field_hr_skill_search__skill_id
+msgid "Compétence"
+msgstr ""
+
+#. module: aaa_hr_skill
+#: model:ir.model.fields,field_description:aaa_hr_skill.field_hr_skill_partner__validate_partner_id
+msgid "Compétence validée par "
+msgstr ""
+
+#. module: aaa_hr_skill
+#: model:ir.model.fields,field_description:aaa_hr_skill.field_crm_lead__lead_skill_ids
+#: model:ir.model.fields,field_description:aaa_hr_skill.field_project_project__project_skill_ids
+#: model:ir.model.fields,field_description:aaa_hr_skill.field_project_task__project_task_skill_ids
+#: model:ir.model.fields,field_description:aaa_hr_skill.field_res_partner__consultant_skill_ids
+#: model:ir.model.fields,field_description:aaa_hr_skill.field_res_users__consultant_skill_ids
+#: model:ir.ui.menu,name:aaa_hr_skill.menu_competences
+#: model:ir.ui.menu,name:aaa_hr_skill.menu_open_view_skill_form
+#: model_terms:ir.ui.view,arch_db:aaa_hr_skill.view_crm_skill_form
+#: model_terms:ir.ui.view,arch_db:aaa_hr_skill.view_employee_skill_form
+#: model_terms:ir.ui.view,arch_db:aaa_hr_skill.view_hr_skill_tree
+#: model_terms:ir.ui.view,arch_db:aaa_hr_skill.view_project_skill_form
+#: model_terms:ir.ui.view,arch_db:aaa_hr_skill.view_skill_partner_form
+#: model_terms:ir.ui.view,arch_db:aaa_hr_skill.view_task_skill_form
+msgid "Compétences"
+msgstr ""
+
+#. module: aaa_hr_skill
+#: model_terms:ir.ui.view,arch_db:aaa_hr_skill.view_crm_skill_form
+#: model_terms:ir.ui.view,arch_db:aaa_hr_skill.view_project_skill_form
+#: model_terms:ir.ui.view,arch_db:aaa_hr_skill.view_task_skill_form
+msgid "Compétences demandées"
+msgstr ""
+
+#. module: aaa_hr_skill
+#: model_terms:ir.ui.view,arch_db:aaa_hr_skill.view_skill_search_form
+msgid "Compétences recherchées"
+msgstr ""
+
+#. module: aaa_hr_skill
+#: model:ir.model.fields,field_description:aaa_hr_skill.field_res_partner__validate_skill_ids
+#: model:ir.model.fields,field_description:aaa_hr_skill.field_res_users__validate_skill_ids
+msgid "Compétences validées"
+msgstr ""
+
+#. module: aaa_hr_skill
+#: model:ir.model.fields,field_description:aaa_hr_skill.field_res_partner__consultant
+#: model:ir.model.fields,field_description:aaa_hr_skill.field_res_users__consultant
+#: model:ir.model.fields,field_description:aaa_hr_skill.field_sale_order_line__employee_id
+msgid "Consultant"
+msgstr "Consultant"
+
+#. module: aaa_hr_skill
+#: model:ir.model,name:aaa_hr_skill.model_hr_skill_partner
+msgid "Consultant Skill"
+msgstr ""
+
+#. module: aaa_hr_skill
+#: model:ir.model.fields,field_description:aaa_hr_skill.field_hr_skill_partner__partner_id
+msgid "Consultant(e)"
+msgstr ""
+
+#. module: aaa_hr_skill
+#: model:ir.model.fields,field_description:aaa_hr_skill.field_hr_skill__employee_skill_ids
+msgid "Consultant(e)s"
+msgstr ""
+
+#. module: aaa_hr_skill
+#: model:ir.actions.act_window,name:aaa_hr_skill.open_search_consultants
+#: model:ir.ui.menu,name:aaa_hr_skill.menu_open_search_consultants
+msgid "Consultants"
+msgstr ""
+
+#. module: aaa_hr_skill
+#: model_terms:ir.ui.view,arch_db:aaa_hr_skill.view_res_partner_consultants_filter
+msgid "Consultants candidats"
+msgstr ""
+
+#. module: aaa_hr_skill
+#: model_terms:ir.ui.view,arch_db:aaa_hr_skill.view_res_partner_consultants_filter
+msgid "Consultants internes"
+msgstr ""
+
+#. module: aaa_hr_skill
+#: model_terms:ir.ui.view,arch_db:aaa_hr_skill.view_res_partner_consultants_filter
+msgid "Consultants pro"
+msgstr ""
+
+#. module: aaa_hr_skill
+#: model:ir.model,name:aaa_hr_skill.model_res_partner
+msgid "Contact"
+msgstr ""
+
+#. module: aaa_hr_skill
+#: model:ir.ui.menu,name:aaa_hr_skill.menu_open_search_contacts
+msgid "Contacts"
+msgstr ""
+
+#. module: aaa_hr_skill
+#: model_terms:ir.ui.view,arch_db:aaa_hr_skill.view_aaa_sale_order_line_form
+#: model_terms:ir.ui.view,arch_db:aaa_hr_skill.view_aaa_sale_order_line_tree
+#: model_terms:ir.ui.view,arch_db:aaa_hr_skill.view_crm_skill_form
+msgid "Coût K2"
+msgstr ""
+
+#. module: aaa_hr_skill
+#: model:ir.model.fields,field_description:aaa_hr_skill.field_hr_skill__create_uid
+#: model:ir.model.fields,field_description:aaa_hr_skill.field_hr_skill_level__create_uid
+#: model:ir.model.fields,field_description:aaa_hr_skill.field_hr_skill_partner__create_uid
+#: model:ir.model.fields,field_description:aaa_hr_skill.field_hr_skill_search__create_uid
+msgid "Created by"
+msgstr "Créé par"
+
+#. module: aaa_hr_skill
+#: model:ir.model.fields,field_description:aaa_hr_skill.field_hr_skill__create_date
+#: model:ir.model.fields,field_description:aaa_hr_skill.field_hr_skill_level__create_date
+#: model:ir.model.fields,field_description:aaa_hr_skill.field_hr_skill_partner__create_date
+#: model:ir.model.fields,field_description:aaa_hr_skill.field_hr_skill_search__create_date
+msgid "Created on"
+msgstr "Créé le"
+
+#. module: aaa_hr_skill
+#: model:ir.model.fields,field_description:aaa_hr_skill.field_hr_skill__description
+#: model:ir.model.fields,field_description:aaa_hr_skill.field_hr_skill_partner__description
+#: model:ir.model.fields,field_description:aaa_hr_skill.field_hr_skill_search__description
+msgid "Description"
+msgstr ""
+
+#. module: aaa_hr_skill
+#: model:ir.model.fields,field_description:aaa_hr_skill.field_hr_skill__display_name
+#: model:ir.model.fields,field_description:aaa_hr_skill.field_hr_skill_level__display_name
+#: model:ir.model.fields,field_description:aaa_hr_skill.field_hr_skill_partner__display_name
+#: model:ir.model.fields,field_description:aaa_hr_skill.field_hr_skill_search__display_name
+msgid "Display Name"
+msgstr "Nom à afficher"
+
+#. module: aaa_hr_skill
+#: model:ir.model.fields,field_description:aaa_hr_skill.field_hr_skill_search__lead_id
+msgid "Enjeux"
+msgstr ""
+
+#. module: aaa_hr_skill
+#: model:ir.model.fields,field_description:aaa_hr_skill.field_sale_order_line__expenses
+msgid "Expenses"
+msgstr "FDS"
+
+#. module: aaa_hr_skill
+#: model_terms:ir.ui.view,arch_db:aaa_hr_skill.view_crm_skill_form
+msgid "HJM"
+msgstr ""
+
+#. module: aaa_hr_skill
+#: model:ir.model,name:aaa_hr_skill.model_hr_skill
+msgid "HR Skill"
+msgstr ""
+
+#. module: aaa_hr_skill
+#: model:ir.model,name:aaa_hr_skill.model_hr_skill_level
+msgid "HR Skill Level"
+msgstr ""
+
+#. module: aaa_hr_skill
+#: model:ir.model.fields,field_description:aaa_hr_skill.field_hr_skill__id
+#: model:ir.model.fields,field_description:aaa_hr_skill.field_hr_skill_level__id
+#: model:ir.model.fields,field_description:aaa_hr_skill.field_hr_skill_partner__id
+#: model:ir.model.fields,field_description:aaa_hr_skill.field_hr_skill_search__id
+msgid "ID"
+msgstr ""
+
+#. module: aaa_hr_skill
+#: model:ir.model.fields,field_description:aaa_hr_skill.field_crm_lead__idees_folles
+#: model_terms:ir.ui.view,arch_db:aaa_hr_skill.view_crm_skill_form
+msgid "Idées folles"
+msgstr ""
+
+#. module: aaa_hr_skill
+#: selection:res.partner,type_consultant:0
+msgid "Interne"
+msgstr ""
+
+#. module: aaa_hr_skill
+#: model:ir.model.fields,field_description:aaa_hr_skill.field_hr_skill____last_update
+#: model:ir.model.fields,field_description:aaa_hr_skill.field_hr_skill_level____last_update
+#: model:ir.model.fields,field_description:aaa_hr_skill.field_hr_skill_partner____last_update
+#: model:ir.model.fields,field_description:aaa_hr_skill.field_hr_skill_search____last_update
+msgid "Last Modified on"
+msgstr "Dernière modification le"
+
+#. module: aaa_hr_skill
+#: model:ir.model.fields,field_description:aaa_hr_skill.field_hr_skill__write_uid
+#: model:ir.model.fields,field_description:aaa_hr_skill.field_hr_skill_level__write_uid
+#: model:ir.model.fields,field_description:aaa_hr_skill.field_hr_skill_partner__write_uid
+#: model:ir.model.fields,field_description:aaa_hr_skill.field_hr_skill_search__write_uid
+msgid "Last Updated by"
+msgstr "Dernière mise à jour par"
+
+#. module: aaa_hr_skill
+#: model:ir.model.fields,field_description:aaa_hr_skill.field_hr_skill__write_date
+#: model:ir.model.fields,field_description:aaa_hr_skill.field_hr_skill_level__write_date
+#: model:ir.model.fields,field_description:aaa_hr_skill.field_hr_skill_partner__write_date
+#: model:ir.model.fields,field_description:aaa_hr_skill.field_hr_skill_search__write_date
+msgid "Last Updated on"
+msgstr "Dernière mise à jour le"
+
+#. module: aaa_hr_skill
+#: model:ir.model,name:aaa_hr_skill.model_crm_lead
+msgid "Lead/Opportunity"
+msgstr "Piste/Enjeu"
+
+#. module: aaa_hr_skill
+#: model_terms:ir.ui.view,arch_db:aaa_hr_skill.view_aaa_sale_order_line_total
+#: model_terms:ir.ui.view,arch_db:aaa_hr_skill.view_crm_skill_form
+msgid "Marge K2"
+msgstr ""
+
+#. module: aaa_hr_skill
+#: model:ir.model.fields,field_description:aaa_hr_skill.field_sale_order__marge_k2_cible
+msgid "Marge K2 Cible"
+msgstr ""
+
+#. module: aaa_hr_skill
+#: model_terms:ir.ui.view,arch_db:aaa_hr_skill.view_aaa_sale_order_line_total
+msgid "Marge K2 cible"
+msgstr ""
+
+#. module: aaa_hr_skill
+#: model:ir.model.fields,field_description:aaa_hr_skill.field_crm_team__percent_marge_cible_team
+#: model:ir.model.fields,field_description:aaa_hr_skill.field_res_company__percent_marge_cible_company
+#: model:ir.model.fields,field_description:aaa_hr_skill.field_res_users__percent_marge_cible_user
+msgid "Marge cible (%)"
+msgstr ""
+
+#. module: aaa_hr_skill
+#: model_terms:ir.ui.view,arch_db:aaa_hr_skill.view_aaa_sale_order_line_form
+#: model_terms:ir.ui.view,arch_db:aaa_hr_skill.view_aaa_sale_order_line_tree
+msgid "Marge unitaire K2"
+msgstr ""
+
+#. module: aaa_hr_skill
+#: model:ir.model.fields,field_description:aaa_hr_skill.field_hr_skill_search__project_task_id
+msgid "Mission"
+msgstr ""
+
+#. module: aaa_hr_skill
+#: model:ir.model.fields,field_description:aaa_hr_skill.field_hr_skill_level__niveau
+#: model:ir.model.fields,field_description:aaa_hr_skill.field_hr_skill_partner__level
+#: model_terms:ir.ui.view,arch_db:aaa_hr_skill.view_skill_level_form
+msgid "Niveau"
+msgstr ""
+
+#. module: aaa_hr_skill
+#: model:ir.model.fields,field_description:aaa_hr_skill.field_hr_skill_level__level
+msgid "Niveau auto-évalué"
+msgstr ""
+
+#. module: aaa_hr_skill
+#: model:ir.model.fields,field_description:aaa_hr_skill.field_hr_skill_search__level_required
+msgid "Niveau demandé"
+msgstr ""
+
+#. module: aaa_hr_skill
+#: model:ir.model.fields,field_description:aaa_hr_skill.field_hr_skill_level__level_required
+msgid "Niveau requis"
+msgstr ""
+
+#. module: aaa_hr_skill
+#: model:ir.model.fields,field_description:aaa_hr_skill.field_hr_skill_level__level_evaluated
+#: model:ir.model.fields,field_description:aaa_hr_skill.field_hr_skill_partner__level_evaluated
+msgid "Niveau évalué"
+msgstr ""
+
+#. module: aaa_hr_skill
+#: model:ir.actions.act_window,name:aaa_hr_skill.acion_menu_competences
+#: model:ir.ui.menu,name:aaa_hr_skill.menu_skill_level
+msgid "Niveaux de compétences"
+msgstr ""
+
+#. module: aaa_hr_skill
+#: model:ir.model.fields,field_description:aaa_hr_skill.field_hr_skill__name
+#: model:ir.model.fields,field_description:aaa_hr_skill.field_hr_skill_level__name
+msgid "Nom"
+msgstr ""
+
+#. module: aaa_hr_skill
+#: model:ir.model.fields,field_description:aaa_hr_skill.field_hr_skill_level__complete_name
+#: model:ir.model.fields,field_description:aaa_hr_skill.field_hr_skill_partner__complete_name
+#: model_terms:ir.ui.view,arch_db:aaa_hr_skill.view_hr_skill_tree
+msgid "Nom complet"
+msgstr ""
+
+#. module: aaa_hr_skill
+#: model:ir.model.fields,field_description:aaa_hr_skill.field_sale_order_line__opportunity_id
+msgid "Opportunity"
+msgstr "Enjeu"
+
+#. module: aaa_hr_skill
+#: model:ir.model.fields,field_description:aaa_hr_skill.field_sale_order_line__order_name
+msgid "Order Reference"
+msgstr "Référence commande"
+
+#. module: aaa_hr_skill
+#: selection:res.partner,type_consultant:0
+msgid "PRO"
+msgstr ""
+
+#. module: aaa_hr_skill
+#: model:ir.model.fields,field_description:aaa_hr_skill.field_hr_skill__parent_id
+msgid "Parent"
+msgstr ""
+
+#. module: aaa_hr_skill
+#: model:ir.model.fields,field_description:aaa_hr_skill.field_hr_skill__parent_path
+msgid "Parent Path"
+msgstr "Chemin parent"
+
+#. module: aaa_hr_skill
+#: model:ir.model,name:aaa_hr_skill.model_project_project
+msgid "Project"
+msgstr "Projet"
+
+#. module: aaa_hr_skill
+#: model:ir.model.fields,field_description:aaa_hr_skill.field_hr_skill_search__project_id
+msgid "Projet"
+msgstr ""
+
+#. module: aaa_hr_skill
+#: model:ir.model.fields,field_description:aaa_hr_skill.field_sale_order__projet_rattache
+msgid "Projet rattaché"
+msgstr ""
+
+#. module: aaa_hr_skill
+#: model:ir.model.fields,field_description:aaa_hr_skill.field_crm_lead__order_line_ids
+msgid "Propositions"
+msgstr ""
+
+#. module: aaa_hr_skill
+#: model:ir.model.fields,field_description:aaa_hr_skill.field_crm_lead__ressources_envoyees
+#: model:ir.model.fields,field_description:aaa_hr_skill.field_project_project__ressources_envoyees
+#: model:ir.model.fields,field_description:aaa_hr_skill.field_project_task__ressources_envoyees
+#: model:ir.model.fields,field_description:aaa_hr_skill.field_res_partner__ressources_envoyees_lead
+#: model:ir.model.fields,field_description:aaa_hr_skill.field_res_partner__ressources_envoyees_project
+#: model:ir.model.fields,field_description:aaa_hr_skill.field_res_partner__ressources_envoyees_task
+#: model:ir.model.fields,field_description:aaa_hr_skill.field_res_users__ressources_envoyees_lead
+#: model:ir.model.fields,field_description:aaa_hr_skill.field_res_users__ressources_envoyees_project
+#: model:ir.model.fields,field_description:aaa_hr_skill.field_res_users__ressources_envoyees_task
+msgid "Ressources envoyées"
+msgstr ""
+
+#. module: aaa_hr_skill
+#: model:ir.model.fields,field_description:aaa_hr_skill.field_crm_lead__ressources_identifiees
+#: model:ir.model.fields,field_description:aaa_hr_skill.field_project_project__ressources_identifiees
+#: model:ir.model.fields,field_description:aaa_hr_skill.field_project_project__ressources_identifiees_tes
+#: model:ir.model.fields,field_description:aaa_hr_skill.field_project_task__ressources_identifiees
+#: model:ir.model.fields,field_description:aaa_hr_skill.field_res_partner__ressources_identifiees_lead
+#: model:ir.model.fields,field_description:aaa_hr_skill.field_res_partner__ressources_identifiees_project
+#: model:ir.model.fields,field_description:aaa_hr_skill.field_res_partner__ressources_identifiees_task
+#: model:ir.model.fields,field_description:aaa_hr_skill.field_res_users__ressources_identifiees_lead
+#: model:ir.model.fields,field_description:aaa_hr_skill.field_res_users__ressources_identifiees_project
+#: model:ir.model.fields,field_description:aaa_hr_skill.field_res_users__ressources_identifiees_task
+msgid "Ressources identifiées"
+msgstr ""
+
+#. module: aaa_hr_skill
+#: model:ir.model.fields,field_description:aaa_hr_skill.field_crm_lead__ressources_non_retenues
+#: model:ir.model.fields,field_description:aaa_hr_skill.field_project_project__ressources_non_retenues
+#: model:ir.model.fields,field_description:aaa_hr_skill.field_project_task__ressources_non_retenues
+#: model:ir.model.fields,field_description:aaa_hr_skill.field_res_partner__ressources_non_retenues_lead
+#: model:ir.model.fields,field_description:aaa_hr_skill.field_res_partner__ressources_non_retenues_project
+#: model:ir.model.fields,field_description:aaa_hr_skill.field_res_partner__ressources_non_retenues_task
+#: model:ir.model.fields,field_description:aaa_hr_skill.field_res_users__ressources_non_retenues_lead
+#: model:ir.model.fields,field_description:aaa_hr_skill.field_res_users__ressources_non_retenues_project
+#: model:ir.model.fields,field_description:aaa_hr_skill.field_res_users__ressources_non_retenues_task
+msgid "Ressources non retenues"
+msgstr ""
+
+#. module: aaa_hr_skill
+#: model:ir.model,name:aaa_hr_skill.model_sale_order
+msgid "Sale Order"
+msgstr "Bon de commande"
+
+#. module: aaa_hr_skill
+#: model:ir.model,name:aaa_hr_skill.model_crm_team
+msgid "Sales Channels"
+msgstr "Equipes de vente"
+
+#. module: aaa_hr_skill
+#: model:ir.model,name:aaa_hr_skill.model_sale_order_line
+msgid "Sales Order Line"
+msgstr "Ligne de bons de commande"
+
+#. module: aaa_hr_skill
+#: model:ir.model,name:aaa_hr_skill.model_hr_skill_search
+msgid "Searched Skill"
+msgstr ""
+
+#. module: aaa_hr_skill
+#: model_terms:ir.ui.view,arch_db:aaa_hr_skill.view_skill_form
+msgid "Skill"
+msgstr ""
+
+#. module: aaa_hr_skill
+#: model:ir.actions.act_window,name:aaa_hr_skill.open_view_skill_form
+msgid "Skills"
+msgstr ""
+
+#. module: aaa_hr_skill
+#: model_terms:ir.ui.view,arch_db:aaa_hr_skill.view_skill_form
+msgid "Sous-compétences"
+msgstr ""
+
+#. module: aaa_hr_skill
+#: selection:res.partner,type_consultant:0
+msgid "Sous-traitant"
+msgstr ""
+
+#. module: aaa_hr_skill
+#: model_terms:ir.ui.view,arch_db:aaa_hr_skill.view_res_partner_consultants_filter
+msgid "Sous-traitants"
+msgstr ""
+
+#. module: aaa_hr_skill
+#: model:ir.model,name:aaa_hr_skill.model_project_task
+msgid "Task"
+msgstr "Tâche"
+
+#. module: aaa_hr_skill
+#: sql_constraint:hr.skill.partner:0
+msgid "This consultant already has that skill!"
+msgstr ""
+
+#. module: aaa_hr_skill
+#: sql_constraint:hr.skill.search:0
+msgid "This lead already has that skill!"
+msgstr ""
+
+#. module: aaa_hr_skill
+#: sql_constraint:hr.skill.search:0
+msgid "This project already has that skill!"
+msgstr ""
+
+#. module: aaa_hr_skill
+#: sql_constraint:hr.skill.search:0
+msgid "This task already has that skill!"
+msgstr ""
+
+#. module: aaa_hr_skill
+#: model_terms:ir.ui.view,arch_db:aaa_hr_skill.view_res_partner_consultants_filter
+msgid "Tous les consultants"
+msgstr ""
+
+#. module: aaa_hr_skill
+#: model:ir.model.fields,field_description:aaa_hr_skill.field_res_partner__type_consultant
+#: model:ir.model.fields,field_description:aaa_hr_skill.field_res_users__type_consultant
+msgid "Type Consultant"
+msgstr ""
+
+#. module: aaa_hr_skill
+#: model_terms:ir.ui.view,arch_db:aaa_hr_skill.view_res_partner_consultants_filter
+msgid "Type de consultants"
+msgstr ""
+
+#. module: aaa_hr_skill
+#: model:ir.model,name:aaa_hr_skill.model_res_users
+msgid "Users"
+msgstr "Utilisateurs"
+
+#. module: aaa_hr_skill
+#: model:ir.model.fields,field_description:aaa_hr_skill.field_hr_skill_partner__level_validate
+msgid "Validée"
+msgstr ""
+
+#. module: aaa_hr_skill
+#: model:ir.model.fields,help:aaa_hr_skill.field_hr_skill_partner__level_evaluated
+msgid "Évaluation expert/manager"
+msgstr ""
+

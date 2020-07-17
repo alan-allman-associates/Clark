@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <record model="ir.config_parameter" id="aaa_alarm_start" forcecreate="True">
+            <field name="key">aaa_alarms.aaa_alarm_start</field>
+            <field name="value">10:00:00</field>
+        </record>
+
+        <record model="ir.config_parameter" id="aaa_alarm_end" forcecreate="True">
+            <field name="key">aaa_alarms.aaa_alarm_end</field>
+            <field name="value">10:05:00</field>
+        </record>
+
+    </data>
+</odoo>

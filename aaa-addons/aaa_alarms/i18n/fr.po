@@ -1,0 +1,123 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* aaa_alarms
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 12.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-11-29 16:17+0000\n"
+"PO-Revision-Date: 2019-11-29 16:17+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: aaa_alarms
+#: model:ir.actions.server,name:aaa_alarms.ir_cron_aaa_alarms_ir_actions_server
+#: model:ir.cron,cron_name:aaa_alarms.ir_cron_aaa_alarms
+#: model:ir.cron,name:aaa_alarms.ir_cron_aaa_alarms
+msgid "AAA alarms"
+msgstr ""
+
+#. module: aaa_alarms
+#: model_terms:ir.ui.view,arch_db:aaa_alarms.view_employee_form
+msgid "Alarms"
+msgstr "Alertes"
+
+#. module: aaa_alarms
+#: model:calendar.alarm,name:aaa_alarms.alarm_notif_aaa
+msgid "At time"
+msgstr "A l'heure"
+
+#. module: aaa_alarms
+#: model:ir.model,name:aaa_alarms.model_res_company
+msgid "Companies"
+msgstr "Sociétés"
+
+#. module: aaa_alarms
+#: model:ir.model.fields,field_description:aaa_alarms.field_project_task__date_end_min
+#: model:ir.model.fields,field_description:aaa_alarms.field_project_task__is_task_max_days
+msgid "Date end min"
+msgstr "Date de fin min"
+
+#. module: aaa_alarms
+#: model:ir.model,name:aaa_alarms.model_hr_employee
+#: model:ir.model.fields,field_description:aaa_alarms.field_hr_employee__employee_max_hol_id
+#: model:ir.model.fields,field_description:aaa_alarms.field_hr_employee__employee_max_task_id
+#: model:ir.model.fields,field_description:aaa_alarms.field_hr_employee__employee_pro_id
+msgid "Employee"
+msgstr "Employé"
+
+#. module: aaa_alarms
+#: code:addons/aaa_alarms/models/hr.py:147
+#, python-format
+msgid "Employees Alarm"
+msgstr "Alerte employés"
+
+#. module: aaa_alarms
+#: model:ir.model.fields,field_description:aaa_alarms.field_hr_employee__employee_pro_ids
+msgid "Employees PRO"
+msgstr "Employés PRO"
+
+#. module: aaa_alarms
+#: model:ir.model.fields,field_description:aaa_alarms.field_res_company__task_day_max
+msgid "End mission max days"
+msgstr "Jours de fin de mission max"
+
+#. module: aaa_alarms
+#: model:ir.model,name:aaa_alarms.model_calendar_event
+msgid "Event"
+msgstr "Évènement"
+
+#. module: aaa_alarms
+#: model:ir.model.fields,field_description:aaa_alarms.field_hr_employee__employee_max_hol_ids
+msgid "Limit holidays"
+msgstr "Limite congés"
+
+#. module: aaa_alarms
+#: model:ir.model.fields,field_description:aaa_alarms.field_hr_employee__employee_max_task_ids
+msgid "Limit missions"
+msgstr "Limite missions"
+
+#. module: aaa_alarms
+#: model:ir.model.fields,field_description:aaa_alarms.field_hr_employee__is_max_holidays
+msgid "Max holidays"
+msgstr "Dépasse la limite de congés"
+
+#. module: aaa_alarms
+#: model:ir.model.fields,field_description:aaa_alarms.field_res_company__leaves_max
+msgid "Maximum leaves"
+msgstr "Congés maximum"
+
+#. module: aaa_alarms
+#: model:ir.model,name:aaa_alarms.model_project_task
+msgid "Task"
+msgstr "Tâche"
+
+#. module: aaa_alarms
+#: code:addons/aaa_alarms/models/hr.py:138
+#, python-format
+msgid "for company(ies)"
+msgstr "pour la(les) société(s)"
+
+#. module: aaa_alarms
+#: code:addons/aaa_alarms/models/hr.py:125
+#, python-format
+msgid "you have employee(s) near limit date end mission"
+msgstr "Vous avez des employés proche de la limite de fin de mission"
+
+#. module: aaa_alarms
+#: code:addons/aaa_alarms/models/hr.py:127
+#, python-format
+msgid "you have employee(s) who are PRO"
+msgstr "Vous avez des employés PRO"
+
+#. module: aaa_alarms
+#: code:addons/aaa_alarms/models/hr.py:135
+#, python-format
+msgid "you have employee(s) who reached days max limit holidays"
+msgstr "Vous avez des employés qui ont atteint la limite du nombre maximum de jours de congés"
+

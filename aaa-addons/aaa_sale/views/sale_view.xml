@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+    <record id="view_order_form" model="ir.ui.view">
+        <field name="name">sale.order.form</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <field name="partner_id" position="before">
+                <field name="axe1" widget="selection"/>
+                <field name="axe2" widget="selection"/>
+            </field>
+            <field name="validity_date" position="before">
+                <field name="axe3" widget="selection"/>
+                <field name="axe4" widget="selection"/>
+            </field>
+        </field>
+    </record>
+
+    </data>
+</odoo>

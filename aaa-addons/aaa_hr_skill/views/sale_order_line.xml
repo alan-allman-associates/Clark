@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<!--<record id="view_aaa_sale_order_line_tree" model="ir.ui.view">
+        <field name="name">Sale Order Line Tree</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale_margin.sale_margin_sale_order_line_form"/>
+        <field name="arch" type="xml">
+         	<xpath expr="//field[@name='purchase_price']" position="replace">
+         		<field name="purchase_price" string="Coût K2"/>
+         		<field name="margin" string="Marge unitaire K2"/>
+         		<field name="percent_marge_unitaire_K2"/>
+         	</xpath>
+        </field>
+</record>-->
+
+	<!-- can't inherit this view ? -->
+	<!--<delete model="ir.ui.view" id="sale_margin.sale_margin_sale_order_line_form" />-->
+
+	<!-- Vue de la commande -->
+	<record id="view_aaa_sale_order_line_tree" model="ir.ui.view">
+        <field name="name">Sale Order Line Tree</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+        	<!-- ajoute coût K2, marge et % dans la vue liste des lignes de commandes-->
+         	<xpath expr="//field[@name='order_line']/tree//field[@name='price_unit']" position="after">
+                <field name="employee_id"/>
+                <field name="expenses"/>
+         		<field name="purchase_price" string="Coût K2"/>
+         		<field name="margin" string="Marge unitaire K2"/>
+         		<field name="percent_marge_unitaire_k2"/>
+         	</xpath>
+         	<!-- ajoute projet rattaché-->
+         	<xpath expr="//field[@name='payment_term_id']" position="after">
+         		<field name="projet_rattache"/>
+         	</xpath>
+            <xpath expr="//page[@name='order_lines']/field/form/group/group[2]/div[2]" position="after">
+                <field name="employee_id"/>
+                <field name="expenses"/>
+            </xpath>
+         	
+        </field>
+	</record>
+    
+    <!-- ajoute coût K2, marge et % dans la vue formulaire des lignes de commandes -->
+    <record id="view_aaa_sale_order_line_form" model="ir.ui.view">
+        <field name="name">Sale Order Line Form</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale_margin.sale_margin_sale_order_line"/>
+        <field name="arch" type="xml">
+         	<xpath expr="//field[@name='purchase_price']" position="replace">
+         		<field name="purchase_price" string="Coût K2" />
+         		<field name="margin" string="Marge unitaire K2" />
+         		<field name="percent_marge_unitaire_k2"/>
+         	</xpath>
+        </field>
+    </record>
+    
+    <!-- ajoute % cible dans le total des lignes de commandes -->
+    <record id="view_aaa_sale_order_line_total" model="ir.ui.view">
+        <field name="name">Sale Order Line Total</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale_margin.sale_margin_sale_order"/>
+        <field name="arch" type="xml">
+         	<xpath expr="//field[@name='margin']" position="replace">
+         		<field name="margin" string="Marge K2"/>
+         		<field name="marge_k2_cible" string="Marge K2 cible"/>
+         	</xpath>
+        </field>
+    </record>
+    
+    
+    
+    <!-- sale_order -->
+    <!--
+   <record id="view_confirm_ecart_margin" model="ir.ui.view">
+            <field name="name">hr.skill.check_margin.form</field>
+            <field name="model">sale.order.checkmargin</field>
+            <field name="arch" type="xml">
+                <form>
+                <div>
+                    <p>The closing balance is different than the computed one!</p>
+                    <p>Confirming this will create automatically a journal entry with the difference in the profit/loss account set on the cash journal.</p>
+                    <footer>
+                        <button string="Confirm" name="validate" type="object" class="btn-primary"/>
+                        <button string="Cancel" class="btn-default" special="cancel"/>
+                    </footer>
+                </div>
+                </form>
+            </field>
+        </record>
+   
+   <record id="action_view_aaa_sale_order_save" model="ir.actions.act_window">
+        <field name="name">Check margin</field>
+        <field name="res_model">sale.order.checkmargin</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="view_confirm_ecart_margin"/>
+        <field name="target">new</field>
+    </record>
+   -->
+</odoo>
