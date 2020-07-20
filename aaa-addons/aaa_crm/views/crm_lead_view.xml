@@ -51,6 +51,7 @@
         <field name="inherit_id" ref="crm.crm_case_form_view_oppor"/>
         <field name="arch" type="xml">
             <field name="user_id" position="before">
+                <field name="end_answer">
                 <field name="axe1" widget="selection" required="True" domain="[('axe_type','=','axe1')]"/>
                 <field name="axe2" widget="selection" required="True" domain="[('axe_type','=','axe2')]"/>
             </field>
