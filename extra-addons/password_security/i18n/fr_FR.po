@@ -181,6 +181,12 @@ msgid "Must contain the following:"
 msgstr "Doit contenir :"
 
 #. module: password_security
+#: code:addons/password_security/models/res_users.py:109
+#, python-format
+msgid "Password must be %d characters or more."
+msgstr "Le mot de passe doir faire au moins %d caractères."
+
+#. module: password_security
 #: model:ir.model.fields,field_description:password_security.field_res_company__password_numeric
 #: model:ir.model.fields,field_description:password_security.field_res_config_settings__password_numeric
 msgid "Numeric"
