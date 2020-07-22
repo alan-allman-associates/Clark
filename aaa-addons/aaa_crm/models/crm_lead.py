@@ -22,8 +22,8 @@ class CrmLead(models.Model):
     end_lead = fields.Datetime(string='Answer date limit')
     has_order = fields.Boolean(compute='_compute_order_ids', string="has_order", store="True")
 
-   @api.multi
-   @api.depends('order_ids')
+    @api.multi
+    @api.depends('order_ids')
     def _compute_order_ids(self):
         self.ensure_one()
         orders = False
