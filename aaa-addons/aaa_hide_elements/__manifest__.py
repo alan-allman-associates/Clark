@@ -17,7 +17,8 @@ AAA Hide Elements
                 'hr_recruitment',
                 'mass_mailing',
                 'website',
-                'mail',
+                'mail'
+				'sale',
                 ],
     'data': ['security/groups.xml',
              'views/menu.xml',
