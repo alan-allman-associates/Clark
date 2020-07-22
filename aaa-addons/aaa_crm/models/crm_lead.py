@@ -20,3 +20,17 @@ class CrmLead(models.Model):
     axe3 = fields.Many2one('crm.axes', string="Axe 3", domain="[('axe_type', '=', 'axe3')]")
     axe4 = fields.Many2one('crm.axes', string="Axe 4", domain="[('axe_type', '=', 'axe4')]")
     end_lead = fields.Datetime(string='Answer date limit')
+    has_order = fields.Boolean(compute='_compute_order_ids', string="has_order", store="True")
+ 
+    @api.depends('order_ids')
+    def _compute_order_ids(self):
+        for lead in self:
+            orders = False
+            vals = {}
+            for order in lead.order_ids:
+                if order.state in ('draft', 'sent'):
+                    orders = True
+            if orders == True:
+                vals = {'has_orders' : orders,
+                        'stage_id' : 5}
+                lead.write(vals)
