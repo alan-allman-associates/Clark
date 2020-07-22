@@ -31,6 +31,6 @@ class CrmLead(models.Model):
                 if order.state in ('draft', 'sent'):
                     orders = True
             if orders == True:
-                vals = {'has_orders' : orders,
+                vals = {'has_order' : orders,
                         'stage_id' : 5}
                 lead.write(vals)
