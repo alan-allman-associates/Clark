@@ -24,7 +24,7 @@ class CrmLead(models.Model):
 
 #    @api.multi
     @api.depends('order_ids')
-    def _compute_order_ids(self):
+#    def _compute_order_ids(self):
         self.ensure_one()
         orders = False
         vals = {}
