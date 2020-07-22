@@ -18,9 +18,10 @@ AAA Hide Elements
                 'mass_mailing',
                 'website',
                 'mail',
+				'sale',
                 ],
     'data': ['security/groups.xml',
-             #'views/menu.xml',
+             'views/menu.xml',
              ],
     'demo': [
     ],

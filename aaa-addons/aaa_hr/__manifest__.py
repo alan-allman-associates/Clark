@@ -15,7 +15,7 @@ AAA HR
     'depends': ['hr',
                 'hr_timesheet',
                 'hr_contract',
-                #'hr_holidays',
+                'hr_holidays',
                 'aaa_base',
                 'aaa_security',
     ],

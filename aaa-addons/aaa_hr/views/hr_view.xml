@@ -48,7 +48,7 @@
         </field>
     </record>
 
-        <!-- <record id="view_employee_form_leave_inherit" model="ir.ui.view">
+        <record id="view_employee_form_leave_inherit" model="ir.ui.view">
             <field name="name">employee.form</field>
             <field name="model">hr.employee</field>
             <field name="inherit_id" ref="hr_holidays.view_employee_form_leave_inherit"/>
@@ -72,7 +72,7 @@
                     </div>
                 </xpath>
             </field>
-        </record> -->
+        </record>
 
     </data>
 </odoo>

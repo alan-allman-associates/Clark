@@ -20,3 +20,4 @@ class CrmLead(models.Model):
     axe3 = fields.Many2one('crm.axes', string="Axe 3", domain="[('axe_type', '=', 'axe3')]")
     axe4 = fields.Many2one('crm.axes', string="Axe 4", domain="[('axe_type', '=', 'axe4')]")
     end_lead = fields.Datetime(string='Answer date limit')
+ 

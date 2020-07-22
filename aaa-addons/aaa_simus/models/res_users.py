@@ -39,7 +39,7 @@ class ResUsers(models.Model):
                                  'phone': phone,
                                  'active': active,
                                  'tz': 'Europe/Paris',
-#                                 'login': login,
+#                                  'login': login,
                                  'login_simus': line[6],
                                  'level': 1,
                                  'company_ids': [(6, 0, [company_id])]}

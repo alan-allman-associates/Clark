@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from odoo import models, api, _
+from odoo import models, api, fields, _
 from datetime import datetime
 from odoo.tools import ustr
 import ftplib as ftp
@@ -9,6 +9,8 @@ import pysftp
 
 class HrEmployee(models.Model):
     _inherit = "hr.employee"
+
+    #child_ids_text = fields.Text(string="child child ids")
 
     @api.model
     def simus_create_job(self, job_name, company_id, company, job_obj):

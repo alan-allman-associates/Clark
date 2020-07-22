@@ -13,47 +13,5 @@
         </field>
     </record>
 
-    <record id="view_calendar_extention" model="ir.ui.view">
-        <field name="name">calendar.event.calendar.extention</field>
-        <field name="inherit_id" ref="calendar.view_calendar_event_calendar"/>
-        <field name="model">calendar.event</field>
-        <field name="priority" eval="2"/>
-        <field name="arch" type="xml">
-        <xpath expr="//calendar[1]" position="replace">
-             <calendar string="Meetings" date_start="start" date_stop="stop" date_delay="duration" all_day="allday"
-                readonly_form_view_id="%(calendar.view_calendar_event_form_popup)s"
-                event_open_popup="true"
-                event_limit="3"
-                color="category_name">
-                <field name="name"/>
-                <field name="is_highlighted" invisible="1"/>
-               <templates>
-                    <t t-name="calendar-box">
-                        <t t-set="color" t-value="widget.getColor(event.color_index) or 9"/>
-                        <div t-att-style="typeof color === 'string' ? ('background-color:'+color)+';' : ''" t-attf-class="#{record.is_highlighted ? 'o_event_hightlight' : ''} #{typeof color === 'number' ? 'o_calendar_color_'+color : ''}">
-                            <div class="o_fields">
-                                <t t-foreach="widget.displayFields" t-as="name">
-                                    <div t-attf-class="o_field_#{name} o_field_type_#{fields[name].type}">
-                                        <t t-if="widget.displayFields[name].avatar_field">
-                                            <t t-if="!isMobile"><t t-esc="fields[name].string"/>:</t>
-                                            <div class="o_calendar_avatars float-right">
-                                                <t t-foreach="widget.getAvatars(record, name, widget.displayFields[name].avatar_field).slice(0,3)" t-as="image"><t t-raw="image"/></t>
-                                                <span t-if="record[name].length - 3 > 0">+<t t-esc="record[name].length - 3"/></span>
-                                            </div>
-                                        </t>
-                                        <t t-else="">
-                                            <t t-esc="format(record, name)"/>
-                                        </t>
-                                    </div>
-                                </t>
-                            </div>
-                        </div>
-                    </t>
-                </templates>
-            </calendar>
-        </xpath>
-        </field>
-    </record>
-
     </data>
 </odoo>

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from odoo import models, api,fields, _
+from odoo import models, api, fields, _
 from odoo.tools import ustr
 
 
@@ -8,7 +8,7 @@ class ResPartner(models.Model):
     _inherit = "res.partner"
 
     employee_id = fields.Many2one('hr.employee', string="employee")
-    
+
     @api.model
     def simus_create_subcontractor(self, cr, lines, company_simus_codes, users_simus_code):
         result = {'nb_lines': len(lines), 'nb_partners_created': 0, 'nb_partners_updated': 0,
