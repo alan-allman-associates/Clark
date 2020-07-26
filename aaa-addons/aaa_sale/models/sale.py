@@ -17,13 +17,13 @@ class SaleOrder(models.Model):
     def create(self, values):
         res = super(SaleOrder, self).create(values)
         enjeu_id = values.get('opportunity_id')
-        stage_obj = self.env['crm.stage']
-        stage_id =  stage_obj.search([('probability', '=', 70)])
+        config = self.env['ir.config_parameter']
+        stage_id =  int(config.get_param('crm.auto_stage_id'))
         if stage_id:
             query = """
                         UPDATE crm_lead
                         SET    stage_id = %(stage_id)s 
                         WHERE  id = %(enjeu_id)s
                     """
-            self._cr.execute(query, {'stage_id' : stage_id.id, 'enjeu_id' : enjeu_id})
+            self._cr.execute(query, {'stage_id' : stage_id, 'enjeu_id' : enjeu_id})
         return res
