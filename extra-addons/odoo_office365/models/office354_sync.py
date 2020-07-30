@@ -164,8 +164,9 @@ class Office365(models.Model):
 
     def auto_import_calendar(self):
         _logger.info('Scheduler is running to import calender event from office')
-
-        self.import_calendar()
+        is_manual = True
+        self.import_calendar(is_manual)
+        #self.import_calendar()
         _logger.info('Calender Scheduler: Successfully import event from office365')
 
     @api.model
@@ -305,6 +306,8 @@ class Office365(models.Model):
     def get_office365_event(self,url,res_user,categ_name=None):
         update_event = []
         new_event = []
+         
+        
         office_connector = self.env['office.sync'].search([])[0]
         if office_connector.calendar_id:
             odoo_event = self.env['calendar.event'].search([('office_id', '!=', None),('calendar_id', '=', office_connector.calendar_id.id)])
@@ -397,6 +400,24 @@ class Office365(models.Model):
 
                                 partner_ids = []
                                 attendee_ids = []
+                                if not event['attendees'] and event['organizer']:
+                                    
+                                    user = self.env['res.users'].search([('login', '=',event['organizer']['emailAddress']['address'])])
+                                    partner = user.partner_id
+                                    
+                                    odoo_attendee = self.env['calendar.attendee'].create({
+                                        'partner_id': partner.id,
+                                        'event_id': odoo_meeting.id,
+                                        'email': partner.email,
+                                        'common_name': partner.name,
+
+                                    })
+                                    attendee_ids.append(odoo_attendee.id)
+                                    odoo_meeting.write({
+                                        'attendee_ids': [[6, 0, attendee_ids]],
+                                        'partner_ids': [[6, 0, partner.ids]]
+                                    })
+                                    self.env.cr.commit()
                                 for attendee in event['attendees']:
                                     partner = self.env['res.partner'].search(
                                         [('email', "=", attendee['emailAddress']['address'])])
@@ -492,6 +513,23 @@ class Office365(models.Model):
                             partner_ids = []
                             attendee_ids = []
                             new_event.append(odoo_event.id)
+                            if not event['attendees'] and event['organizer']:
+                                    user = self.env['res.users'].search([('login', '=',event['organizer']['emailAddress']['address'])])
+                                    partner = user.partner_id
+                                    #partner = self.env['res.partner'].search([('email', '=',event['organizer']['emailAddress']['address'])])
+                                    odoo_attendee = self.env['calendar.attendee'].create({
+                                        'partner_id': partner.id,
+                                        'event_id': odoo_event.id,
+                                        'email': partner.email,
+                                        'common_name': partner.name,
+
+                                    })
+                                    attendee_ids.append(odoo_attendee.id)
+                                    odoo_event.write({
+                                        'attendee_ids': [[6, 0, attendee_ids]],
+                                        'partner_ids': [[6, 0, partner.ids]]
+                                    })
+                                    self.env.cr.commit()
                             for attendee in event['attendees']:
                                 partner = self.env['res.partner'].search(
                                     [('email', "=", attendee['emailAddress']['address'])])
@@ -513,14 +551,14 @@ class Office365(models.Model):
 
                                 })
                                 attendee_ids.append(odoo_attendee.id)
-                                if not event['attendees']:
-                                    odoo_attendee = self.env['calendar.attendee'].create({
-                                        'partner_id': res_user.partner_id.id,
-                                        'event_id': odoo_event.id,
-                                        'email': res_user.partner_id.email,
-                                        'common_name': res_user.partner_id.name,
+                                #if not event['attendees']:
+                                    #odoo_attendee = self.env['calendar.attendee'].create({
+                                    #    'partner_id': res_user.partner_id.id,
+                                     #   'event_id': odoo_event.id,
+                                  #      'email': res_user.partner_id.email,
+                                   #     'common_name': res_user.partner_id.name,
 
-                                    })
+                                 #   })
                                 attendee_ids.append(odoo_attendee.id)
                                 partner_ids.append(res_user.partner_id.id)
                                 odoo_event.write({
@@ -533,7 +571,7 @@ class Office365(models.Model):
                     if odoo_event_ids and res_user.office365_event_del_flag:
                         delete_event= self.env['calendar.event'].search([('office_id','in',odoo_event_ids)])
                         delete_event.unlink()
-
+                    
 
                     return update_event,new_event
 
