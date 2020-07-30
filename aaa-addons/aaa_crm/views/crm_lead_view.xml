@@ -51,6 +51,7 @@
         <field name="inherit_id" ref="crm.crm_case_form_view_oppor"/>
         <field name="arch" type="xml">
             <field name="user_id" position="before">
+                <field name="end_lead"/>
                 <field name="axe1" widget="selection" required="True" domain="[('axe_type','=','axe1')]"/>
                 <field name="axe2" widget="selection" required="True" domain="[('axe_type','=','axe2')]"/>
             </field>
@@ -60,6 +61,38 @@
             </field>
         </field>
     </record>
+	
+    <record id="crm_case_kanban_view_leads_all" model="ir.ui.view">
+        <field name="name">crm.lead.kanban.lead</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.crm_case_kanban_view_leads"/>
+        <field name="arch" type="xml">
+            <xpath expr="//kanban" position="attributes">
+                <attribute name="create">true</attribute>
+                <attribute name="quick_create">false</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="res_config_settings_auto_view_form" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.inherit.crm.auto</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="crm.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@id='crm_lead']" position="after">
+                    <div class="o_setting_left_pane"/>
+                    <div class="o_setting_right_pane">
+                        <label string="Automatic stage" for="auto_stage"/>
+                        <div class="content-group">
+                            <div class="mt16">
+                                <field name="stage_auto_id" widget="selection" class="col-lg-16"/>
+                            </div>
+                        </div>
+                   </div>
+            </xpath>
+        </field>
+    </record>
+
 
     </data>
 </odoo>

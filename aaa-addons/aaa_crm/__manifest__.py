@@ -13,6 +13,7 @@ AAA CRM
     'website': 'https://www.auguria.fr',
     'images': [],
     'depends': ['sales_team',
+                'sale_crm',
                 'crm',
                 'aaa_security',
                 ],
