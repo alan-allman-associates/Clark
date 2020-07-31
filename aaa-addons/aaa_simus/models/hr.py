@@ -82,6 +82,7 @@ class HrEmployee(models.Model):
                             'phone':line[18],
                             'email':work_email,
                             'consultant': True,
+                            'parent_id': company_id.partner_id.id,
                         }
                         if employee.job_id.name == 'Consultant':
                             consultant_id = self.env['res.partner'].create(data_consultant)

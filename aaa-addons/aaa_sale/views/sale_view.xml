@@ -7,6 +7,10 @@
         <field name="model">sale.order</field>
         <field name="inherit_id" ref="sale.view_order_form"/>
         <field name="arch" type="xml">
+            <xpath expr="//page[@name='order_lines']//form//field[@name='product_id']" position="replace">
+                    <field name="product_id" options="{'no_create': True, 'no_create_edit':True}"  context="{'partner_id':parent.partner_id, 'quantity':product_uom_qty, 'pricelist':parent.pricelist_id, 'uom':product_uom, 'company_id': parent.company_id}" attrs="{                                                     'readonly': [('product_updatable', '=', False)],                                                     'required': [('display_type', '=', False)],                                                 }" force_save="1"/>
+
+                </xpath>
             <field name="partner_id" position="before">
                 <field name="axe1" widget="selection"/>
                 <field name="axe2" widget="selection"/>
