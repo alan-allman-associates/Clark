@@ -306,6 +306,7 @@ class CustomMeeting(models.Model):
     @api.multi
     def unlink(self):
         events = self
+        res = []
         for self in events:
             if self.office_id and self.env.user.event_del_flag:
                 if self.env.user.expires_in:
@@ -338,9 +339,20 @@ class CustomMeeting(models.Model):
                 if response.status_code == 204:
                     _logger.info('successfull deleted event ' + self.name+"from Office365 Calendar")
                     # res = super(CustomMeeting, self).unlink(self)
-                res = super(CustomMeeting, self).unlink(self)
+                delete_event= self.env['calendar.event'].search([('office_id','=', self.office_id)])
+                res = super(CustomMeeting, delete_event).unlink(delete_event)
+
             else:
-                res = super(CustomMeeting, self).unlink(self)
+                if self.recurrency:
+                   delete_event_1 = self.env['calendar.event'].search([('recurrent_id','=', self.recurrent_id)])
+                   ident = self.id
+                   if type(ident) is str:
+                      ident = int(ident[0:ident.find("-")])
+                   delete_event_2 = self.env['calendar.event'].search([('id','=', ident)])
+                   delete_event = delete_event_1 + delete_event_2  
+                   res = super(CustomMeeting, delete_event).unlink(delete_event)
+                else:
+                   res = super(CustomMeeting, self).unlink(self)
 
         return res
 
