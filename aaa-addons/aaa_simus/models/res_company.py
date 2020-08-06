@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from odoo import models, api, _
+from odoo import models, fields, api, _
 from datetime import datetime
 from os.path import exists
 from odoo.tools import ustr
@@ -10,6 +10,8 @@ import csv
 class ResCompany(models.Model):
     _inherit = "res.company"
 
+    do_not_import = fields.Boolean(string="Do not import this company", store=True)
+ 
     @api.multi
     def write(self, vals):
         for company in self:
@@ -50,6 +52,10 @@ class ResCompany(models.Model):
 
     @api.model
     def simus_import_resources(self):
+        dont_sompany_simus_code = []
+        dont_company = self.env['res.company'].search([('do_not_import', '=', True)])
+        for comp in dont_company:
+            dont_sompany_simus_code.append(comp.simus_code)
         ftp = self.env['res.ftp'].search([])
         path = ftp.file_name
         if exists(path):
@@ -84,7 +90,7 @@ class ResCompany(models.Model):
                         #next(resources_reader)
                         break
                 for line in resources_reader:
-                    if line and line[1] not in ['INP', 'INS']:
+                    if line and line[1] not in dont_sompany_simus_code:
                         simus_code = line[1]
                         if not line[2] in lines:
                             lines[line[2]] = []
@@ -168,6 +174,10 @@ class ResCompany(models.Model):
     @api.model
     def simus_import_projects(self):
         ftp = self.env['res.ftp'].search([])
+        dont_sompany_simus_code_pr = []
+        dont_company = self.env['res.company'].search([('do_not_import', '=', True)])
+        for comp in dont_company:
+            dont_sompany_simus_code_pr.append(comp.simus_code)
         path = ftp.file_name_sec
         if exists(path):
             user_obj = self.env['res.users']
@@ -187,7 +197,7 @@ class ResCompany(models.Model):
                             lines.append(line)
                         for line in lines:
                             company = self.env['res.company'].search([('simus_code', '=', line[1])])
-                            if company and not line[1] in ['INP', 'INS']:
+                            if company and not line[1] in dont_sompany_simus_code_pr:
                                 simus_code = line[9]
                                 company_id = company.id
                                 name = line[8]

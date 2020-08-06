@@ -13,6 +13,7 @@
             <page name="simus_ftp" string="SIMUS FTP">
                 <page>
                     <group>
+                        <field name="do_not_import"/>
                         <field name="url"/>
                         <field name="login"/>
                         <field name="password"/>
