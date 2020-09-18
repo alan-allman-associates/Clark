@@ -7,6 +7,9 @@
         <field name="model">res.partner</field>
         <field name="inherit_id" ref="base.view_partner_form"/>
         <field name="arch" type="xml">
+            <field name="company_id" position="replace">
+                <field name="company_id" required="1" groups="base.group_multi_company" options="{'no_create': True}"/>
+            </field>
             <field name="function" position="before">
                 <field name="gender"/>
                 <field name="birthday"/>
