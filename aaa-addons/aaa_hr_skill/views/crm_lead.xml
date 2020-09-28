@@ -13,7 +13,7 @@
          	
          	<xpath expr="//field[@name='team_id']" position="after">
          		<field name="order_line_ids">
-         			<tree editable="bottom">
+         			<tree create="false" editable="false">
                         <field name="order_name" string="N°"/>
                         <field name="price_unit" string="HJM"/>
                         <field name="employee_id"/>

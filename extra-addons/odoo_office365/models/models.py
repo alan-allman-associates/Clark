@@ -303,7 +303,6 @@ class CustomMeeting(models.Model):
 
 
 
-    @api.multi
     def unlink(self):
         events = self
         res = []
@@ -355,8 +354,8 @@ class CustomMeeting(models.Model):
                    res = super(CustomMeeting, self).unlink(self)
 
         return res
-
-
+    
+    
 class CustomMessageInbox(models.Model):
     """
     Email will store in mail.message class so that's why we need office_id

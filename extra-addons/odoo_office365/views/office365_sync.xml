@@ -26,8 +26,8 @@
 
                             </group>
                         </group>
-                        <div>
-                            <!--group>
+                         <div>
+                           <group>
                                 <div class="content-group">
                                     <group col="4">
 
@@ -41,7 +41,7 @@
                                                 Import from Office365 to ODOO.
                                             </span>
                                         </group>
-                                        <group>
+                                        <group  groups="base.group_system">
 
                                             <span>
                                                 <h2>Export</h2>
@@ -56,12 +56,12 @@
                                         <group>
                                             <field name="is_import_contact" nolabel="1"/>
                                         </group>
-                                        <group>
+                                        <group  groups="base.group_system">
                                             <field name="is_export_contact" nolabel="1"/>
                                         </group>
                                         <group></group>
                                     </group>
-                                    <group col="4">
+                                    <!--group col="4">
                                         <group>
                                             <strong>Email</strong>
                                         </group>
@@ -69,7 +69,7 @@
                                             <field name="is_import_email" nolabel="1"/>
                                         </group>
                                         <group></group>
-                                    </group>
+                                    </group-->
                                     <group col="4">
                                         <group>
                                             <strong>Calendar</strong>
@@ -77,7 +77,7 @@
                                         <group>
                                             <field name="is_import_calendar" nolabel="1"/>
                                         </group>
-                                        <group>
+                                        <group  groups="base.group_system">
                                             <field name="is_export_calendar" nolabel="1"/>
                                         </group>
                                     </group>
@@ -88,11 +88,11 @@
                                         <group>
                                             <field name="is_import_task" nolabel="1"/>
                                         </group>
-                                        <group>
+                                        <group  groups="base.group_system">
                                             <field name="is_export_task" nolabel="1"/>
                                         </group>
                                     </group>
-                                    <group col="3">
+                                    <group col="3" groups="base.group_system">
                                         <group>
                                             <field name="is_auto_sync"/>
                                         </group>
@@ -117,25 +117,25 @@
                                             <field name="to_date" attrs="{'invisible':[('is_manual_sync','=',False)]}"/>
 
                                         </group>
-                                        <group>
+                                        <!--group>
                                             <field name ='calendar_id' widget="selection"   />
 
                                         </group>
                                         <group>
                                             <field name ='categories' widget="many2many_tags"   attrs="{'invisible':[('is_import_calendar','=',False)]}"/>
-                                         </group>
+                                         </group-->
 
                                     </group>
 
                                     <button name="sync_data"
                                             type="object" string="Start Execution" class="oe_highlight" icon="fa-refresh fa-2x"/>
-                                    <button name="test" attrs="{'invisible': [('is_auto_sync', '=', False)]}"
-                                            type="object" string="test history" class="oe_highlight"
-                                            icon="fa-refresh fa-2x"/>
+<!--                                    <button name="test" attrs="{'invisible': [('is_auto_sync', '=', False)]}"-->
+<!--                                            type="object" string="test history" class="oe_highlight"-->
+<!--                                            icon="fa-refresh fa-2x"/>-->
                                 </div>
 
 
-                            </group-->
+                            </group>
 
                         </div>
                         <notebook colspan="3">

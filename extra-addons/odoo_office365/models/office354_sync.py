@@ -138,7 +138,6 @@ class Office365(models.Model):
             nowDateTime = datetime.now()
             if nowDateTime > expires_in:
                 self.generate_refresh_token()
-
         response = requests.get(
             'https://graph.microsoft.com/v1.0/me/messages/' + message['id'] + '/attachments/',
             headers={
@@ -182,11 +181,13 @@ class Office365(models.Model):
     def get_categ_id(self, event):
         categ_id = []
         for categ in event['categories']:
-            categ_type_id = self.env['calendar.event.type'].search([('name','=',categ.split(' ')[0])])
+#            categ_type_id = self.env['calendar.event.type'].search([('name','=',categ.split(' ')[0])])
+            categ_type_id = self.env['calendar.event.type'].search([('name','=',categ)])
             if categ_type_id:
                 categ_id.append(categ_type_id[0].id)
             else:
-                categ_type_id = categ_type_id.create({'name':categ.split(' ')[0]})
+#                categ_type_id = categ_type_id.create({'name':categ.split(' ')[0]})
+                categ_type_id = categ_type_id.create({'name':categ})
                 categ_id.append(categ_type_id[0].id)
         return categ_id
 
@@ -200,10 +201,11 @@ class Office365(models.Model):
         office_connector = self.env['office.sync'].search([])[0]
         context = self._context
         current_uid = context.get('uid')
-        res_user = self.env['res.users'].browse(current_uid)
+        res_user = self.env['res.users'].sudo().browse(current_uid)
         update_event = 0
         new_event = 0
         status = None
+        _logger.info('Office365 import: utilisateur {}'.format(res_user.id))
         if res_user.token:
             try:
                 if res_user.expires_in:
@@ -265,10 +267,48 @@ class Office365(models.Model):
                                 url = 'https://graph.microsoft.com/v1.0/me/calendars/'+str(office_connector.calendar_id.calendar_id)+'/events'
                             else:
                                 url = 'https://graph.microsoft.com/v1.0/me/events'
+                                
 
-                    up_event, n_event = self.get_office365_event(url, res_user)
-                    update_event = update_event + len(up_event)
-                    new_event = new_event + len(n_event)
+                    _logger.info('Office365: url  de départ {}'.format(url))
+                    response = requests.get(
+                        url,
+                        headers={
+                            'Host': 'outlook.office.com',
+                            'Authorization': 'Bearer {0}'.format(res_user.token),
+                            'Accept': 'application/json',
+                            'X-Target-URL': 'http://outlook.office.com',
+                            'connection': 'keep-Alive'
+                        }).content
+                    if 'value' not in json.loads((response.decode('utf-8'))).keys():
+                        raise osv.except_osv(response)
+                        _logger.error('Office365:{}'.format(json.loads((response.decode('utf-8')))))
+                    events = json.loads((response.decode('utf-8')))['value']
+ 
+                    if '@odata.nextLink' in json.loads((response.decode('utf-8'))).keys():
+                        nextlink = json.loads((response.decode('utf-8')))['@odata.nextLink']
+ 
+                    while '@odata.nextLink' in json.loads((response.decode('utf-8'))).keys():
+                            _logger.info('Office365: url {}'.format(nextlink))
+                            response = requests.get(
+                                nextlink,
+                                headers={
+                                    'Host': 'outlook.office.com',
+                                    'Authorization': 'Bearer {0}'.format(res_user.token),
+                                    'Accept': 'application/json',
+                                    'X-Target-URL': 'http://outlook.office.com',
+                                    'connection': 'keep-Alive'
+                                }).content
+                            if 'value' not in json.loads((response.decode('utf-8'))).keys():
+                                raise osv.except_osv(response)
+                                _logger.error('Office365:{}'.format(json.loads((response.decode('utf-8')))))
+
+                            events =  events + json.loads((response.decode('utf-8')))['value']
+                            if '@odata.nextLink' in json.loads((response.decode('utf-8'))).keys():
+                                    nextlink = json.loads((response.decode('utf-8')))['@odata.nextLink']
+                                    
+                    up_event, n_event = self.get_office365_event(events, res_user)
+                    update_event = len(up_event)
+                    new_event = len(n_event)
 
             except Exception as e:
                 status = 'Error'
@@ -303,11 +343,11 @@ class Office365(models.Model):
         else:
             raise Warning("Token not found! Please Go to user preference from left corner and login Office365 Account ")
 
-    def get_office365_event(self,url,res_user,categ_name=None):
+    def get_office365_event(self,events,res_user,categ_name=None):
         update_event = []
         new_event = []
-         
-        
+        recurrency_ids = []
+        office_ids = []
         office_connector = self.env['office.sync'].search([])[0]
         if office_connector.calendar_id:
             odoo_event = self.env['calendar.event'].search([('office_id', '!=', None),('calendar_id', '=', office_connector.calendar_id.id)])
@@ -316,281 +356,301 @@ class Office365(models.Model):
         odoo_event_ids =  odoo_event.mapped('office_id')
 
         try:
-
-                    response = requests.get(
-                        url,
-                        headers={
-                            'Host': 'outlook.office.com',
-                            'Authorization': 'Bearer {0}'.format(res_user.token),
-                            'Accept': 'application/json',
-                            'X-Target-URL': 'http://outlook.office.com',
-                            'connection': 'keep-Alive'
-                        }).content
-                    if 'value' not in json.loads((response.decode('utf-8'))).keys():
-                        raise osv.except_osv(response)
-                        _logger.error('Office365:{}'.format(json.loads((response.decode('utf-8')))))
-                    events = json.loads((response.decode('utf-8')))['value']
                     
-                    for event in events:
-                        if event['id'] in odoo_event_ids and res_user.office365_event_del_flag:
-                            odoo_event_ids.remove(event['id'])
+                    for event in events: 
+                        if event.get('id') in odoo_event_ids and res_user.office365_event_del_flag:
+                            odoo_event_ids.remove(event.get('id'))
 
                     for event in events:
-                        if not event['subject'] and event['body']:
+                        if not event.get('subject') and event.get('body'):
                             continue
-
                         # if 'showAs' in event:
-                        odoo_meetings = self.env['calendar.event'].search([("office_id", "=", event['id'])])
+                        odoo_meetings = self.env['calendar.event'].sudo().search([("office_id", "=", event.get('id'))])
+                        
+                        for odoo_meeting in odoo_meetings:
+                            if event['id'] in odoo_event_ids:
+                               odoo_event_ids.remove(event.get('id'))
+                            
                         categ_id = None
-                        if 'categories' in event and  event['categories']:
+                        
+                        if 'categories' in event and  event.get('categories'):
                             categ_id = self.get_categ_id(event)
-                        if  odoo_meetings:
+
+                        rrule_type_odoo = None
+
+                        if  event.get('recurrence'):
+                            rrule_type_odoo = event.get('recurrence').get('pattern').get('type').replace('absolute', '').lower()
+                            rrule_type_odoo = event.get('recurrence').get('pattern').get('type').replace('relative', '').lower()
+
+                        if odoo_meetings:
                             for odoo_meeting in odoo_meetings:
-                                if event['id'] in odoo_event_ids:
-                                   odoo_event_ids.remove(event['id'])
-                                if datetime.strptime(event['lastModifiedDateTime'][0:18],"%Y-%m-%dT%H:%M:%S") != odoo_meeting.modified_date:
-                                        ident = odoo_meeting.id
-                                        if type(ident) is str:
-                                           ident = int(ident[0:ident.find("-")])
-                                        _logger.info('Office365: Updating event {} In Odoo'.format(ident))
-                                        odoo_meeting.write({
-                                            'is_update': False,
-                                            'active': True,
-                                            'calendar_id': office_connector.calendar_id.id if office_connector.calendar_id else None,
-                                            'office_id': event['id'],
-                                            'name': event['subject'],
-                                            'category_name': event['categories'][0] if 'categories' in event and event['categories'] else None,
-                                            "description": event['bodyPreview'],
-                                            'location': (event['location']['address']['city'] + ', ' + event['location']['address'][
-                                                'countryOrRegion']) if 'address' in event['location'] and 'city' in
-                                                                       event['location'][
-                                                                           'address'].keys() else "",
-                                            'start': datetime.strptime(event['start']['dateTime'][0:18], '%Y-%m-%dT%H:%M:%S'),
-                                            'stop': datetime.strptime(event['end']['dateTime'][0:18], '%Y-%m-%dT%H:%M:%S'),
-                                            'allday': event['isAllDay'],
-                                            'categ_ids': [(6,0,categ_id)] if categ_id else None,
-                                            'show_as': event['showAs'] if 'showAs' in event and (
-                                                    event['showAs'] == 'free' or event['showAs'] == 'busy') else None,
-                                            'recurrency': True if event['recurrence'] else False,
-                                            'end_type': 'end_date' if event['recurrence'] else "",
-                                            'rrule_type': event['recurrence']['pattern']['type'].replace('absolute', '').lower() if
-                                            event[
-                                                'recurrence'] else "",
-                                            'count': event['recurrence']['range']['numberOfOccurrences'] if event[
-                                                'recurrence'] else "",
-                                            'final_date': datetime.strptime(event['recurrence']['range']['endDate'],
-                                                                            '%Y-%m-%d').strftime(
-                                                '%Y-%m-%d') if event['recurrence'] else None,
-                                            'mo': True if event['recurrence'] and 'daysOfWeek' in event['recurrence'][
-                                                'pattern'].keys() and 'monday' in event['recurrence']['pattern'][
-                                                              'daysOfWeek'] else False,
-                                            'tu': True if event['recurrence'] and 'daysOfWeek' in event['recurrence'][
-                                                'pattern'].keys() and 'tuesday' in event['recurrence']['pattern'][
-                                                              'daysOfWeek'] else False,
-                                            'we': True if event['recurrence'] and 'daysOfWeek' in event['recurrence'][
-                                                'pattern'].keys() and 'wednesday' in event['recurrence']['pattern'][
-                                                              'daysOfWeek'] else False,
-                                            'th': True if event['recurrence'] and 'daysOfWeek' in event['recurrence'][
-                                                'pattern'].keys() and 'thursday' in event['recurrence']['pattern'][
-                                                              'daysOfWeek'] else False,
-                                            'fr': True if event['recurrence'] and 'daysOfWeek' in event['recurrence'][
-                                                'pattern'].keys() and 'friday' in event['recurrence']['pattern'][
-                                                              'daysOfWeek'] else False,
-                                            'sa': True if event['recurrence'] and 'daysOfWeek' in event['recurrence'][
-                                                'pattern'].keys() and 'saturday' in event['recurrence']['pattern'][
-                                                              'daysOfWeek'] else False,
-                                            'su': True if event['recurrence'] and 'daysOfWeek' in event['recurrence'][
-                                                'pattern'].keys() and 'sunday' in event['recurrence']['pattern'][
-                                                              'daysOfWeek'] else False,
-                                            'modified_date': datetime.strptime(event['lastModifiedDateTime'][0:18],"%Y-%m-%dT%H:%M:%S")
-                                        })
-#                                        if not event['recurrence']:
-#                                            odoo_meeting.write({
-#                                            'name': event['subject'],
-#                                        })
+                                   if datetime.strptime(event['lastModifiedDateTime'][0:18],"%Y-%m-%dT%H:%M:%S") != odoo_meeting.modified_date:
+                                        if odoo_meeting.office_id not in office_ids and not odoo_meeting.recurrent_id:
+                                            office_ids.append(odoo_meeting.office_id)
+                                            ident = odoo_meeting.id
+                                            if type(ident) is str:
+                                                ident = int(ident[0:ident.find("-")])
+                                            _logger.info('Office365: Updating event {} In Odoo'.format(ident))
+                                            if odoo_meeting.recurrency:
+                                               recurrency_ids.append(ident) 
+                                            odoo_meeting.write({
+                                                'is_update': False,
+                                                'active': True,
+                                                'calendar_id': office_connector.calendar_id.id if office_connector.calendar_id else None,
+                                                'office_id': event.get('id'),
+                                                'name': event.get('subject'),
+                                                'category_name': event.get('categories')[0] if 'categories' in event and event.get('categories') else None,
+                                                "description": event.get('bodyPreview'),
+                                                'location': (event['location']['address']['city'] + ', ' + event['location']['address'][
+                                                    'countryOrRegion']) if 'address' in event['location'] and 'city' in
+                                                                           event['location'][
+                                                                               'address'].keys() else "",
+                                                'start': datetime.strptime(event['start']['dateTime'][0:18], '%Y-%m-%dT%H:%M:%S'),
+                                                'stop': datetime.strptime(event['end']['dateTime'][0:18], '%Y-%m-%dT%H:%M:%S'),
+                                                'allday': event.get('isAllDay'),
+                                                'categ_ids': [(6,0,categ_id)] if categ_id else None,
+                                                'show_as': event.get('showAs') if 'showAs' in event and (
+                                                           event.get('showAs') == 'free' or event['showAs'] == 'busy') else None,
+                                                'recurrency': True if event.get('recurrence') else False,
+                                                'end_type': 'end_date' if event.get('recurrence') else "",
+                                                'rrule_type': rrule_type_odoo if event.get('recurrence') else "",
+                                                'count': event.get('recurrence').get('range').get('numberOfOccurrences') if event.get('recurrence') and 
+                                                         event.get('recurrence').get('range').get('numberOfOccurrences')  > 0 else 1,
+                                                'final_date': datetime.strptime(event.get('recurrence').get('range').get('endDate'),
+                                                                                            '%Y-%m-%d').strftime(
+                                                                                            '%Y-%m-%d') if event.get('recurrence') else None,
+                                                'mo': True if event.get('recurrence') and 'daysOfWeek' in event.get('recurrence').get('pattern').keys()
+                                                                                         and 'monday' in event.get('recurrence').get('pattern').get('daysOfWeek') else False,
+                                                'tu': True if event.get('recurrence') and 'daysOfWeek' in event.get('recurrence').get('pattern').keys()
+                                                                                        and 'tuesday' in event.get('recurrence').get('pattern').get('daysOfWeek') else False,
+                                                'we': True if event.get('recurrence') and 'daysOfWeek' in event.get('recurrence').get('pattern').keys()
+                                                                                         and 'wednesday' in event.get('recurrence').get('pattern').get('daysOfWeek') else False,
+                                                'th': True if event.get('recurrence') and 'daysOfWeek' in event.get('recurrence').get('pattern').keys()
+                                                                                          and 'thursday' in event.get('recurrence').get('pattern').get('daysOfWeek') else False,
+                                                'fr': True if event.get('recurrence') and 'daysOfWeek' in event.get('recurrence').get('pattern').keys()
+                                                                                        and 'friday' in event.get('recurrence').get('pattern').get('daysOfWeek') else False,
+                                                'sa': True if event.get('recurrence') and 'daysOfWeek' in event.get('recurrence').get('pattern').keys()
+                                                                                          and 'saturday' in event.get('recurrence').get('pattern').get('daysOfWeek') else False,
+                                                'su': True if event.get('recurrence') and 'daysOfWeek' in event.get('recurrence').get('pattern').keys()
+                                                                                          and 'sunday' in event.get('recurrence').get('pattern').get('daysOfWeek') else False,
+                                                'modified_date': datetime.strptime(event['lastModifiedDateTime'][0:18],"%Y-%m-%dT%H:%M:%S"),
+                                            })
+                                                
+                                            _logger.info('Office365: Updating event {} In Odoo 2'.format(odoo_meeting.name))
 
-                                        
-                                        partner_ids = []
-                                        attendee_ids = []
-                                        if event['organizer']:
-                                            user = self.env['res.users'].search([('login', '=',event['organizer']['emailAddress']['address'])])
-                                            partner = user.partner_id
-                                            _logger.info('Office365: Attendee update {}'.format(partner[0].id))
+                                            odoo_meeting.write({
+                                                'name': event['subject'],
+                                                'start': datetime.strptime(event['start']['dateTime'][0:18], '%Y-%m-%dT%H:%M:%S'),
+                                                'stop': datetime.strptime(event['end']['dateTime'][0:18], '%Y-%m-%dT%H:%M:%S'),
+                                            })
+                                                
+                                            partner_ids = []
+                                            attendee_ids = []
+                                            partner = res_user.partner_id
                                             odoo_attendee = self.env['calendar.attendee'].create({
-                                                'partner_id': partner[0].id,
-                                                'event_id': ident,
-                                                'email': partner.email,
-                                                'common_name': partner.name,
-
+                                                 'partner_id': partner[0].id,
+                                                 'event_id': ident,
+                                                 'email': partner[0].email,
+                                                 'common_name': partner[0].name,
                                             })
                                             attendee_ids.append(odoo_attendee[0].id)
                                             partner_ids.append(partner[0].id)
                                             odoo_meeting.write({
-                                                'attendee_ids': [[6, 0, attendee_ids]],
-                                                'partner_ids': [[6, 0, partner_ids]]
+                                               'attendee_ids': [[6, 0, attendee_ids]],
+                                               'partner_ids': [[6, 0, partner_ids]]
                                             })
                                             self.env.cr.commit()
-                                        for attendee in event['attendees']:
-                                            partner = self.env['res.partner'].search(
-                                                [('email', "=", attendee['emailAddress']['address'])])
-                                            _logger.info('Office365: Attendee update {}'.format(partner[0].id))
-                                            if not partner:
-                                                _logger.info('Office365: Creating attendee {} in ODOO'.format(
-                                                    attendee['emailAddress']['address']))
-                                                partner = self.env['res.partner'].create({
-                                                    'name': attendee['emailAddress']['name'],
-                                                    'email': attendee['emailAddress']['address'],
-                                                })
-                                            odoo_attendee = self.env['calendar.attendee'].create({
-                                                'partner_id': partner[0].id,
-                                                'event_id': ident,
-                                                'email': attendee['emailAddress']['address'],
-                                                'common_name': attendee['emailAddress']['name'],
 
-                                            })
-                                            attendee_ids.append(odoo_attendee[0].id)
-                                            partner_ids.append(partner[0].id)
-                                            odoo_meeting.write({
-                                                'attendee_ids': [[6, 0, attendee_ids]],
-                                                'partner_ids': [[6, 0, partner_ids]]
-                                            })
-                                            self.env.cr.commit()
-                                        update_event.append(ident)
+                                            if event.get('attendees'):        
+                                                for attendee in event.get('attendees'):
+                                                    partner_email = attendee.get('emailAddress').get('address')
+                                                    partner_name = attendee.get('emailAddress').get('name')
+                                                    _logger.info('Office365: partner email {}'.format(partner_email))
+                                                    partner = self.env['res.partner'].search(
+                                                        [('email', "=", partner_email)])
+                                                    if not partner:
+                                                        _logger.info('Office365: Creating PARTNER {} In Odoo'.format(
+                                                            partner_email))
+                                                        partner = self.env['res.partner'].create({
+                                                            'name': partner_name,
+                                                            'email': partner_email,
+                                                            'company_id': res_user.company_id[0].id
+                                                        })
+                                                        self.env.cr.commit()
+                                                    _logger.info(
+                                                        'Office365: Creating attendee {} In Odoo'.format(attendee['emailAddress']['address']))
+                                                    odoo_attendee = self.env['calendar.attendee'].create({
+                                                        'partner_id': partner[0].id,
+                                                        'event_id': ident,
+                                                        'email': partner[0].email,
+                                                        'common_name': partner[0].name,
+                                                    })
+                                                    _logger.info(
+                                                        'Office365: Creating attendee 2 {} In Odoo'.format(attendee['emailAddress']['address']))
+                                                    attendee_ids.append(odoo_attendee[0].id)
+                                                    partner_ids.append(partner[0].id)
+                                                    _logger.info(
+                                                        'Office365: Creating attendee 3 {} In Odoo'.format(attendee['emailAddress']['address']))
+                                                    odoo_meeting.write({
+                                                        'attendee_ids': [[6, 0, attendee_ids]],
+                                                        'partner_ids': [[6, 0, partner_ids]]
+                                                    })
+                                                    self.env.cr.commit()
+                                            update_event.append(ident)
 
-                                    # odoo_meeting.unlink()
-                                    # self.env.cr.commit()
+                                        # odoo_meeting.unlink()
+                                        # self.env.cr.commit()
                         else:
-                                user = self.env['res.users'].search([('login', '=',event['organizer']['emailAddress']['address'])])
-                                odoo_event = self.env['calendar.event'].create({
-                                    'office_id': event['id'],
-                                    'is_update': False,
-                                    'active': True,
-                                    'name': event['subject'],
-                                    'calendar_id': office_connector.calendar_id.id if office_connector.calendar_id else None,
-                                    'category_name': event['categories'][0] if 'categories' in event and event['categories'] else None,
-                                    "description": event['bodyPreview'],
-                                    'location': (event['location']['address']['city'] + ', ' + event['location']['address'][
-                                        'countryOrRegion']) if 'address' in event['location'] and 'city' in
-                                                            event['location'][
-                                                                'address'].keys() else "",
-                                    'start': datetime.strptime(event['start']['dateTime'][0:18], '%Y-%m-%dT%H:%M:%S'),
-                                    'stop': datetime.strptime(event['end']['dateTime'][0:18], '%Y-%m-%dT%H:%M:%S'),
-                                    'allday': event['isAllDay'],
+                                    user = self.env['res.users'].search([('login', '=',event['organizer']['emailAddress']['address'])])
+                                    _logger.info('Office365: Creating event {} In Odoo'.format(event['subject']))
+                                    odoo_event = self.env['calendar.event'].create({
+                                        'office_id': event.get('id'),
+                                        'is_update': False,
+                                        'active': True,
+                                        'calendar_id': office_connector.calendar_id.id if office_connector.calendar_id else None,
+                                        'office_id': event.get('id'),
+                                        'name': event.get('subject'),
+                                        'category_name': event.get('categories')[0] if 'categories' in event and event.get('categories') else None,
+                                        'description': event.get('bodyPreview'),
+                                        'location': (event['location']['address']['city'] + ', ' + event['location']['address'][
+                                                                          'countryOrRegion']) if 'address' in event.get('location') and 'city' in
+                                                                           event['location'][
+                                                                               'address'].keys() else "",
+                                        'start': datetime.strptime(event['start']['dateTime'][0:18], '%Y-%m-%dT%H:%M:%S'),
+                                        'stop': datetime.strptime(event['end']['dateTime'][0:18], '%Y-%m-%dT%H:%M:%S'),
+                                        'allday': event.get('isAllDay'),
+                                        'categ_ids': [(6,0,categ_id)] if categ_id else None,
+                                        'show_as': event.get('showAs') if 'showAs' in event and (
+                                                   event.get('showAs') == 'free' or event['showAs'] == 'busy') else None,
+                                        'recurrency': True if event.get('recurrence') else False,
+                                        'end_type': 'end_date' if event.get('recurrence') else "",
+                                        'rrule_type': rrule_type_odoo if event.get('recurrence') else "",
+                                        'count': event.get('recurrence').get('range').get('numberOfOccurrences') if event.get('recurrence') and 
+                                                 event.get('recurrence').get('range').get('numberOfOccurrences')  > 0 else 1,
+                                        'final_date': datetime.strptime(event.get('recurrence').get('range').get('endDate'),
+                                                                                '%Y-%m-%d').strftime(
+                                                                                '%Y-%m-%d') if event.get('recurrence') else None,
+                                        'mo': True if event.get('recurrence') and 'daysOfWeek' in event.get('recurrence').get('pattern').keys()
+                                                                              and 'monday' in event.get('recurrence').get('pattern').get('daysOfWeek') else False,
+                                        'tu': True if event.get('recurrence') and 'daysOfWeek' in event.get('recurrence').get('pattern').keys()
+                                                                              and 'tuesday' in event.get('recurrence').get('pattern').get('daysOfWeek') else False,
+                                        'we': True if event.get('recurrence') and 'daysOfWeek' in event.get('recurrence').get('pattern').keys()
+                                                                              and 'wednesday' in event.get('recurrence').get('pattern').get('daysOfWeek') else False,
+                                        'th': True if event.get('recurrence') and 'daysOfWeek' in event.get('recurrence').get('pattern').keys()
+                                                                              and 'thursday' in event.get('recurrence').get('pattern').get('daysOfWeek') else False,
+                                        'fr': True if event.get('recurrence') and 'daysOfWeek' in event.get('recurrence').get('pattern').keys()
+                                                                              and 'friday' in event.get('recurrence').get('pattern').get('daysOfWeek') else False,
+                                        'sa': True if event.get('recurrence') and 'daysOfWeek' in event.get('recurrence').get('pattern').keys()
+                                                                              and 'saturday' in event.get('recurrence').get('pattern').get('daysOfWeek') else False,
+                                        'su': True if event.get('recurrence') and 'daysOfWeek' in event.get('recurrence').get('pattern').keys()
+                                                                              and 'sunday' in event.get('recurrence').get('pattern').get('daysOfWeek') else False,
+                                        'modified_date': datetime.strptime(event['lastModifiedDateTime'][0:18],"%Y-%m-%dT%H:%M:%S"),
+                                       })
 
-                                    'categ_ids': [[6,0, categ_id]] if categ_id else None,
-                                    'show_as': event['showAs'] if 'showAs' in event and (
-                                            event['showAs'] == 'free' or event['showAs'] == 'busy') else None,
-                                    'recurrency': True if event['recurrence'] else False,
-                                    'end_type': 'end_date' if event['recurrence'] else "",
-                                    'rrule_type': event['recurrence']['pattern']['type'].replace('absolute', '').lower() if
-                                    event[
-                                        'recurrence'] else "",
-                                    'count': event['recurrence']['range']['numberOfOccurrences'] if event[
-                                        'recurrence'] else "",
-                                    'final_date': datetime.strptime(event['recurrence']['range']['endDate'],
-                                                                    '%Y-%m-%d').strftime(
-                                        '%Y-%m-%d') if event['recurrence'] else None,
-                                    'mo': True if event['recurrence'] and 'daysOfWeek' in event['recurrence'][
-                                        'pattern'].keys() and 'monday' in event['recurrence']['pattern'][
-                                                    'daysOfWeek'] else False,
-                                    'tu': True if event['recurrence'] and 'daysOfWeek' in event['recurrence'][
-                                        'pattern'].keys() and 'tuesday' in event['recurrence']['pattern'][
-                                                    'daysOfWeek'] else False,
-                                    'we': True if event['recurrence'] and 'daysOfWeek' in event['recurrence'][
-                                        'pattern'].keys() and 'wednesday' in event['recurrence']['pattern'][
-                                                    'daysOfWeek'] else False,
-                                    'th': True if event['recurrence'] and 'daysOfWeek' in event['recurrence'][
-                                        'pattern'].keys() and 'thursday' in event['recurrence']['pattern'][
-                                                    'daysOfWeek'] else False,
-                                    'fr': True if event['recurrence'] and 'daysOfWeek' in event['recurrence'][
-                                        'pattern'].keys() and 'friday' in event['recurrence']['pattern'][
-                                                    'daysOfWeek'] else False,
-                                    'sa': True if event['recurrence'] and 'daysOfWeek' in event['recurrence'][
-                                        'pattern'].keys() and 'saturday' in event['recurrence']['pattern'][
-                                                    'daysOfWeek'] else False,
-                                    'su': True if event['recurrence'] and 'daysOfWeek' in event['recurrence'][
-                                        'pattern'].keys() and 'sunday' in event['recurrence']['pattern'][
-                                                    'daysOfWeek'] else False,
-                                    'modified_date' : datetime.strptime(event['lastModifiedDateTime'][0:18],"%Y-%m-%dT%H:%M:%S"),
-                                })
 
-                                partner_ids = []
-                                attendee_ids = []
-                                new_event.append(odoo_event.id)
-                                if event['organizer']:
-                                        user = self.env['res.users'].search([('login', '=',event['organizer']['emailAddress']['address'])])
-                                        partner = user.partner_id
-                                        #partner = self.env['res.partner'].search([('email', '=',event['organizer']['emailAddress']['address'])])
-                                        odoo_attendee = self.env['calendar.attendee'].create({
-                                            'partner_id': partner[0].id,
-                                            'event_id': odoo_event.id,
-                                            'email': partner.email,
-                                            'common_name': partner.name,
-
-                                        })
-                                        attendee_ids.append(odoo_attendee[0].id)
-                                        partner_ids.append(partner[0].id)
-                                        odoo_event.write({
-                                            'attendee_ids': [[6, 0, attendee_ids]],
-                                            'partner_ids': [[6, 0, partner_ids]]
-                                        })
-                                        odoo_event.write({
-                                          'attendee_ids': [[6, 0, attendee_ids]],
-                                          'partner_ids': [[6, 0, partner_ids]]
-                                        })
-                                        self.env.cr.commit()
-                                for attendee in event['attendees']:
-                                    partner = self.env['res.partner'].search(
-                                        [('email', "=", attendee['emailAddress']['address'])])
-                                    if not partner:
-                                        _logger.info('Office365: Creating attendee {} In Odoo'.format(
-                                            attendee['emailAddress']['address']))
-                                        partner = self.env['res.partner'].create({
-                                            'name': attendee['emailAddress']['name'],
-                                            'email': attendee['emailAddress']['address'],
-                                        })
-                                    _logger.info(
-                                        'Office365: Creating attendee {} In Odoo'.format(attendee['emailAddress']['address']))
+                                    partner_ids = []
+                                    attendee_ids = []
+                                    partner_ids = []
+                                    attendee_ids = []
+                                    partner = res_user.partner_id
                                     odoo_attendee = self.env['calendar.attendee'].create({
-                                        'partner_id': partner[0].id,
-                                        'event_id': odoo_event.id,
-                                        'email': attendee['emailAddress']['address'],
-                                        'common_name': attendee['emailAddress']['name'],
-
+                                         'partner_id': partner[0].id,
+                                         'event_id': odoo_event.id,
+                                         'email': partner.email,
+                                         'common_name': partner.name,
                                     })
                                     attendee_ids.append(odoo_attendee[0].id)
                                     partner_ids.append(partner[0].id)
                                     odoo_event.write({
-                                      'attendee_ids': [[6, 0, attendee_ids]],
-                                      'partner_ids': [[6, 0, partner_ids]]
+                                       'attendee_ids': [[6, 0, attendee_ids]],
+                                       'partner_ids': [[6, 0, partner_ids]]
                                     })
                                     self.env.cr.commit()
-                                   #if not event['attendees']:
-                                        #odoo_attendee = self.env['calendar.attendee'].create({
-                                        #    'partner_id': res_user.partner_id.id,
-                                        #   'event_id': odoo_event.id,
-                                    #      'email': res_user.partner_id.email,
-                                    #     'common_name': res_user.partner_id.name,
 
-                                    #   })
+                                    if event.get('organizer'):
+                                            organizer_email = event.get('organizer').get('emailAddress').get('address')
+                                            organizer_name = event.get('organizer').get('emailAddress').get('name')
+                                            organizer =  self.env['res.partner'].search(
+                                                [('email', "=", organizer_email)])
+                                            _logger.info('Office365: Creating organizer {} In Odoo'.format(
+                                                   organizer_email))
+                                            if not organizer:
+                                                _logger.info('Office365: Creating ORGANIZER {} In Odoo'.format(
+                                                   organizer_email))
+                                                organizer = self.env['res.partner'].create({
+                                                    'name': organizer_name,
+                                                    'email': organizer_email,
+                                                    'company_id': res_user.company_id[0].id
+                                                })
+                                                self.env.cr.commit()
+                                            odoo_attendee = self.env['calendar.attendee'].create({
+                                                    'partner_id': organizer[0].id,
+                                                    'event_id': odoo_event.id,
+                                                    'email': organizer[0].email,
+                                                    'common_name': organizer[0].name,
 
+                                                })
+                                            attendee_ids.append(odoo_attendee[0].id)
+                                            partner_ids.append(organizer[0].id)
+                                            odoo_event.write({
+                                                   'attendee_ids': [[6, 0, attendee_ids]],
+                                                   'partner_ids': [[6, 0, partner_ids]]
+                                            })
+                                            self.env.cr.commit()
+
+                                    if event.get('attendees'):        
+                                        for attendee in event.get('attendees'):
+                                            partner_email = attendee.get('emailAddress').get('address')
+                                            partner_name = attendee.get('emailAddress').get('name')
+                                            _logger.info('Office365: partner email {}'.format(partner_email))
+                                            partner = self.env['res.partner'].search(
+                                                [('email', "=", partner_email)])
+                                            if not partner:
+                                                _logger.info('Office365: Creating PARTNER {} In Odoo'.format(
+                                                    partner_email))
+                                                partner = self.env['res.partner'].create({
+                                                    'name': partner_name,
+                                                    'email': partner_email,
+                                                    'company_id': res_user.company_id[0].id,
+                                                })
+                                                self.env.cr.commit()
+                                            _logger.info(
+                                                'Office365: Creating attendee {} In Odoo'.format(attendee['emailAddress']['address']))
+                                            odoo_attendee = self.env['calendar.attendee'].create({
+                                                'partner_id': partner[0].id,
+                                                'event_id': odoo_event.id,
+                                                'email': partner[0].email,
+                                                'common_name': partner[0].name,
+                                            })
+                                            _logger.info(
+                                                'Office365: Creating attendee 2 {} In Odoo'.format(attendee['emailAddress']['address']))
+                                            attendee_ids.append(odoo_attendee[0].id)
+                                            partner_ids.append(partner[0].id)
+                                            _logger.info(
+                                                'Office365: Creating attendee 3 {} In Odoo'.format(attendee['emailAddress']['address']))
+                                            odoo_event.write({
+                                                'attendee_ids': [[6, 0, attendee_ids]],
+                                                'partner_ids': [[6, 0, partner_ids]]
+                                            })
+                                            self.env.cr.commit()
+
+                                    new_event.append(odoo_event.id)
+
+                    if recurrency_ids:
+                        for recurrency in recurrency_ids:
+                            self._cr.execute("""delete from calendar_event where recurrent_id = %s""",([recurrency]))
+                        
                     if odoo_event_ids and res_user.office365_event_del_flag:
                         for office in odoo_event_ids: 
-                            delete_events= self.env['calendar.event'].search([('office_id','=', office)])
-                            delete_events.unlink()
-#                        for delete in delete_events:
-#                            ident = delete_events.id
-#                            if type(ident) is str:
-#                               ident = int(ident[0:ident.find("-")])
-#                            delete_event = self.env['calendar.event'].search([('id','=', ident)])
-#                            for event in delete_event:
-#                                event.unlink()
+                           _logger.info('Office365: delete event {} In Odoo'.format(office))
+                           delete_events= self.env['calendar.event'].sudo().search([('office_id','=', office)])
+                           delete_events.sudo().unlink()
 
 
 
                     return update_event,new_event
 
-                    # res_user.last_calender_import = datetime.now()
+                    res_user.last_calender_import = datetime.now()
 
         except Exception as e:
             raise Warning(e)
@@ -601,17 +661,17 @@ class Office365(models.Model):
         this function export  odoo calendar event  to office 365 Calendar
 
         """
-
         office_connector = self.env['office.sync'].search([])[0]
         context = self._context
         current_uid = context.get('uid')
-        res_user = self.env['res.users'].browse(current_uid)
+        res_user = self.env['res.users'].sudo().browse(current_uid)
         export_event = []
         update_event = []
         status = None
         from_date = None
         to_date = None
-        if res_user.token:
+        _logger.info('Office365 export: utilisateur {}'.format(res_user.id))
+        if res_user.token :
             try:
                 if res_user.expires_in:
                     expires_in = datetime.fromtimestamp(int(res_user.expires_in) / 1e3)
@@ -660,106 +720,115 @@ class Office365(models.Model):
                     calendars = json.loads((response.decode('utf-8')))['value']
                     calendar_id = calendars[0]['id']
 
-                meetings = self.env['calendar.event'].search([("write_uid", '=', res_user.id)])
-                _logger.info('Office365: from date  {}'.format(from_date))
-                _logger.info('Office365: to date  {}'.format(to_date))
-                if from_date and to_date:
-                    meetings = meetings.search([('write_date', '>=', from_date), ('write_date', '<=', to_date)])
+                meetings = self.env['calendar.event'].sudo().search([('user_id', '=', res_user.id),('active', '=', True)])
+
+                _logger.info('Odoo: meeting trouvé  {}'.format(len(meetings)))
+                
+                if from_date and to_date and meetings:
+                    _logger.info('Odoo: from date  {}'.format(from_date))
+                    _logger.info('Odoo: to date  {}'.format(to_date))
+                    meetings = meetings.sudo().search([('modified_date', '>=', from_date), ('modified_date', '<=', to_date),("user_id", '=', res_user.id)])
+                
                 added_meetings = self.env['calendar.event'].search(
-                    [("office_id", "!=", False), ("create_uid", '=', res_user.id)])
+                    [("office_id", "!=", False), ("user_id", '=', res_user.id)])
+
+                _logger.info('Odoo: user_id  {}'.format(res_user.id))
+                _logger.info('Odoo: meeting trouvé  {}'.format(len(meetings)))
 
                 added = []
                 
-                for meeting in meetings:
-#                    if not meeting.recurrency:
-                        temp = meeting
-                        id = str(meeting.id).split('-')[0]
-                        metngs = [meeting for meeting in meetings if id in str(meeting.id)]
-                        index = len(metngs)
-                        categ_name=[]
-                        if meeting.categ_ids:
-                            for cat in meeting.categ_ids:
-                                categ_name.append(cat.name)
-                        meeting = metngs[index - 1]
-                        if meeting.start is not None:
-                            metting_start = meeting.start.strftime(
-                                '%Y-%m-%d T %H:%M:%S') if meeting.start else meeting.start
-                        else:
-                            metting_start = None
+                if 1==1:
+                    for meeting in meetings:
+                            temp = meeting
+                            id = str(meeting.id).split('-')[0]
+                            metngs = [meeting for meeting in meetings if id in str(meeting.id)]
+                            index = len(metngs)
+                            categ_name=[]
+                            if meeting.categ_ids:
+                                for cat in meeting.categ_ids:
+                                    categ_name.append(cat.name)
+                            meeting = metngs[index - 1]
+                            if meeting.start is not None:
+                                metting_start = meeting.start.strftime(
+                                    '%Y-%m-%d T %H:%M:%S') if meeting.start else meeting.start
+                            else:
+                                metting_start = None
 
-                        _logger.info('Office365: name {}'.format(meeting.name))
-                        payload = {
-                            "subject": meeting.name,
-                            "categories": categ_name,
-                            "attendees": self.getAttendee(meeting.attendee_ids),
-                            'reminderMinutesBeforeStart': self.getTime(meeting.alarm_ids),
-                            "start": {
-                                "dateTime": meeting.start.strftime(
-                                    '%Y-%m-%d T %H:%M:%S') if meeting.start else meeting.start,
-                                "timeZone": "UTC"
-                            },
-                            "end": {
-                                "dateTime": meeting.stop.strftime('%Y-%m-%d T %H:%M:%S') if meeting.stop else meeting.stop,
-                                "timeZone": "UTC"
-                            },
-                            "showAs": meeting.show_as,
-                            "location": {
-                                "displayName": meeting.location if meeting.location else "",
-                            },
-
-                        }
-                        if meeting.recurrency:
-                            payload.update({"recurrence": {
-                                "pattern": {
-                                    "daysOfWeek": self.getdays(meeting),
-                                    "type": (
-                                                'Absolute' if meeting.rrule_type != "weekly" and meeting.rrule_type != "daily" else "") + meeting.rrule_type,
-                                    "interval": meeting.interval,
-                                    "month": int(meeting.start.month),  # meeting.start[5] + meeting.start[6]),
-                                    "dayOfMonth": int(meeting.start.day),  # meeting.start[8] + meeting.start[9]),
-                                    "firstDayOfWeek": "sunday",
-                                    # "index": "first"
+                            _logger.info('Office365: name {}'.format(meeting.name))
+                            payload = {
+                                "subject": meeting.name,
+                                "categories": categ_name,
+                                "attendees": self.getAttendee(meeting.attendee_ids),
+                                'reminderMinutesBeforeStart': self.getTime(meeting.alarm_ids),
+                                "start": {
+                                    "dateTime": meeting.start.strftime(
+                                        '%Y-%m-%d T %H:%M:%S') if meeting.start else meeting.start,
+                                    "timeZone": "UTC"
                                 },
-                                "range": {
-                                    "type": "endDate",
-                                    "startDate": str(
-                                        str(meeting.start.year) + "-" + str(meeting.start.month) + "-" + str(
-                                            meeting.start.day)),
-                                    "endDate": str(meeting.final_date),
-                                    "recurrenceTimeZone": "UTC",
-                                    "numberOfOccurrences": meeting.count,
-                                }
-                            }})
-                        if meeting.name not in added:
-                            if not meeting.office_id:
-                                response = requests.post(
-                                    'https://graph.microsoft.com/v1.0/me/calendars/' + calendar_id + '/events',
-                                    headers=header, data=json.dumps(payload)).content
-                                if 'id' in json.loads((response.decode('utf-8'))):
-                                    temp.write({
-                                        'office_id': json.loads((response.decode('utf-8')))['id']
-                                    })
-                                    # temp.is_update = False
-                                    self.env.cr.commit()
-                                    export_event.append(json.loads((response.decode('utf-8')))['id'])
-                                    if meeting.recurrency:
-                                        added.append(meeting.name)
+                                "end": {
+                                    "dateTime": meeting.stop.strftime('%Y-%m-%d T %H:%M:%S') if meeting.stop else meeting.stop,
+                                    "timeZone": "UTC"
+                                },
+                                "showAs": meeting.show_as,
+                                "location": {
+                                    "displayName": meeting.location if meeting.location else "",
+                                },
 
-                            elif meeting.is_update:
+                            }
+                            if meeting.recurrency:
+                                payload.update({"recurrence": {
+                                    "pattern": {
+                                        "daysOfWeek": self.getdays(meeting),
+                                        "type": (
+                                                    'Absolute' if meeting.rrule_type != "weekly" and meeting.rrule_type != "daily" else "") + meeting.rrule_type,
+                                        "interval": meeting.interval,
+                                        "month": int(meeting.start.month),  # meeting.start[5] + meeting.start[6]),
+                                        "dayOfMonth": int(meeting.start.day),  # meeting.start[8] + meeting.start[9]),
+                                        "firstDayOfWeek": "sunday",
+                                    #    "index": "first"
+                                    },
+                                    "range": {
+                                        "type": "endDate",
+                                        "startDate": str(
+                                            str(meeting.start.year) + "-" + str(meeting.start.month) + "-" + str(
+                                                meeting.start.day)),
+                                        "endDate": str(meeting.final_date),
+                                        "recurrenceTimeZone": "UTC",
+                                        "numberOfOccurrences": meeting.count,
+                                    }
+                                }})
+                            if meeting.name not in added:
+                                if not meeting.office_id:
+                                    _logger.info('export not in add : name {}'.format(meeting.name))
+                                    response = requests.post(
+                                        'https://graph.microsoft.com/v1.0/me/calendars/' + calendar_id + '/events',
+                                        headers=header, data=json.dumps(payload)).content
+                                    _logger.info('export not in add : office_id {}'.format(response))
+                                    if 'id' in json.loads((response.decode('utf-8'))):
+                                        _logger.info('export not in add : office_id {}'.format(json.loads((response.decode('utf-8')))['id']))
+                                        temp.write({
+                                            'office_id': json.loads((response.decode('utf-8')))['id']
+                                        })
+                                        # temp.is_update = False
+                                        self.env.cr.commit()
+                                        export_event.append(json.loads((response.decode('utf-8')))['id'])
+                                        if meeting.recurrency:
+                                            added.append(meeting.name)
 
-                                response = requests.patch(
-                                    'https://graph.microsoft.com/v1.0/me/calendars/' + calendar_id + '/events/' + meeting.office_id,
-                                    headers=header, data=json.dumps(payload)).content
-                                if 'id' in json.loads((response.decode('utf-8'))):
-                                    temp.write({
-                                        'office_id': json.loads((response.decode('utf-8')))['id']
-                                    })
-                                    update_event.append(json.loads((response.decode('utf-8')))['id'])
-                                    meeting.is_update =False
-                                    self.env.cr.commit()
-                                    if meeting.recurrency:
-                                        added.append(meeting.name)
-
+                                elif meeting.is_update:
+                                    response = requests.patch(
+                                        'https://graph.microsoft.com/v1.0/me/calendars/' + calendar_id + '/events/' + meeting.office_id,
+                                        headers=header, data=json.dumps(payload)).content
+                                    if 'id' in json.loads((response.decode('utf-8'))):
+                                        temp.write({
+                                            'office_id': json.loads((response.decode('utf-8')))['id']
+                                        })
+                                        update_event.append(json.loads((response.decode('utf-8')))['id'])
+                                        meeting.is_update =False
+                                        self.env.cr.commit()
+                                        if meeting.recurrency:
+                                            added.append(meeting.name)
+                                        
             except Exception as e:
                 _logger.error(e)
                 raise ValidationError(_(str(e)))

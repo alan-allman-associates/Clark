@@ -23,7 +23,7 @@ class CalendarEvent(models.Model):
     @api.depends('user_id', 'categ_ids', 'start_datetime')
     def _compute_speed_id(self):
         speed_obj = self.env['speed']
-        for event in self:
+        for event in self.filtered(lambda r: not recurrency):
             user = event.user_id
             if user.partner_id.is_business_manager:
                 date = event.start_datetime
