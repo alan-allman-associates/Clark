@@ -27,7 +27,7 @@
                 <field name="display_name"/>
                 <field name="title"/>
                 <field name="speed_max"/>
-                <field name="speed_week"/>
+                <field name="speed_week_sec"/>
                 <field name="company_id"/>
                 <templates>
                     <t t-name="kanban-box">
@@ -38,7 +38,7 @@
                                 <strong class="o_kanban_record_title oe_partner_heading"><field name="title"/></strong>
                                 <strong class="o_kanban_record_title oe_partner_heading"><field name="display_name"/></strong>
                             </div>
-                            <field name="speed_week" widget="gauge"  
+                            <field name="speed_week_sec" widget="gauge"  
                                    options="{'max_field': 'speed_max', 'style':'width:120px;height:90px;'}"/>
                             </t>
                         </div>

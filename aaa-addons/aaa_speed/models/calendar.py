@@ -23,7 +23,7 @@ class CalendarEvent(models.Model):
     @api.depends('user_id', 'categ_ids', 'start_datetime')
     def _compute_speed_id(self):
         speed_obj = self.env['speed']
-        for event in self:
+        for event in self.filtered(lambda r: not r.recurrency):
             user = event.user_id
             if user.partner_id.is_business_manager:
                 date = event.start_datetime
@@ -39,7 +39,7 @@ class CalendarEvent(models.Model):
                                                   'week': week,
                                                   'month': month})
                     event.update({'speed_id': speed.id, 'coefficient': sum([categ.coefficient for categ in event.categ_ids])})
-                    event.coefficient_sec = sum([categ.coefficient for categ in event.categ_ids])
+                event.coefficient_sec = sum([categ.coefficient for categ in event.categ_ids])
 
     @api.multi
     def unlink(self):
