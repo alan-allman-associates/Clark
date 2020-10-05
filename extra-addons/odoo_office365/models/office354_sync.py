@@ -379,8 +379,8 @@ class Office365(models.Model):
                         rrule_type_odoo = None
 
                         if  event.get('recurrence'):
-                            rrule_type_odoo = event.get('recurrence').get('pattern').get('type').replace('absolute', '').lower()
-                            rrule_type_odoo = event.get('recurrence').get('pattern').get('type').replace('relative', '').lower()
+                            rrule_type_odoo = event.get('recurrence').get('pattern').get('type')
+                            rrule_type_odoo = (rrule_type_odoo.replace('relative', '')).replace('absolute', '').lower()
 
                         if odoo_meetings:
                             for odoo_meeting in odoo_meetings:
