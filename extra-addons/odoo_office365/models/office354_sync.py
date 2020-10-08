@@ -163,9 +163,9 @@ class Office365(models.Model):
 
     def auto_import_calendar(self):
         _logger.info('Scheduler is running to import calender event from office')
-        is_manual = True
-        self.import_calendar(is_manual)
-        #self.import_calendar()
+#        is_manual = True
+#        self.import_calendar(is_manual)
+        self.import_calendar()
         _logger.info('Calender Scheduler: Successfully import event from office365')
 
     @api.model
@@ -201,147 +201,150 @@ class Office365(models.Model):
         office_connector = self.env['office.sync'].search([])[0]
         context = self._context
         current_uid = context.get('uid')
-        res_user = self.env['res.users'].sudo().browse(current_uid)
+        if is_manual:
+           res_users = self.env['res.users'].sudo().browse(current_uid)
+        else:
+            res_users = self.env['res.users'].search([('token', '!=', None)]) 
         update_event = 0
         new_event = 0
         status = None
-        _logger.info('Office365 import: utilisateur {}'.format(res_user.id))
-        if res_user.token:
-            try:
-                if res_user.expires_in:
-                    expires_in = datetime.fromtimestamp(int(res_user.expires_in) / 1e3)
-                    expires_in = expires_in + timedelta(seconds=3600)
-                    nowDateTime = datetime.now()
-                    if nowDateTime > expires_in:
-                        _logger.info('Office365: refreshing office365 Token')
-                        self.generate_refresh_token()
-                if self.categories:
-                    categ_name = []
-                    for catg in self.categories:
-                        if office_connector.calendar_id and office_connector.calendar_id.calendar_id:
-                            url = "https://graph.microsoft.com/v1.0/me/calendars/"+str(office_connector.calendar_id.calendar_id)+"/eventsevents?$filter=categories/any(a:a+eq+'{}')".format(
-                                catg.name.replace(' ', '+'))
-                        else:
-                            url = "https://graph.microsoft.com/v1.0/me/events?$filter=categories/any(a:a+eq+'{}')".format(catg.name.replace(' ','+'))
-                        up_event,n_event = self.get_office365_event(url,res_user)
-                        update_event = update_event+len(up_event)
-                        new_event = new_event + len(n_event)
-                else:
-                    if is_manual:
-                        #
-                        if self.from_date and not self.to_date:
-                            raise Warning('Please! Select "To Date" to Import Events.')
-                        if self.from_date and self.to_date:
+        _logger.info('Office365  import: is_manual {}'.format(is_manual))
+        for res_user in res_users:
+            _logger.info('Office365 import: utilisateur {}'.format(res_user.id))
+            if res_user.token:
+                try:
+                    if res_user.expires_in:
+                        expires_in = datetime.fromtimestamp(int(res_user.expires_in) / 1e3)
+                        expires_in = expires_in + timedelta(seconds=3600)
+                        nowDateTime = datetime.now()
+                        if nowDateTime > expires_in:
+                            _logger.info('Office365: refreshing office365 Token')
+                            self.generate_refresh_token()
+                    if self.categories:
+                        categ_name = []
+                        for catg in self.categories:
                             if office_connector.calendar_id and office_connector.calendar_id.calendar_id:
-                                url = 'https://graph.microsoft.com/v1.0/me/calendars/'+str(office_connector.calendar_id.calendar_id)+'/events?$filter=lastModifiedDateTime ge {}&lastModifiedDateTime le {}' \
+                                url = "https://graph.microsoft.com/v1.0/me/calendars/"+str(office_connector.calendar_id.calendar_id)+"/eventsevents?$filter=categories/any(a:a+eq+'{}')".format(
+                                    catg.name.replace(' ', '+'))
+                            else:
+                                url = "https://graph.microsoft.com/v1.0/me/events?$filter=categories/any(a:a+eq+'{}')".format(catg.name.replace(' ','+'))
+                            up_event,n_event = self.get_office365_event(url,res_user)
+                            update_event = update_event+len(up_event)
+                            new_event = new_event + len(n_event)
+                    else:
+                        if is_manual:
+                            #
+                            if self.from_date and not self.to_date:
+                                raise Warning('Please! Select "To Date" to Import Events.')
+                            if self.from_date and self.to_date:
+                                if office_connector.calendar_id and office_connector.calendar_id.calendar_id:
+                                    url = 'https://graph.microsoft.com/v1.0/me/calendars/'+str(office_connector.calendar_id.calendar_id)+'/events?$filter=lastModifiedDateTime ge {}&lastModifiedDateTime le {}' \
+                                        .format(self.from_date.strftime("%Y-%m-%dT%H:%M:%SZ"),
+                                                self.to_date.strftime("%Y-%m-%dT%H:%M:%SZ"))
+                                else:
+
+                                    url = 'https://graph.microsoft.com/v1.0/me/events?$filter=lastModifiedDateTime ge {}&lastModifiedDateTime le {}' \
                                     .format(self.from_date.strftime("%Y-%m-%dT%H:%M:%SZ"),
                                             self.to_date.strftime("%Y-%m-%dT%H:%M:%SZ"))
                             else:
+                                if office_connector.calendar_id and office_connector.calendar_id.calendar_id:
+                                    url = 'https://graph.microsoft.com/v1.0/me/calendars/' + str(
+                                        office_connector.calendar_id.calendar_id) + '/events'
 
-                                url = 'https://graph.microsoft.com/v1.0/me/events?$filter=lastModifiedDateTime ge {}&lastModifiedDateTime le {}' \
-                                .format(self.from_date.strftime("%Y-%m-%dT%H:%M:%SZ"),
-                                        self.to_date.strftime("%Y-%m-%dT%H:%M:%SZ"))
-                        else:
-                            if office_connector.calendar_id and office_connector.calendar_id.calendar_id:
-                                url = 'https://graph.microsoft.com/v1.0/me/calendars/' + str(
-                                    office_connector.calendar_id.calendar_id) + '/events'
+                                else:
+                                    url = 'https://graph.microsoft.com/v1.0/me/events'
 
-                            else:
-                                url = 'https://graph.microsoft.com/v1.0/me/events'
-
-
-                    else:
-                        custom_data = self.env['office.sync'].search([])[0]
-                        if custom_data.from_date and custom_data.to_date:
-                            if office_connector.calendar_id and office_connector.calendar_id.calendar_id:
-                                url = 'https://graph.microsoft.com/v1.0/me/calendars/'+str(office_connector.calendar_id.calendar_id)+'/events?$filter=lastModifiedDateTime ge {}&lastModifiedDateTime le {}' \
-                                    .format(custom_data.from_date.strftime("%Y-%m-%dT%H:%M:%SZ"),
-                                            custom_data.to_date.strftime("%Y-%m-%dT%H:%M:%SZ"))
-                            else:
-                                url = 'https://graph.microsoft.com/v1.0/me/events?$filter=lastModifiedDateTime ge {}&lastModifiedDateTime le {}' \
-                                .format(custom_data.from_date.strftime("%Y-%m-%dT%H:%M:%SZ"),
-                                        custom_data.to_date.strftime("%Y-%m-%dT%H:%M:%SZ"))
 
                         else:
-                            if office_connector.calendar_id and office_connector.calendar_id.calendar_id:
-                                url = 'https://graph.microsoft.com/v1.0/me/calendars/'+str(office_connector.calendar_id.calendar_id)+'/events'
+                            _logger.info('Office365: IS AUTO')
+                            if res_user.last_calender_import:
+                                if office_connector.calendar_id and office_connector.calendar_id.calendar_id:
+                                    url = 'https://graph.microsoft.com/v1.0/me/calendars/'+str(office_connector.calendar_id.calendar_id)+'/events?$filter=lastModifiedDateTime ge {}' \
+                                        .format(res_user.last_calender_import.strftime("%Y-%m-%dT%H:%M:%SZ"))
+                                else:
+                                    url = 'https://graph.microsoft.com/v1.0/me/events?$filter=lastModifiedDateTime ge {}' \
+                                        .format(res_user.last_calender_import.strftime("%Y-%m-%dT%H:%M:%SZ"))
+
                             else:
-                                url = 'https://graph.microsoft.com/v1.0/me/events'
-                                
+                                if office_connector.calendar_id and office_connector.calendar_id.calendar_id:
+                                    url = 'https://graph.microsoft.com/v1.0/me/calendars/'+str(office_connector.calendar_id.calendar_id)+'/events'
+                                else:
+                                    url = 'https://graph.microsoft.com/v1.0/me/events'
 
-                    _logger.info('Office365: url  de départ {}'.format(url))
-                    response = requests.get(
-                        url,
-                        headers={
-                            'Host': 'outlook.office.com',
-                            'Authorization': 'Bearer {0}'.format(res_user.token),
-                            'Accept': 'application/json',
-                            'X-Target-URL': 'http://outlook.office.com',
-                            'connection': 'keep-Alive'
-                        }).content
-                    if 'value' not in json.loads((response.decode('utf-8'))).keys():
-                        raise osv.except_osv(response)
-                        _logger.error('Office365:{}'.format(json.loads((response.decode('utf-8')))))
-                    events = json.loads((response.decode('utf-8')))['value']
- 
-                    if '@odata.nextLink' in json.loads((response.decode('utf-8'))).keys():
-                        nextlink = json.loads((response.decode('utf-8')))['@odata.nextLink']
- 
-                    while '@odata.nextLink' in json.loads((response.decode('utf-8'))).keys():
-                            _logger.info('Office365: url {}'.format(nextlink))
-                            response = requests.get(
-                                nextlink,
-                                headers={
-                                    'Host': 'outlook.office.com',
-                                    'Authorization': 'Bearer {0}'.format(res_user.token),
-                                    'Accept': 'application/json',
-                                    'X-Target-URL': 'http://outlook.office.com',
-                                    'connection': 'keep-Alive'
-                                }).content
-                            if 'value' not in json.loads((response.decode('utf-8'))).keys():
-                                raise osv.except_osv(response)
-                                _logger.error('Office365:{}'.format(json.loads((response.decode('utf-8')))))
 
-                            events =  events + json.loads((response.decode('utf-8')))['value']
-                            if '@odata.nextLink' in json.loads((response.decode('utf-8'))).keys():
-                                    nextlink = json.loads((response.decode('utf-8')))['@odata.nextLink']
-                                    
-                    up_event, n_event = self.get_office365_event(events, res_user)
-                    update_event = len(up_event)
-                    new_event = len(n_event)
+                        _logger.info('Office365: url  de départ {}'.format(url))
+                        response = requests.get(
+                            url,
+                            headers={
+                                'Host': 'graph.microsoft.com',
+                                'Authorization': 'Bearer {0}'.format(res_user.token),
+                                'Accept': 'application/json',
+                                'X-Target-URL': 'http://graph.office.com',
+                                'connection': 'keep-Alive'
+                            }).content
+                        if 'value' not in json.loads((response.decode('utf-8'))).keys():
+                            raise osv.except_osv(response)
+                            _logger.error('Office365:{}'.format(json.loads((response.decode('utf-8')))))
+                        events = json.loads((response.decode('utf-8')))['value']
 
-            except Exception as e:
-                status = 'Error'
-                if is_manual:
+                        if '@odata.nextLink' in json.loads((response.decode('utf-8'))).keys():
+                            nextlink = json.loads((response.decode('utf-8')))['@odata.nextLink']
+
+                        while '@odata.nextLink' in json.loads((response.decode('utf-8'))).keys():
+                                _logger.info('Office365: url {}'.format(nextlink))
+                                response = requests.get(
+                                    nextlink,
+                                    headers={
+                                        'Host': 'graph.microsoft.com',
+                                        'Authorization': 'Bearer {0}'.format(res_user.token),
+                                        'Accept': 'application/json',
+                                        'X-Target-URL': 'http://graph.office.com',
+                                        'connection': 'keep-Alive'
+                                    }).content
+                                if 'value' not in json.loads((response.decode('utf-8'))).keys():
+                                    raise osv.except_osv(response)
+                                    _logger.error('Office365:{}'.format(json.loads((response.decode('utf-8')))))
+
+                                events =  events + json.loads((response.decode('utf-8')))['value']
+                                if '@odata.nextLink' in json.loads((response.decode('utf-8'))).keys():
+                                        nextlink = json.loads((response.decode('utf-8')))['@odata.nextLink']
+
+                        up_event, n_event = self.get_office365_event(events, res_user)
+                        update_event = len(up_event)
+                        new_event = len(n_event)
+
+                except Exception as e:
+                    status = 'Error'
+                    if is_manual:
+                        _logger.error(e)
+                        raise Warning(e)
                     _logger.error(e)
-                    raise Warning(e)
-                _logger.error(e)
 
-            finally:
-                res_user.last_calender_import = datetime.now()
-                type = None
-                if not is_manual:
-                    type = 'auto'
-                else:
-                    type = 'manual'
-                history = self.env['sync.history']
-                history.create({'last_sync': datetime.now(),
-                                'no_im_calender': new_event if new_event else 0,
-                                'no_up_calender': update_event if update_event else 0,
-                                'sync_type': type,
-                                'no_up_task': 0,
-                                'no_up_contact': 0,
-                                'no_im_contact': 0,
-                                'no_im_email': 0,
-                                'no_im_task': 0,
-                                'sync_id': 1,
-                                'status': status if status else 'Success'
-                                })
+                finally:
+                    res_user.last_calender_import = datetime.now()
+                    type = None
+                    if not is_manual:
+                        type = 'auto'
+                    else:
+                        type = 'manual'
+                    history = self.env['sync.history']
+                    history.create({'last_sync': datetime.now(),
+                                    'no_im_calender': new_event if new_event else 0,
+                                    'no_up_calender': update_event if update_event else 0,
+                                    'sync_type': type,
+                                    'no_up_task': 0,
+                                    'no_up_contact': 0,
+                                    'no_im_contact': 0,
+                                    'no_im_email': 0,
+                                    'no_im_task': 0,
+                                    'sync_id': 1,
+                                    'status': status if status else 'Success'
+                                    })
 
-                self.env.cr.commit()
+                    self.env.cr.commit()
 
-        else:
-            raise Warning("Token not found! Please Go to user preference from left corner and login Office365 Account ")
+#        else:
+#            raise Warning("Token not found! Please Go to user preference from left corner and login Office365 Account ")
 
     def get_office365_event(self,events,res_user,categ_name=None):
         update_event = []
@@ -640,11 +643,11 @@ class Office365(models.Model):
                         for recurrency in recurrency_ids:
                             self._cr.execute("""delete from calendar_event where recurrent_id = %s""",([recurrency]))
                         
-                    if odoo_event_ids and res_user.office365_event_del_flag:
-                        for office in odoo_event_ids: 
-                           _logger.info('Office365: delete event {} In Odoo'.format(office))
-                           delete_events= self.env['calendar.event'].sudo().search([('office_id','=', office)])
-                           delete_events.sudo().unlink()
+#                    if odoo_event_ids and res_user.office365_event_del_flag:
+#                        for office in odoo_event_ids: 
+#                           _logger.info('Office365: delete event {} In Odoo'.format(office))
+#                           delete_events= self.env['calendar.event'].sudo().search([('office_id','=', office)])
+#                           delete_events.sudo().unlink()
 
 
 
