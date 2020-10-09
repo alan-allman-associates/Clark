@@ -351,12 +351,15 @@ class Office365(models.Model):
         new_event = []
         recurrency_ids = []
         office_ids = []
+        odoo_event_ids = []
         office_connector = self.env['office.sync'].search([])[0]
         if office_connector.calendar_id:
-            odoo_event = self.env['calendar.event'].search([('office_id', '!=', None),('calendar_id', '=', office_connector.calendar_id.id)])
+            odoo_event = self.env['calendar.event'].search([('office_id', '!=', None),('calendar_id', '=', office_connector.calendar_id.id),('modified_date', 'ge', res_user.last_calender_import)])
         else:
-            odoo_event = self.env['calendar.event'].search([('office_id','!=',None)])
-        odoo_event_ids =  odoo_event.mapped('office_id')
+            odoo_event = self.env['calendar.event'].search([('office_id','!=',None), ('modified_date', '>=', res_user.last_calender_import)])
+            
+        if odoo_event:	
+            odoo_event_ids =  odoo_event.mapped('office_id')
 
         try:
                     
