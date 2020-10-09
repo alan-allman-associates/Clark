@@ -314,8 +314,8 @@ class Office365(models.Model):
                         new_event = len(n_event)
 
                 except Exception as e:
-                    status = 'Error'
                     if is_manual:
+                        status = 'Error'
                         _logger.error(e)
                         raise Warning(e)
                     _logger.error(e)
