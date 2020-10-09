@@ -219,7 +219,7 @@ class Office365(models.Model):
                         nowDateTime = datetime.now()
                         if nowDateTime > expires_in:
                             _logger.info('Office365: refreshing office365 Token')
-                            self.generate_refresh_token()
+                            self.generate_refresh_token_bis(res_user)
                     if self.categories:
                         categ_name = []
                         for catg in self.categories:
@@ -1548,6 +1548,39 @@ class Office365(models.Model):
         context = self._context
         current_uid = context.get('uid')
         res_user = self.env['res.users'].browse(current_uid)
+
+        if res_user.refresh_token:
+            settings = self.env['office.settings'].search([])
+            settings = settings[0] if settings else settings
+
+            if not settings.client_id or not settings.redirect_url or not settings.secret:
+                raise osv.except_osv(_("Error!"), (_("Please ask admin to add Office365 settings!")))
+
+            header = {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            }
+
+            response = requests.post(
+                'https://login.microsoftonline.com/common/oauth2/v2.0/token',
+                data='grant_type=refresh_token&refresh_token=' + res_user.refresh_token + '&redirect_uri=' + settings.redirect_url + '&client_id=' + settings.client_id + '&client_secret=' + settings.secret
+                , headers=header).content
+
+            response = json.loads((str(response)[2:])[:-1])
+            if 'access_token' not in response:
+                response["error_/opt/odoo13/custom_addons/odoo_xerodescription"] = response[
+                    "error_description"].replace("\\r\\n", " ")
+                raise osv.except_osv(_("Error!"), (_(response["error"] + " " + response["error_description"])))
+            else:
+                res_user.token = response['access_token']
+                res_user.refresh_token = response['refresh_token']
+                res_user.expires_in = int(round(time.time() * 1000))
+        else:
+            _logger.error('Refresh token not found!')
+
+    def generate_refresh_token_bis(self,res_user):
+#        context = self._context
+#        current_uid = context.get('uid')
+#        res_user = self.env['res.users'].browse(current_uid)
 
         if res_user.refresh_token:
             settings = self.env['office.settings'].search([])
