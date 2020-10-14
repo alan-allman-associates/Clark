@@ -267,7 +267,7 @@ class ResCompany(models.Model):
     @api.model
     def create_consultant_public_user(self):
         consultants = self.env['res.partner'].search([('consultant', '=', True), ('user_ids', '=', False)])
-        user_obj = self.env['res.users']
+        user_obj = self.env['res.users'].with_context(no_reset_password=True)
         if consultants:
             for consultant in consultants:
                 default_login = consultant.lastname + '@' + consultant.firstname + '.com'
@@ -281,11 +281,10 @@ class ResCompany(models.Model):
                                  'login': consultant.email or default_login,
                                  'level': 1,
                                  'partner_id': consultant.id,
+                                 'notification_type': 'inbox',
+                                 'groups_id': [(5, 0, 0), (4, self.env.ref('base.group_public').sudo().id)],
                                  'company_ids': [(6, 0, [consultant.company_id.id])]}
                 user = user_obj.search([('login', '=', consultant.email)])
                 default_user = user_obj.search([('login', '=', default_login)])
                 if not default_user and not user:
                     user = user_obj.create(user_vals)
-                    user.write({'groups_id':[(5,0,0)]})                
-                    public_group_id = self.env.ref('base.group_public').sudo().id
-                    user.write({'groups_id': [(4, public_group_id)]})

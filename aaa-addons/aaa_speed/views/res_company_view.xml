@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Copyright 2020 Auguria
+    License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
+-->
+<odoo>
+    <record id="view_company_speed" model="ir.ui.view">
+        <field name="name">res.company.form.spped.inherit</field>
+        <field name="model">res.company</field>
+        <field name="inherit_id" ref="base.view_company_form"/>
+        <field name="arch" type="xml">
+           <xpath expr="//field[@name='parent_id']" position="before">
+                <field name="manage_speed"/>
+           </xpath>
+        </field>
+    </record>
+</odoo>

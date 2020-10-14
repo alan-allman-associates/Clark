@@ -62,6 +62,7 @@
        id="menu_open_view_speed"
        action="open_view_speed"
        parent="contacts.menu_contacts"
+       groups="aaa_speed.group_manage_speed"
        sequence="10"/>
 
     </data>
