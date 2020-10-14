@@ -45,7 +45,11 @@
            <field name="res_model">speed</field>
            <field name="view_mode">tree,form</field>
        </record>
-        <menuitem id="main_speed_menu" name="Speed history" groups="base.group_user" action="aaa_speed.action_speed" parent="contacts.menu_contacts"/>
+     <menuitem id="main_speed_menu"
+               name="Speed history"
+               groups="aaa_speed.group_manage_speed"
+               action="aaa_speed.action_speed"
+               parent="contacts.menu_contacts"/>
     </data>
 </odoo>
     

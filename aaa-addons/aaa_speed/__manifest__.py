@@ -18,9 +18,11 @@ AAA Speed
     'data': [
             'security/ir.model.access.csv',
             'views/res_partner_view.xml',
+            'views/res_company_view.xml',
             'views/calendar_view.xml',
             'views/speed.xml',
             'data/ir_config_parameter.xml',
+            'data/res_groups.xml',
     ],
     'demo': [
     ],
