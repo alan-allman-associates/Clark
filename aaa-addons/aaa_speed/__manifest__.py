@@ -17,6 +17,7 @@ AAA Speed
         ],
     'data': [
             'security/ir.model.access.csv',
+            'data/res_groups.xml',
             'views/res_partner_view.xml',
             'views/res_company_view.xml',
             'views/calendar_view.xml',
