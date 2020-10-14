@@ -281,6 +281,7 @@ class ResCompany(models.Model):
                                  'login': consultant.email or default_login,
                                  'level': 1,
                                  'partner_id': consultant.id,
+                                 'notification_type': 'inbox',
                                  'groups_id': [(5, 0, 0), (4, self.env.ref('base.group_public').sudo().id)],
                                  'company_ids': [(6, 0, [consultant.company_id.id])]}
                 user = user_obj.search([('login', '=', consultant.email)])
