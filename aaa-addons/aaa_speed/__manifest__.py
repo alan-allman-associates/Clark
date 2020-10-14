@@ -23,7 +23,6 @@ AAA Speed
             'views/calendar_view.xml',
             'views/speed.xml',
             'data/ir_config_parameter.xml',
-            'data/res_groups.xml',
     ],
     'demo': [
     ],
