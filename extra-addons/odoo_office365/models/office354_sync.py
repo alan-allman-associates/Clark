@@ -448,6 +448,7 @@ class Office365(models.Model):
                                                 'name': event['subject'],
                                                 'start': datetime.strptime(event['start']['dateTime'][0:18], '%Y-%m-%dT%H:%M:%S'),
                                                 'stop': datetime.strptime(event['end']['dateTime'][0:18], '%Y-%m-%dT%H:%M:%S'),
+                                                'user_id': res_user.id
                                             })
                                                 
                                             partner_ids = []
@@ -569,7 +570,8 @@ class Office365(models.Model):
                                     partner_ids.append(partner[0].id)
                                     odoo_event.write({
                                        'attendee_ids': [[6, 0, attendee_ids]],
-                                       'partner_ids': [[6, 0, partner_ids]]
+                                       'partner_ids': [[6, 0, partner_ids]],
+                                        'user_id': res_user.id,
                                     })
                                     self.env.cr.commit()
 
@@ -600,7 +602,8 @@ class Office365(models.Model):
                                             partner_ids.append(organizer[0].id)
                                             odoo_event.write({
                                                    'attendee_ids': [[6, 0, attendee_ids]],
-                                                   'partner_ids': [[6, 0, partner_ids]]
+                                                   'partner_ids': [[6, 0, partner_ids]],
+                                                'user_id': res_user.id
                                             })
                                             self.env.cr.commit()
 
@@ -636,7 +639,8 @@ class Office365(models.Model):
                                                 'Office365: Creating attendee 3 {} In Odoo'.format(attendee['emailAddress']['address']))
                                             odoo_event.write({
                                                 'attendee_ids': [[6, 0, attendee_ids]],
-                                                'partner_ids': [[6, 0, partner_ids]]
+                                                'partner_ids': [[6, 0, partner_ids]],
+                                                'user_id': res_user.id
                                             })
                                             self.env.cr.commit()
 
@@ -647,10 +651,10 @@ class Office365(models.Model):
                             self._cr.execute("""delete from calendar_event where recurrent_id = %s""",([recurrency]))
                         
                     if odoo_event_ids and res_user.office365_event_del_flag:
-                        for office in odoo_event_ids: 
-                           _logger.info('Office365: delete event {} In Odoo'.format(office))
-                           delete_events= self.env['calendar.event'].sudo().search([('office_id','=', office)])
-                           delete_events.sudo().unlink()
+                        for office in odoo_event_ids:
+                            _logger.info('Office365: delete event {} In Odoo'.format(office))
+                            delete_events= self.env['calendar.event'].sudo().search([('office_id','=', office)])
+                            delete_events.sudo().unlink()
 
 
 
