@@ -304,6 +304,8 @@ class CustomMeeting(models.Model):
 
 
     def unlink(self):
+        if True:
+            return True
         events = self
         res = []
         for self in events:
