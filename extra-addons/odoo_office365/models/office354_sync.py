@@ -650,11 +650,11 @@ class Office365(models.Model):
                         for recurrency in recurrency_ids:
                             self._cr.execute("""delete from calendar_event where recurrent_id = %s""",([recurrency]))
                         
-                    if odoo_event_ids and res_user.office365_event_del_flag:
-                        for office in odoo_event_ids:
-                            _logger.info('Office365: delete event {} In Odoo'.format(office))
-                            delete_events= self.env['calendar.event'].sudo().search([('office_id','=', office)])
-                            delete_events.sudo().unlink()
+                    #if odoo_event_ids and res_user.office365_event_del_flag:
+                        #for office in odoo_event_ids:
+                            #_logger.info('Office365: delete event {} In Odoo'.format(office))
+                            #delete_events= self.env['calendar.event'].sudo().search([('office_id','=', office)])
+                            #delete_events.sudo().unlink()
 
 
 
