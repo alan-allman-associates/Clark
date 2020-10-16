@@ -17,7 +17,7 @@ class Speed(models.Model):
     month = fields.Integer(string="Month")
     week = fields.Integer(string="Week")
     speed_week = fields.Integer(compute='_compute_speed_week', string="Speed", store=True, compute_sudo=True)
-    speed_week_sec = fields.Integer(compute='_compute_speed_week', string="Speed")
+    speed_week_sec = fields.Integer(compute='_compute_speed_week', store=True, string="Speed")
     prospecting = fields.Integer(compute='_compute_speed_week', string="Prospecting", store=True, compute_sudo=True)
     candidate = fields.Integer(compute='_compute_speed_week', string="Candidate", store=True, compute_sudo=True)
     qualification = fields.Integer(compute='_compute_speed_week', string="qualification", store=True, compute_sudo=True)
