@@ -8,8 +8,8 @@
         <field name="inherit_id" ref="base.view_partner_form"/>
         <field name="arch" type="xml">
            <xpath expr="//field[@name='type']" position="before">
-                <field name="speed_week_sec" widget="gauge" nolabel="1" options="{'max_field': 'speed_max', 'style': 'width:120px; height: 90px;'}"/>
-	            <group>
+                <field name="speed_week_sec" widget="gauge" nolabel="1" options="{'max_field': 'speed_max', 'style': 'width:120px; height: 90px;'}" groups="aaa_speed.group_manage_speed"/>
+	            <group groups="aaa_speed.group_manage_speed">
                     <field name="speed_date" widget="date"/>
                     <field name="is_date_current"/>
                 </group>
