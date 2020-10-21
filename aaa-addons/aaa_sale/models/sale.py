@@ -19,7 +19,7 @@ class SaleOrder(models.Model):
         enjeu_id = values.get('opportunity_id')
         config = self.env['ir.config_parameter']
         stage_id =  int(config.get_param('crm.auto_stage_id'))
-        if stage_id:
+        if stage_id and enjeu_id:
             query = """
                         UPDATE crm_lead
                         SET    stage_id = %(stage_id)s 

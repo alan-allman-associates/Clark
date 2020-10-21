@@ -372,113 +372,6 @@ class CustomMessage(models.Model):
     _inherit = 'mail.mail'
     office_id = fields.Char('Office Id')
 
-    @api.model
-    def create(self, values):
-        """
-        overriding create message to send email on message creation
-        :param values:
-        :return:
-        """
-        ################## New Code ##################
-        ################## New Code ##################
-        o365_id = None
-        conv_id = None
-        context = self._context
-
-        current_uid = context.get('uid')
-
-        user = self.env['res.users'].browse(current_uid)
-        if user.send_mail_flag:
-            if user.token:
-                if user.expires_in:
-                    expires_in = datetime.fromtimestamp(int(user.expires_in) / 1e3)
-                    expires_in = expires_in + timedelta(seconds=3600)
-                    nowDateTime = datetime.now()
-                    if nowDateTime > expires_in:
-                        self.generate_refresh_token()
-                if 'mail_message_id' in values:
-                    email_obj = self.env['mail.message'].search([('id', '=', values['mail_message_id'])])
-                    partner_id = values['recipient_ids'][0][1]
-                    partner_obj = self.env['res.partner'].search([('id', '=', partner_id)])
-
-                    new_data = {
-                                "subject": values['subject'] if values['subject'] else email_obj.body,
-                                # "importance": "high",
-                                "body": {
-                                    "contentType": "HTML",
-                                    "content": email_obj.body
-                                },
-                                "toRecipients": [
-                                    {
-                                        "emailAddress": {
-                                            "address": partner_obj.email
-                                        }
-                                    }
-                                ]
-                            }
-
-                    response = requests.post(
-                        'https://graph.microsoft.com/v1.0/me/messages', data=json.dumps(new_data),
-                                            headers={
-                                                'Host': 'outlook.office.com',
-                                                'Authorization': 'Bearer {0}'.format(user.token),
-                                                'Accept': 'application/json',
-                                                'Content-Type': 'application/json',
-                                                'X-Target-URL': 'http://outlook.office.com',
-                                                'connection': 'keep-Alive'
-                                            })
-                    if 'conversationId' in json.loads((response.content.decode('utf-8'))).keys():
-                        conv_id = json.loads((response.content.decode('utf-8')))['conversationId']
-
-                    if 'id' in json.loads((response.content.decode('utf-8'))).keys():
-
-                        o365_id = json.loads((response.content.decode('utf-8')))['id']
-                        if email_obj.attachment_ids:
-                            for attachment in self.getAttachments(email_obj.attachment_ids):
-                                attachment_response = requests.post(
-                                    'https://graph.microsoft.com/beta/me/messages/' + o365_id + '/attachments',
-                                    data=json.dumps(attachment),
-                                    headers={
-                                        'Host': 'outlook.office.com',
-                                        'Authorization': 'Bearer {0}'.format(user.token),
-                                        'Accept': 'application/json',
-                                        'Content-Type': 'application/json',
-                                        'X-Target-URL': 'http://outlook.office.com',
-                                        'connection': 'keep-Alive'
-                                    })
-                        send_response = requests.post(
-                            'https://graph.microsoft.com/v1.0/me/messages/' + o365_id + '/send',
-                            headers={
-                                'Host': 'outlook.office.com',
-                                'Authorization': 'Bearer {0}'.format(user.token),
-                                'Accept': 'application/json',
-                                'Content-Type': 'application/json',
-                                'X-Target-URL': 'http://outlook.office.com',
-                                'connection': 'keep-Alive'
-                            })
-
-                        message = super(CustomMessage, self).create(values)
-                        message.email_from = None
-
-                        if conv_id:
-                            message.office_id = conv_id
-
-                        return message
-                    else:
-                        pass
-                        # print('Check your credentials! Mail does not send due to invlide office365 credentials ')
-
-                else:
-
-                    return super(CustomMessage, self).create(values)
-
-            else:
-                # print('Office354 Token is missing.. Please add your account token and try again!')
-                return super(CustomMessage, self).create(values)
-
-        else:
-            return super(CustomMessage, self).create(values)
-
     def getAttachments(self, attachment_ids):
         attachment_list = []
         if attachment_ids:
@@ -544,13 +437,6 @@ class CustomActivity(models.Model):
 
     @api.model
     def create(self, values):
-        if self.env.user.expires_in:
-            expires_in = datetime.fromtimestamp(int(self.env.user.expires_in) / 1e3)
-            expires_in = expires_in + timedelta(seconds=3600)
-            nowDateTime = datetime.now()
-            if nowDateTime > expires_in:
-                self.generate_refresh_token()
-
         o365_id = None
         if self.env.user.office365_email and not self.env.user.is_task_sync_on and values[
             'res_id'] == self.env.user.partner_id.id:
