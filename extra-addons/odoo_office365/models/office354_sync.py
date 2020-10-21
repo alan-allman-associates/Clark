@@ -219,7 +219,7 @@ class Office365(models.Model):
                         nowDateTime = datetime.now()
                         if nowDateTime > expires_in:
                             _logger.info('Office365: refreshing office365 Token')
-                            self.generate_refresh_token()
+                            self.generate_refresh_token_bis(res_user)
                     if self.categories:
                         categ_name = []
                         for catg in self.categories:
@@ -314,8 +314,8 @@ class Office365(models.Model):
                         new_event = len(n_event)
 
                 except Exception as e:
-                    status = 'Error'
                     if is_manual:
+                        status = 'Error'
                         _logger.error(e)
                         raise Warning(e)
                     _logger.error(e)
@@ -351,12 +351,15 @@ class Office365(models.Model):
         new_event = []
         recurrency_ids = []
         office_ids = []
+        odoo_event_ids = []
         office_connector = self.env['office.sync'].search([])[0]
         if office_connector.calendar_id:
-            odoo_event = self.env['calendar.event'].search([('office_id', '!=', None),('calendar_id', '=', office_connector.calendar_id.id)])
+            odoo_event = self.env['calendar.event'].search([('office_id', '!=', None),('calendar_id', '=', office_connector.calendar_id.id),('modified_date', '>=', res_user.last_calender_import)])
         else:
-            odoo_event = self.env['calendar.event'].search([('office_id','!=',None)])
-        odoo_event_ids =  odoo_event.mapped('office_id')
+            odoo_event = self.env['calendar.event'].search([('office_id','!=',None), ('modified_date', '>=', res_user.last_calender_import)])
+            
+        if odoo_event:	
+            odoo_event_ids =  odoo_event.mapped('office_id')
 
         try:
                     
@@ -445,6 +448,7 @@ class Office365(models.Model):
                                                 'name': event['subject'],
                                                 'start': datetime.strptime(event['start']['dateTime'][0:18], '%Y-%m-%dT%H:%M:%S'),
                                                 'stop': datetime.strptime(event['end']['dateTime'][0:18], '%Y-%m-%dT%H:%M:%S'),
+                                                'user_id': res_user.id
                                             })
                                                 
                                             partner_ids = []
@@ -566,7 +570,8 @@ class Office365(models.Model):
                                     partner_ids.append(partner[0].id)
                                     odoo_event.write({
                                        'attendee_ids': [[6, 0, attendee_ids]],
-                                       'partner_ids': [[6, 0, partner_ids]]
+                                       'partner_ids': [[6, 0, partner_ids]],
+                                        'user_id': res_user.id,
                                     })
                                     self.env.cr.commit()
 
@@ -597,7 +602,8 @@ class Office365(models.Model):
                                             partner_ids.append(organizer[0].id)
                                             odoo_event.write({
                                                    'attendee_ids': [[6, 0, attendee_ids]],
-                                                   'partner_ids': [[6, 0, partner_ids]]
+                                                   'partner_ids': [[6, 0, partner_ids]],
+                                                'user_id': res_user.id
                                             })
                                             self.env.cr.commit()
 
@@ -633,7 +639,8 @@ class Office365(models.Model):
                                                 'Office365: Creating attendee 3 {} In Odoo'.format(attendee['emailAddress']['address']))
                                             odoo_event.write({
                                                 'attendee_ids': [[6, 0, attendee_ids]],
-                                                'partner_ids': [[6, 0, partner_ids]]
+                                                'partner_ids': [[6, 0, partner_ids]],
+                                                'user_id': res_user.id
                                             })
                                             self.env.cr.commit()
 
@@ -643,11 +650,11 @@ class Office365(models.Model):
                         for recurrency in recurrency_ids:
                             self._cr.execute("""delete from calendar_event where recurrent_id = %s""",([recurrency]))
                         
-                    if odoo_event_ids and res_user.office365_event_del_flag:
-                        for office in odoo_event_ids: 
-                           _logger.info('Office365: delete event {} In Odoo'.format(office))
-                           delete_events= self.env['calendar.event'].sudo().search([('office_id','=', office)])
-                           delete_events.sudo().unlink()
+                    #if odoo_event_ids and res_user.office365_event_del_flag:
+                        #for office in odoo_event_ids:
+                            #_logger.info('Office365: delete event {} In Odoo'.format(office))
+                            #delete_events= self.env['calendar.event'].sudo().search([('office_id','=', office)])
+                            #delete_events.sudo().unlink()
 
 
 
@@ -1545,6 +1552,39 @@ class Office365(models.Model):
         context = self._context
         current_uid = context.get('uid')
         res_user = self.env['res.users'].browse(current_uid)
+
+        if res_user.refresh_token:
+            settings = self.env['office.settings'].search([])
+            settings = settings[0] if settings else settings
+
+            if not settings.client_id or not settings.redirect_url or not settings.secret:
+                raise osv.except_osv(_("Error!"), (_("Please ask admin to add Office365 settings!")))
+
+            header = {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            }
+
+            response = requests.post(
+                'https://login.microsoftonline.com/common/oauth2/v2.0/token',
+                data='grant_type=refresh_token&refresh_token=' + res_user.refresh_token + '&redirect_uri=' + settings.redirect_url + '&client_id=' + settings.client_id + '&client_secret=' + settings.secret
+                , headers=header).content
+
+            response = json.loads((str(response)[2:])[:-1])
+            if 'access_token' not in response:
+                response["error_/opt/odoo13/custom_addons/odoo_xerodescription"] = response[
+                    "error_description"].replace("\\r\\n", " ")
+                raise osv.except_osv(_("Error!"), (_(response["error"] + " " + response["error_description"])))
+            else:
+                res_user.token = response['access_token']
+                res_user.refresh_token = response['refresh_token']
+                res_user.expires_in = int(round(time.time() * 1000))
+        else:
+            _logger.error('Refresh token not found!')
+
+    def generate_refresh_token_bis(self,res_user):
+#        context = self._context
+#        current_uid = context.get('uid')
+#        res_user = self.env['res.users'].browse(current_uid)
 
         if res_user.refresh_token:
             settings = self.env['office.settings'].search([])
