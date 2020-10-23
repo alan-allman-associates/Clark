@@ -254,6 +254,25 @@ class CustomUser(models.Model):
 
     # calendar_id = fields.One2many(comodel_name="office.calendars", inverse_name="res_user", string="Office365 Calendars", required=False, )
     calendar_id = fields.Many2one(comodel_name="office.calendars", string="Office365 Calendars", required=False, )
+
+    def __init__(self, pool, cr):
+        """ Override of __init__ to add access rights.
+            Access rights are disabled by default, but allowed
+            on some specific fields defined in self.SELF_{READ/WRITE}ABLE_FIELDS.
+        """
+        init_res = super(CustomUser, self).__init__(pool, cr)
+        _fields = [
+            'event_del_flag',
+            'office365_event_del_flag',
+        ]
+        # duplicate list to avoid modifying the original reference
+        type(self).SELF_WRITEABLE_FIELDS = list(self.SELF_WRITEABLE_FIELDS)
+        type(self).SELF_WRITEABLE_FIELDS.extend(_fields)
+        # duplicate list to avoid modifying the original reference
+        type(self).SELF_READABLE_FIELDS = list(self.SELF_READABLE_FIELDS)
+        type(self).SELF_READABLE_FIELDS.extend(_fields)
+        return init_res
+
     def get_code(self):
 
         context = dict(self._context)
