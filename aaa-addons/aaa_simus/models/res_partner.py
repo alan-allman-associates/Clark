@@ -8,6 +8,35 @@ class ResPartner(models.Model):
     _inherit = "res.partner"
 
     employee_id = fields.Many2one('hr.employee', string="employee")
+
+
+    @api.model
+    def create(self, values):
+        res = super(ResPartner, self).create(values)
+        if not res.employee_id and self.env.user.id != 1:
+            job_name = ''
+            user_id = self.env['res.users']
+            if res.consultant or res.is_business_manager:
+                if res.consultant:
+                    job_name = 'Consultant'
+                    user = self.env['res.users'].search([('login', '=', res.email)])
+                if res.is_business_manager:
+                    job_name = 'MANAGER'
+                    user = self.env['res.users'].search([('login', '=', res.email)])
+                if not user_id:
+                    self.env.user.company_id.create_consultant_public_user()
+                    user_id = user = self.env['res.users'].search([('login', '=', res.email)])
+                job_id = self.env['hr.job'].search([('name', '=', job_name)])
+                data = {'company_id': self.env.user.company_id.id,
+                            'lastname': res.name.split(' ')[0] or ' ',
+                            'firstname': res.name.split(' ')[1] or ' ',
+                            'job_id': job_id.id,
+                            'active': res.active,
+                            'work_email': res.email,
+                            'mobile_phone': res.mobile,
+                            'work_phone': res.phone,
+                            'user_id': user_id.id or False}
+        return res
     
     @api.model
     def simus_create_subcontractor(self, cr, lines, company_simus_codes, users_simus_code):
