@@ -19,10 +19,10 @@ class ResPartner(models.Model):
             if res.consultant or res.is_business_manager:
                 if res.consultant:
                     job_name = 'Consultant'
-                    user = self.env['res.users'].search([('login', '=', res.email)])
+                    user_id = self.env['res.users'].search([('login', '=', res.email)])
                 if res.is_business_manager:
                     job_name = 'MANAGER'
-                    user = self.env['res.users'].search([('login', '=', res.email)])
+                    user_id = self.env['res.users'].search([('login', '=', res.email)])
                 if not user_id:
                     self.env.user.company_id.create_consultant_public_user()
                     user_id = user = self.env['res.users'].search([('login', '=', res.email)])
@@ -36,7 +36,41 @@ class ResPartner(models.Model):
                             'mobile_phone': res.mobile,
                             'work_phone': res.phone,
                             'user_id': user_id.id or False}
+                employee = self.env['hr.employee'].create(data)
+                res.employee_id = employee.id
         return res
+        
+    
+    @api.multi
+    def write(self, values):
+        for record in self:
+            res = super(ResPartner, self).write(values)
+            if not record.employee_id and self.env.user.id != 1:
+                job_name = ''
+                user_id = self.env['res.users']
+                if record.consultant or record.is_business_manager:
+                    if record.consultant:
+                        job_name = 'Consultant'
+                        user_id = self.env['res.users'].search([('login', '=', record.email)])
+                    if record.is_business_manager:
+                        job_name = 'MANAGER'
+                        user_id = self.env['res.users'].search([('login', '=', record.email)])
+                    if not user_id:
+                        self.env.user.company_id.create_consultant_public_user()
+                        user_id = self.env['res.users'].search([('login', '=', record.email)])
+                    job_id = self.env['hr.job'].search([('name', '=', job_name)])
+                    data = {'company_id': self.env.user.company_id.id,
+                                'lastname': record.name.split(' ')[0] or ' ',
+                                'firstname': record.name.split(' ')[1] or ' ',
+                                'job_id': job_id.id,
+                                'active': record.active,
+                                'work_email': record.email,
+                                'mobile_phone': record.mobile,
+                                'work_phone': record.phone,
+                                'user_id': user_id.id or False}
+                    employee = self.env['hr.employee'].create(data)
+                    record.employee_id = employee.id
+            return res
     
     @api.model
     def simus_create_subcontractor(self, cr, lines, company_simus_codes, users_simus_code):
