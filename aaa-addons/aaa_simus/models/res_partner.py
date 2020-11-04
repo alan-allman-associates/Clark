@@ -2,12 +2,47 @@
 
 from odoo import models, api,fields, _
 from odoo.tools import ustr
+import logging
+_logger = logging.getLogger(__name__)
 
 
 class ResPartner(models.Model):
     _inherit = "res.partner"
 
     employee_id = fields.Many2one('hr.employee', string="employee")
+
+    def _prepare_user_datas(self, default_login):
+        """ prepare user data in optic to create an user portal
+        @:param default_login str
+        @:return dict
+        """
+        user_vals = {'company_id': self.company_id.id,
+                      'lastname': self.lastname,
+                      'firstname': self.firstname,
+                      'mobile': self.mobile,
+                      'phone': self.phone,
+                      'active': self.active,
+                      'tz': 'Europe/Paris',
+                      'login': self.email or default_login,
+                      'level': 1,
+                      'partner_id': self.id,
+                      'notification_type': 'inbox',
+                      'groups_id': [(5, 0, 0), (4, self.env.ref('base.group_public').id)],
+                      'company_ids': [(6, 0, [self.company_id.id])]
+                     }
+        return user_vals
+
+    def create_consultant_login(self):
+        ResUsers = self.env['res.users'].with_context(no_reset_password=True)
+        for consultant in self.filtered('consultant'):
+            default_login = consultant.lastname + '@' + consultant.firstname + '.com'
+            user = ResUsers.search([('login', 'in', [consultant.email, default_login])])
+            if not user:
+                vals = self._prepare_user_datas(default_login=default_login)
+                user_id = ResUsers.with_context(create_or_update_employee = True).create(vals)
+                _logger.info("The user %s is successfully created", user_id.name)
+                return user_id
+        return ResUsers
 
 
     @api.model
@@ -24,7 +59,7 @@ class ResPartner(models.Model):
                     job_name = 'MANAGER'
                     user_id = self.env['res.users'].search([('login', '=', res.email)])
                 if not user_id:
-                    self.env.user.company_id.create_consultant_public_user()
+                    self.create_consultant_login()
                     user_id = user = self.env['res.users'].search([('login', '=', res.email)])
                 job_id = self.env['hr.job'].search([('name', '=', job_name)])
                 data = {'company_id': self.env.user.company_id.id,
@@ -45,7 +80,7 @@ class ResPartner(models.Model):
     def write(self, values):
         for record in self:
             res = super(ResPartner, self).write(values)
-            if not record.employee_id and self.env.user.id != 1:
+            if not record.employee_id and self.env.user.id != 1 and not self.env.context.get('create_or_update_employee'):
                 job_name = ''
                 user_id = self.env['res.users']
                 if record.consultant or record.is_business_manager:
@@ -56,8 +91,7 @@ class ResPartner(models.Model):
                         job_name = 'MANAGER'
                         user_id = self.env['res.users'].search([('login', '=', record.email)])
                     if not user_id:
-                        self.env.user.company_id.create_consultant_public_user()
-                        user_id = self.env['res.users'].search([('login', '=', record.email)])
+                        user_id = self.create_consultant_login()
                     job_id = self.env['hr.job'].search([('name', '=', job_name)])
                     data = {'company_id': self.env.user.company_id.id,
                                 'lastname': record.name.split(' ')[0] or ' ',
@@ -69,7 +103,7 @@ class ResPartner(models.Model):
                                 'work_phone': record.phone,
                                 'user_id': user_id.id or False}
                     employee = self.env['hr.employee'].create(data)
-                    record.employee_id = employee.id
+                    record.with_context(create_or_update_employee = True).employee_id = employee.id
             return res
     
     @api.model
