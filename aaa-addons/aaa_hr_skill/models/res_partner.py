@@ -76,16 +76,16 @@ class Partner(models.Model):
                 user_id = ResUsers.create(vals)
                 _logger.info("The user %s is successfully created", user_id.name)
 
-    @api.model
-    def create(self, vals):
-        res = super(Partner, self).create(vals)
-        if 'consultant' in vals and vals.get('consultant'):
-            res.create_consultant_login()
-        return res
-
-    @api.multi
-    def write(self, vals):
-        res = super(Partner, self).write(vals)
-        if 'consultant' in vals and vals.get('consultant'):
-            self.create_consultant_login()
-        return res
+    # @api.model
+    # def create(self, vals):
+    #     res = super(Partner, self).create(vals)
+    #     if 'consultant' in vals and vals.get('consultant'):
+    #         res.create_consultant_login()
+    #     return res
+    #
+    # @api.multi
+    # def write(self, vals):
+    #     res = super(Partner, self).write(vals)
+    #     if 'consultant' in vals and vals.get('consultant'):
+    #         self.create_consultant_login()
+    #     return res
