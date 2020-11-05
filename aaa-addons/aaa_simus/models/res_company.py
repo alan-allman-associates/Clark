@@ -269,7 +269,7 @@ class ResCompany(models.Model):
         dont_company = self.env['res.company'].search([('do_not_import', '=', True)])
         partners_dont_treat = dont_company.mapped('partner_id')
         consultants = self.env['res.partner'].search([('consultant', '=', True), ('user_ids', '=', False)])
-        consultants = consultants.filtered(lambda r: r.parent_id not in partners_dont_treat.ids)
+        consultants = consultants.filtered(lambda r: r.parent_id.id not in partners_dont_treat.ids)
         user_obj = self.env['res.users'].with_context(no_reset_password=True)
         if consultants:
             for consultant in consultants:
