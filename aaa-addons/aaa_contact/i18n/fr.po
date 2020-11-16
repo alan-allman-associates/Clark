@@ -1,0 +1,52 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* aaa_calendar
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 12.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-11-29 16:26+0000\n"
+"PO-Revision-Date: 2019-11-29 16:26+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: aaa_calendar
+#: model:ir.model.fields,field_description:aaa_calendar.field_calendar_event_type__color
+msgid "Color"
+msgstr "Couleur"
+
+#. module: aaa_calendar
+#: model:ir.model,name:aaa_calendar.model_calendar_event
+msgid "Event"
+msgstr "Évènement"
+
+#. module: aaa_calendar
+#: model:ir.model,name:aaa_calendar.model_calendar_event_type
+msgid "Event Meeting Type"
+msgstr "Type d'évènement"
+
+#. module: aaa_calendar
+#: model:ir.model.fields,field_description:aaa_calendar.field_calendar_event__outlook_code
+msgid "Outlook ID"
+msgstr "Identifiant outlook"
+
+#. module: aaa_calendar
+#: model:ir.model.fields,field_description:aaa_calendar.field_calendar_event__outlook_url
+msgid "Outlook URL"
+msgstr "URL Outlook"
+
+#. module: aaa_calendar
+#: model:ir.model.fields,field_description:aaa_calendar.field_calendar_event__outlook_change_key
+msgid "Outlook change key"
+msgstr "Changement de clé Outlook"
+
+#. module: aaa_calendar
+#: model:ir.model.fields,field_description:aaa_calendar.field_calendar_event__outlook_event_code
+msgid "Outlook event id"
+msgstr "Identifiant evènement outlook"
+

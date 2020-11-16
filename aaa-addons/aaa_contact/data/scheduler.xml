@@ -1,0 +1,16 @@
+<odoo>
+    <data>
+        <record id="partner_deactivate" model="ir.cron">
+            <field name="name">Desactivation des contact @</field>
+            <field name="model_id" ref="base.model_res_partner"/>
+            <field name="state">code</field>
+            <field name="active">0</field>
+            <field name="code">model.partner_deactivate()</field>
+            <field name='interval_number'>1</field>
+            <field name="user_id" ref="base.user_root"/>
+            <field name='interval_type'>days</field>
+            <field name="numbercall">-1</field>
+        </record>
+ 
+    </data>
+</odoo>
