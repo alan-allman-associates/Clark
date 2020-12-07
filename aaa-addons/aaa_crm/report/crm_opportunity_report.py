@@ -47,10 +47,10 @@ class OpportunityReport(models.Model):
     campaign_id = fields.Many2one('utm.campaign', string='Campaign', readonly=True)
     source_id = fields.Many2one('utm.source', string='Source', readonly=True)
     medium_id = fields.Many2one('utm.medium', string='Medium', readonly=True)
-    closing_rate = fields.Float(string='Taux de closing (%)', digits=(16, 2), readonly=True)
-    conversion_rate = fields.Float(string='Taux de transformation (%)', digits=(16, 2), readonly=True)
-    overall_efficiency_rate = fields.Float(string="Taux d'efficacité globale(%)", digits=(16, 2), readonly=True)
-    portfolio_maturity = fields.Float(string="Maturité protefeuille (%)", digits=(16, 2), readonly=True)
+    closing_rate = fields.Float(string='Taux de closing', digits=(16, 2), readonly=True)
+    conversion_rate = fields.Float(string='Taux de transformation', digits=(16, 2), readonly=True)
+    overall_efficiency_rate = fields.Float(string="Taux d'efficacité globale", digits=(16, 2), readonly=True)
+    portfolio_maturity = fields.Float(string="Maturité protefeuille", digits=(16, 2), readonly=True)
 
 
 
