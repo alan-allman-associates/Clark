@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+        <!-- Opportunities by user and team pivot View -->
+        <record id="crm_opportunity_report_view_pivot" model="ir.ui.view">
+            <field name="name">crm.opportunity.report.pivot</field>
+            <field name="model">crm.opportunity.report</field>
+            <field name="arch" type="xml">
+                <pivot string="Pipeline Analysis" disable_linking="True">
+                    <field name="stage_id" type="row"/>
+                    <field name="total_revenue" type="measure"/>
+                    <field name="closing_rate" type="measure"/>
+                    <field name="conversion_rate" type="measure"/>
+                    <field name="overall_efficiency_rate" type="measure"/>
+                    <field name="portfolio_maturity" type="measure"/>
+                </pivot>
+            </field>
+        </record>
+
+    <record id="crm_opportunity_report_view_search" model="ir.ui.view">
+            <field name="name">crm.opportunity.report.select</field>
+            <field name="model">crm.opportunity.report</field>
+            <field name="arch" type="xml">
+                <search string="Opportunities Analysis">
+                    <filter string="My Opportunities" name="my"
+                            domain="[('user_id', '=', uid)]"/>
+                    <separator/>
+                    <filter name="opportunity" string="Opportunity" domain="[('type','=','opportunity')]" help="Show only opportunity"/>
+                    <separator/>
+                    <filter string="Won" name="won"
+                            domain="[('probability', '=', 100)]"/>
+                    <filter string="Lost" name="lost"
+                            domain="[('probability', '=', 0), ('active', '=', False)]"/>
+                    <field name="team_id" context="{'invisible_team': False}"/>
+                    <field name="user_id" string="Salesperson"/>
+                    <separator/>
+                    <filter string="This Month" name="this_month" domain="[('date_closed', '&gt;=', context_today().strftime('%%Y-%%m-01'))]"/>
+                    <filter string="Last Month" name="last_month" domain="['&amp;', ('date_closed', '&gt;=', (context_today() - relativedelta(months=1)).strftime('%%Y-%%m-01')), ('date_closed', '&lt;', context_today().strftime('%%Y-%%m-01'))]"/>
+                    <separator/>
+                    <filter string="Current" name="current" context="{'measures': ['expected_revenue', '__count__']}" domain="[('active', '=', True)]"/>
+                    <filter string="Archived" name="archived" domain="[('active', '=', False)]"/>
+                </search>
+            </field>
+        </record>
+
+
+        <!-- Opportunities by user and team Graph View -->
+        <record id="crm_opportunity_report_view_graph" model="ir.ui.view">
+            <field name="name">crm.opportunity.report.graph</field>
+            <field name="model">crm.opportunity.report</field>
+            <field name="arch" type="xml">
+                <graph string="Pipeline Analysis" stacked="True">
+                    <field name="stage_id" type="row"/>
+                    <field name="date_deadline" type="row" interval="month"/>
+                    <field name="expected_revenue" type="measure"/>
+                </graph>
+            </field>
+        </record>
+
+
+        <record id="crm_opportunity_report_action" model="ir.actions.act_window">
+            <field name="name">Leads Analysis</field>
+            <field name="res_model">crm.opportunity.report</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">pivot,graph</field>
+            <field name="context">{'search_default_current': True, 'active_test': True}</field>
+        </record>
+
+        <menuitem
+            id="crm_opportunity_report_menu"
+            name="Leads Analysis"
+            parent="crm.crm_menu_report"
+            action="crm_opportunity_report_action"
+            sequence="1"/>
+
+</odoo>
