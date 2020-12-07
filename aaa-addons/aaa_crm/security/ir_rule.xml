@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
 
+        <record model="res.groups" id="aaa_access_crm_opportunity_report">
+            <field name="name">Access leads analysis</field>
+        </record>
+
     <record id="crm_rule_personal_lead_report" model="ir.rule">
         <field name="name">Personal Leads Analysis</field>
         <field ref="aaa_crm.model_crm_opportunity_report" name="model_id"/>

@@ -47,10 +47,10 @@ class OpportunityReport(models.Model):
     campaign_id = fields.Many2one('utm.campaign', string='Campaign', readonly=True)
     source_id = fields.Many2one('utm.source', string='Source', readonly=True)
     medium_id = fields.Many2one('utm.medium', string='Medium', readonly=True)
-    closing_rate = fields.Float(string='Taux de closing', digits=(16, 2), readonly=True)
-    conversion_rate = fields.Float(string='Taux de transformation', digits=(16, 2), readonly=True)
-    overall_efficiency_rate = fields.Float(string="Taux d'efficacité globale", digits=(16, 2), readonly=True)
-    portfolio_maturity = fields.Float(string="Maturité protefeuille", digits=(16, 2), readonly=True)
+    closing_rate = fields.Float(string='Taux de closing (%)', digits=(16, 2), readonly=True)
+    conversion_rate = fields.Float(string='Taux de transformation (%)', digits=(16, 2), readonly=True)
+    overall_efficiency_rate = fields.Float(string="Taux d'efficacité globale (%)", digits=(16, 2), readonly=True)
+    portfolio_maturity = fields.Float(string="Maturité protefeuille (€)", digits=(16, 2), readonly=True)
 
 
 
@@ -88,9 +88,9 @@ class OpportunityReport(models.Model):
             (SELECT COUNT(*)
              FROM mail_message m
              WHERE m.model = 'crm.lead' and m.res_id = c.id) as nbr_activities,
-            (SELECT (COUNT(c.id) / CASE COALESCE(short.total_short, 0) WHEN 0 THEN 1.0 ELSE short.total_short END) FROM crm_lead lead ,(SELECT COUNT(l.id) total_short FROM crm_lead l where l.stage_id = %d and c.company_id = l.company_id AND l.active = c.active and l.type = c.type) short where lead.id=c.id and lead.stage_id = %d) as closing_rate,
-            (SELECT (COUNT(c.id) / CASE COALESCE(conversion.total_conversion, 0) WHEN 0 THEN 1.0 ELSE conversion.total_conversion END) FROM crm_lead lead, (SELECT COUNT(l.id) total_conversion FROM crm_lead l where l.stage_id = %d and c.company_id = l.company_id AND l.active = c.active and l.type = c.type) conversion  where lead.id=c.id and lead.stage_id = %d) as conversion_rate,
-            (SELECT (COUNT(c.id) / CASE COALESCE(overall_efficiency.total_overall_efficiency, 0) WHEN 0 THEN 1.0 ELSE overall_efficiency.total_overall_efficiency END) FROM crm_lead lead, (SELECT COUNT(l.id) total_overall_efficiency FROM crm_lead l where l.stage_id = %d and c.company_id = l.company_id AND l.active = c.active and l.type = c.type) overall_efficiency where lead.id=c.id and lead.stage_id = %d) as overall_efficiency_rate,
+            (SELECT (COUNT(c.id) * 100.0 / CASE COALESCE(short.total_short, 0) WHEN 0 THEN 1.0 ELSE short.total_short END) FROM crm_lead lead ,(SELECT COUNT(l.id) total_short FROM crm_lead l where l.stage_id = %d and c.company_id = l.company_id AND l.active = c.active and l.type = c.type) short where lead.id=c.id and lead.stage_id = %d) as closing_rate,
+            (SELECT (COUNT(c.id) * 100.0 / CASE COALESCE(conversion.total_conversion, 0) WHEN 0 THEN 1.0 ELSE conversion.total_conversion END) FROM crm_lead lead, (SELECT COUNT(l.id) total_conversion FROM crm_lead l where l.stage_id = %d and c.company_id = l.company_id AND l.active = c.active and l.type = c.type) conversion  where lead.id=c.id and lead.stage_id = %d) as conversion_rate,
+            (SELECT (COUNT(c.id) * 100.0 / CASE COALESCE(overall_efficiency.total_overall_efficiency, 0) WHEN 0 THEN 1.0 ELSE overall_efficiency.total_overall_efficiency END) FROM crm_lead lead, (SELECT COUNT(l.id) total_overall_efficiency FROM crm_lead l where l.stage_id = %d and c.company_id = l.company_id AND l.active = c.active and l.type = c.type) overall_efficiency where lead.id=c.id and lead.stage_id = %d) as overall_efficiency_rate,
             (SELECT ((c.planned_revenue * stage.probability / 100.0) / total.total_lead) FROM crm_lead lead , (SELECT COUNT(l.id) total_lead FROM crm_lead l where c.company_id = l.company_id AND l.active = c.active and l.type = c.type) total,
             crm_stage stage WHERE c.id = lead.id and lead.stage_id = stage.id) as portfolio_maturity,
             c.active,
