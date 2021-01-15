@@ -66,6 +66,37 @@ class OpportunityReport(models.Model):
     def get_qualified_stage_id(self):
         return int(self.env['ir.config_parameter'].sudo().get_param('qualified_stage_id'))
 
+    def replace_domain(self, domain, stage_id):
+        res = []
+        for elment in domain:
+            if 'stage_id' in list(elment):
+                res.append(('stage_id','=',stage_id))
+            else:
+                res.append(elment)
+        return res
+
+    @api.model
+    def read_group(self, domain, fields, groupby, offset=0, limit=None, orderby=False, lazy=True):
+        result = super(OpportunityReport, self).read_group(domain, fields, groupby, offset=offset, limit=limit, orderby=orderby,
+                                                  lazy=lazy)
+        list_resultat = []
+        for ele in result:
+            if ele.get('__domain'):
+                if 'closing_rate' in ele and ele['closing_rate']:
+                    win_leads = self.search_count(ele['__domain']) or 1
+                    short_leads  = self.search_count(self.replace_domain(ele['__domain'], self.get_short_id())) or 1
+                    ele['closing_rate'] = short_leads * 100.0 / win_leads
+                if 'conversion_rate' in ele and ele['conversion_rate']:
+                    win_leads = self.search_count(ele['__domain']) or 1
+                    proposal_leads = self.search_count(self.replace_domain(ele['__domain'], self.get_proposal_stage_id())) or 1
+                    ele['conversion_rate'] = proposal_leads * 100.0 / win_leads
+                if 'overall_efficiency_rate' in ele and ele['closing_rate']:
+                    win_leads = self.search_count(ele['__domain']) or 1
+                    short_leads = self.search_count(self.replace_domain(ele['__domain'], self.get_qualified_stage_id())) or 1
+                    ele['overall_efficiency_rate'] = short_leads * 100.0 / win_leads
+                list_resultat.append(ele)
+        return list_resultat or result
+
 
 
 
