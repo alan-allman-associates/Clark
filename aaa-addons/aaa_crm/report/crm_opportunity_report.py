@@ -70,7 +70,10 @@ class OpportunityReport(models.Model):
         res = []
         for elment in domain:
             if 'stage_id' in list(elment):
-                res.append(('stage_id','=',stage_id))
+                if self.env.context.get('portfolio_maturity'):
+                    res.append(('stage_id','!=',stage_id))
+                else:
+                    res.append(('stage_id','=',stage_id))
             else:
                 res.append(elment)
         return res
@@ -84,16 +87,19 @@ class OpportunityReport(models.Model):
             if ele.get('__domain'):
                 if 'closing_rate' in ele and ele['closing_rate']:
                     win_leads = self.search_count(ele['__domain']) or 1
-                    short_leads  = self.search_count(self.replace_domain(ele['__domain'], self.get_short_id())) or 1
+                    short_leads = self.search_count(self.replace_domain(ele['__domain'], self.get_short_id()))
                     ele['closing_rate'] = short_leads * 100.0 / win_leads
                 if 'conversion_rate' in ele and ele['conversion_rate']:
                     win_leads = self.search_count(ele['__domain']) or 1
-                    proposal_leads = self.search_count(self.replace_domain(ele['__domain'], self.get_proposal_stage_id())) or 1
+                    proposal_leads = self.search_count(self.replace_domain(ele['__domain'], self.get_proposal_stage_id()))
                     ele['conversion_rate'] = proposal_leads * 100.0 / win_leads
-                if 'overall_efficiency_rate' in ele and ele['closing_rate']:
+                if 'overall_efficiency_rate' in ele and ele['overall_efficiency_rate']:
                     win_leads = self.search_count(ele['__domain']) or 1
-                    short_leads = self.search_count(self.replace_domain(ele['__domain'], self.get_qualified_stage_id())) or 1
-                    ele['overall_efficiency_rate'] = short_leads * 100.0 / win_leads
+                    qualified_leads = self.search_count(self.replace_domain(ele['__domain'], self.get_qualified_stage_id()))
+                    ele['overall_efficiency_rate'] = qualified_leads * 100.0 / win_leads
+                if 'portfolio_maturity' in ele and ele['portfolio_maturity']:
+                    all_leads = self.search_count(self.with_context(portfolio_maturity=True).replace_domain(ele['__domain'], 9999999)) or 1
+                    ele['portfolio_maturity'] = ele['portfolio_maturity'] / all_leads
                 list_resultat.append(ele)
         return list_resultat or result
 
@@ -122,7 +128,7 @@ class OpportunityReport(models.Model):
             (SELECT (COUNT(c.id) * 100.0 / CASE COALESCE(short.total_short, 0) WHEN 0 THEN 1.0 ELSE short.total_short END) FROM crm_lead lead ,(SELECT COUNT(l.id) total_short FROM crm_lead l where l.stage_id = %d and c.company_id = l.company_id AND l.active = c.active and l.type = c.type) short where lead.id=c.id and lead.stage_id = %d) as closing_rate,
             (SELECT (COUNT(c.id) * 100.0 / CASE COALESCE(conversion.total_conversion, 0) WHEN 0 THEN 1.0 ELSE conversion.total_conversion END) FROM crm_lead lead, (SELECT COUNT(l.id) total_conversion FROM crm_lead l where l.stage_id = %d and c.company_id = l.company_id AND l.active = c.active and l.type = c.type) conversion  where lead.id=c.id and lead.stage_id = %d) as conversion_rate,
             (SELECT (COUNT(c.id) * 100.0 / CASE COALESCE(overall_efficiency.total_overall_efficiency, 0) WHEN 0 THEN 1.0 ELSE overall_efficiency.total_overall_efficiency END) FROM crm_lead lead, (SELECT COUNT(l.id) total_overall_efficiency FROM crm_lead l where l.stage_id = %d and c.company_id = l.company_id AND l.active = c.active and l.type = c.type) overall_efficiency where lead.id=c.id and lead.stage_id = %d) as overall_efficiency_rate,
-            (SELECT ((c.planned_revenue * stage.probability / 100.0) / total.total_lead) FROM crm_lead lead , (SELECT COUNT(l.id) total_lead FROM crm_lead l where c.company_id = l.company_id AND l.active = c.active and l.type = c.type) total,
+            (SELECT ((c.planned_revenue * stage.probability / 100.0)) FROM crm_lead lead , (SELECT COUNT(l.id) total_lead FROM crm_lead l where c.company_id = l.company_id AND l.active = c.active and l.type = c.type) total,
             crm_stage stage WHERE c.id = lead.id and lead.stage_id = stage.id) as portfolio_maturity,
             c.active,
             c.campaign_id,
