@@ -69,7 +69,7 @@
         <menuitem
             id="crm_opportunity_report_menu"
             name="Leads Analysis"
-            parent="crm.crm_menu_report"
+            parent="crm.crm_menu_sales"
             groups="aaa_crm.aaa_access_crm_opportunity_report"
             action="crm_opportunity_report_action"
             sequence="1"/>
