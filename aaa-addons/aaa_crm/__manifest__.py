@@ -18,8 +18,11 @@ AAA CRM
                 'aaa_security',
                 ],
     'data': ['security/ir.model.access.csv',
+             'security/ir_rule.xml',
+             'data/ir_config_parameter.xml',
              'views/crm_lead_view.xml',
              'views/crm_team_view.xml',
+             'report/crm_opportunity_report_views.xml',
     ],
     'demo': [
     ],
