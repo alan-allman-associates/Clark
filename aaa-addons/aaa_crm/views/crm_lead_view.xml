@@ -58,6 +58,7 @@
             <field name="priority" position="before">
                 <field name="axe3" widget="selection" required="True" domain="[('axe_type','=','axe3')]"/>
                 <field name="axe4" widget="selection" required="True" domain="[('axe_type','=','axe4')]"/>
+                <field name="axe5" widget="selection" required="True" domain="[('axe_type','=','axe5')]" groups="aaa_crm.axe5_sous_domain"/>
             </field>
         </field>
     </record>

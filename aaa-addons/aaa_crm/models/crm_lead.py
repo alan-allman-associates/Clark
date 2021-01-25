@@ -2,7 +2,7 @@
 
 from odoo import api, fields, models
 
-SELECTION_AXES = [('axe1', 'Axe 1'), ('axe2', 'Axe 2'), ('axe3', 'Axe 3'), ('axe4', 'Axe 4')]
+SELECTION_AXES = [('axe1', 'Axe 1'), ('axe2', 'Axe 2'), ('axe3', 'Axe 3'), ('axe4', 'Axe 4'), ('axe5', 'Sous domaine')]
 
 class CrmAxes(models.Model):
     _name = "crm.axes"
@@ -19,5 +19,7 @@ class CrmLead(models.Model):
     axe2 = fields.Many2one('crm.axes', string="Axe 2", domain="[('axe_type', '=', 'axe2')]")
     axe3 = fields.Many2one('crm.axes', string="Axe 3", domain="[('axe_type', '=', 'axe3')]")
     axe4 = fields.Many2one('crm.axes', string="Axe 4", domain="[('axe_type', '=', 'axe4')]")
+    axe5 = fields.Many2one('crm.axes', string="Sous domaine", domain="[('axe_type', '=', 'axe5')]")
+
     end_lead = fields.Datetime(string='Answer date limit')
  
