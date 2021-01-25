@@ -30,7 +30,7 @@ class ResPartner(models.Model):
              '|',
              ('name', 'not like', '%]%'),
              ('name', 'like', '%@%')])
-        for partner in partners[20]:
+        for partner in partners:
             deactive = True
             attendees = self.env['calendar.attendee'].search([('partner_id','=', partner.id)])
             if attendees: 
