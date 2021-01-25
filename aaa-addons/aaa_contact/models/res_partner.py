@@ -11,6 +11,13 @@ _logger = logging.getLogger(__name__)
 class ResPartner(models.Model):
     _inherit = 'res.partner'
 
+    def log(self, message, level="info"):
+        with self.pool.cursor() as cr:
+            cr.execute("""
+                INSERT INTO ir_logging(create_date, create_uid, type, dbname, name, level, message, path, line, func)
+                VALUES (NOW() at time zone 'UTC', %s, %s, %s, %s, %s, %s, %s, %s, %s)
+            """, (self.env.uid, 'server', self._cr.dbname, __name__, level, message, "action", self.id, self.name))
+
     def partner_deactivate(self):
         partners_deactivate = self.env['res.partner']
         _logger.info('Scheduler is running to deactivate partner with name with @')
@@ -30,6 +37,8 @@ class ResPartner(models.Model):
              '|',
              ('name', 'not like', '%]%'),
              ('name', 'like', '%@%')])
+        partners and partners[0].log("Nbre de contact est %s" %(len(partners)))
+        partners and partners[0].log("Les contacts sont %s" %(partners.mapped('name')))
         for partner in partners:
             deactive = True
             attendees = self.env['calendar.attendee'].search([('partner_id','=', partner.id)])
