@@ -18,6 +18,7 @@ AAA CRM
                 'aaa_security',
                 ],
     'data': ['security/ir.model.access.csv',
+             'security/res_groups.xml',
              'security/ir_rule.xml',
              'data/ir_config_parameter.xml',
              'views/crm_lead_view.xml',
