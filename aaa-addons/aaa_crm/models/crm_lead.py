@@ -9,8 +9,15 @@ class CrmAxes(models.Model):
     _name = "crm.axes"
     _order = "axe_type, name"
 
+    @api.model
+    def _get_company(self):
+        return self.env.user.company_id
+
     name = fields.Char(string="Value", required=True)
     axe_type = fields.Selection(SELECTION_AXES, string="Type", required=True)
+    company_ids = fields.Many2many('res.company', 'res_company_axes_rel', 'axes_id', 'cid',
+    string='Sociétés', default=_get_company)
+
 
 
 class CrmLead(models.Model):
@@ -34,3 +41,12 @@ class CrmLead(models.Model):
                 order.user_is_subdomain = True
             else:
                 order.user_is_subdomain = current_user.has_group(group)
+
+class ActivityReport(models.Model):
+    """ CRM Lead Analysis """
+    _inherit = "crm.activity.report"
+
+    user_activity_id = fields.Many2one('res.users', 'Assigné à', readonly=True)
+
+    def _select(self):
+        return super(ActivityReport, self)._select() + ", m.user_activity_id"

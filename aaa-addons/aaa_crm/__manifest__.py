@@ -16,6 +16,7 @@ AAA CRM
                 'sale_crm',
                 'crm',
                 'aaa_security',
+                'mail',
                 ],
     'data': ['security/ir.model.access.csv',
              'security/res_groups.xml',
@@ -23,6 +24,7 @@ AAA CRM
              'data/ir_config_parameter.xml',
              'views/crm_lead_view.xml',
              'views/crm_team_view.xml',
+             'views/mail_message_view.xml',
              'report/crm_opportunity_report_views.xml',
     ],
     'demo': [
