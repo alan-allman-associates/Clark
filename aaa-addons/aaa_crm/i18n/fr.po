@@ -70,6 +70,12 @@ msgid "Axe 4"
 msgstr "Engagement"
 
 #. module: aaa_crm
+#: selection:crm.axes,axe_type:0
+#: model:ir.model.fields,field_description:aaa_crm.field_crm_lead__axe5
+msgid "Axe 5"
+msgstr "Sous domaine"
+
+#. module: aaa_crm
 #: model:ir.ui.menu,name:aaa_crm.crm_axe_menu_config
 msgid "Axes"
 msgstr ""
