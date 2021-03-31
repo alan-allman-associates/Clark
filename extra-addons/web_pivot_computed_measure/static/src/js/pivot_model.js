@@ -136,7 +136,7 @@ odoo.define('web_pivot_computed_measure.PivotModel', function (require) {
             });
         },
 
-        /** 
+        /**
          * Fill the dataPoints with the computed measures values
          *
          * @override
