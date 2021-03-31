@@ -97,6 +97,38 @@
         </field>
     </record>
 
+<!--     <record id="view_crm_case_opportunities_filter" model="ir.ui.view">-->
+<!--        <field name="name">crm.lead.search.opportunity.axe1</field>-->
+<!--        <field name="model">crm.lead</field>-->
+<!--        <field name="inherit_id" ref="crm.res_config_settings_view_form"/>-->
+<!--        <field name="arch" type="xml">-->
+<!--            <field name="date_conversion" position="after">-->
+<!--                    <field name="axe1" string="axe1" filter_domain="[('axe1', 'ilike', self)]"/>-->
+<!--                    <field name="axe2" string="axe1" filter_domain="[('axe2', 'ilike', self)]"/>-->
+<!--                    <field name="axe3" string="axe3" filter_domain="[('axe3', 'ilike', self)]"/>-->
+<!--                    <field name="axe4" string="axe4" filter_domain="[('axe4', 'ilike', self)]"/>-->
+<!--                    <field name="axe5" string="axe5" filter_domain="[('axe5', 'ilike', self)]"/>-->
+<!--            </field>-->
+<!--        </field>-->
+<!--     </record>-->
+
+    <record id="crm_opportunity_action_crm_kpi" model="ir.actions.act_window">
+        <field name="name">CRM KPI</field>
+        <field name="res_model">crm.lead</field>
+        <field name="view_mode">pivot</field>
+        <field name="view_id" ref=""/>
+        <field name="search_view_id" ref="crm.view_crm_case_opportunities_filter"/>
+    </record>
+
+    <menuitem
+    name="CRM KPI"
+    action="aaa_crm.crm_opportunity_action_crm_kpi"
+    id="menu_account_csv_export"
+    parent="crm.crm_menu_report"
+    groups="aaa_crm.crm_kpi_groupe"
+    sequence="110"
+    />
+
 
     </data>
 </odoo>
