@@ -28,10 +28,11 @@ class CrmLead(models.Model):
     axe3 = fields.Many2one('crm.axes', string="Axe 3", domain="[('axe_type', '=', 'axe3')]")
     axe4 = fields.Many2one('crm.axes', string="Axe 4", domain="[('axe_type', '=', 'axe4')]")
     axe5 = fields.Many2one('crm.axes', string="Axe 5", domain="[('axe_type', '=', 'axe5')]")
-    stage_10 = fields.Integer(string="AO (10%)")
-    stage_25 = fields.Integer(string="Proposition (25%)")
-    stage_50 = fields.Integer(string="Short list (50%)")
-    stage_100 = fields.Integer(string="Gagné (100%)")
+    stage_10 = fields.Integer(string="Comptage - AO (10%)")
+    stage_25 = fields.Integer(string="Comptage - Proposition (25%)")
+    stage_50 = fields.Integer(string="Comptage - Short list (50%)")
+    stage_100 = fields.Integer(string="Comptage - Gagné (100%)")
+    stage_all = fields.Integer(string="Nbre enjeux")
     amount_stage_10 = fields.Integer(string="Revenue - AO (10%)")
     amount_stage_25 = fields.Integer(string="Revenue - Proposition (25%)")
     amount_stage_50 = fields.Integer(string="Revenue - Short list (50%)")
@@ -49,9 +50,11 @@ class CrmLead(models.Model):
         for rec in self:
             if rec.stage_id and rec.stage_id.probability and int(rec.stage_id.probability) in [10 ,25, 50, 100]:
                 for field in rec.fields_to_search():
+                    rec.stage_all = 0
                     rec[field] = 0
                     rec["amount_%s" %(field)] = 0
                 rec["stage_%s"%(int(rec.stage_id.probability))] = 1
+                rec.stage_all = 1
                 rec["amount_stage_%s" % (int(rec.stage_id.probability))] = rec.planned_revenue
 
 
