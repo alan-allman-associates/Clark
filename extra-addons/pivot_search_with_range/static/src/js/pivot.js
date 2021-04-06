@@ -142,7 +142,7 @@ PivotController.include({
         if (self.$search_int_partner) {
             var start_int  = self.$search_int_partner.find('.input_field_partner').val();
             if (start_int) {
-                searchview.search_domain.push([['parent_id', '=', parseInt(start_int)]]);
+                searchview.search_domain.push(['|',['parent_id', '=', parseInt(start_int)],['partner_id', '=', parseInt(start_int)]]);
             }
         }
         self.searchView.query.trigger('reset');
@@ -242,7 +242,7 @@ PivotController.include({
            var res = rpc.query({
             model: 'res.partner',
             method: 'search_read',
-            args: [[['parent_id','=',false],['is_company','=',true]], ['id', 'name']],
+            args: [[['parent_id','=',false],['is_company','=',true],['name', 'like','%[%']], ['id', 'name']],
             /* args: args */
         }).then(function (result) {
          var values_field = [];
