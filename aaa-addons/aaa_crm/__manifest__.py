@@ -22,12 +22,12 @@ AAA CRM
              'security/res_groups.xml',
              'security/ir_rule.xml',
              'data/ir_config_parameter.xml',
-             'data/ir_filters.xml',
              'views/crm_lead_view.xml',
              'views/crm_team_view.xml',
              'views/mail_message_view.xml',
              'report/crm_opportunity_report_views.xml',
-    ],
+             'data/ir_filters.xml',
+             ],
     'demo': [
     ],
     'qweb': [
