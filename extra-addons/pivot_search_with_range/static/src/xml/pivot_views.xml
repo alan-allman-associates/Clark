@@ -16,6 +16,23 @@
             </div>
         </div>
  </t>
+
+     <t t-name="button_for_partner">
+            <div class="search-range_partner btn-group-sm" >
+            <div style="padding-right: 10px;">
+                <span style="display: inline-block;">
+                       <span style="font-weight: bold;">Groupe client :</span>
+                </span>
+                 <span style="display: inline-block; margin-left: 2px;">
+                        <select id="id_input_field_partner" style="margin-left:5px;width:210px;" class="input_field_partner form-control">
+                            <option t-foreach="values_field" t-as="value" t-att-value="value[0]">
+                            <t t-esc="value[1]"/>
+                            </option>
+                        </select>
+                </span>
+            </div>
+        </div>
+ </t>
 	<!--for date-->
  <t t-name="buttons_for_date">
             <div class="search-range btn-group-sm" >
