@@ -97,6 +97,64 @@
         </field>
     </record>
 
+<!--     <record id="view_crm_case_opportunities_filter" model="ir.ui.view">-->
+<!--        <field name="name">crm.lead.search.opportunity.axe1</field>-->
+<!--        <field name="model">crm.lead</field>-->
+<!--        <field name="inherit_id" ref="crm.res_config_settings_view_form"/>-->
+<!--        <field name="arch" type="xml">-->
+<!--            <field name="date_conversion" position="after">-->
+<!--                    <field name="axe1" string="axe1" filter_domain="[('axe1', 'ilike', self)]"/>-->
+<!--                    <field name="axe2" string="axe1" filter_domain="[('axe2', 'ilike', self)]"/>-->
+<!--                    <field name="axe3" string="axe3" filter_domain="[('axe3', 'ilike', self)]"/>-->
+<!--                    <field name="axe4" string="axe4" filter_domain="[('axe4', 'ilike', self)]"/>-->
+<!--                    <field name="axe5" string="axe5" filter_domain="[('axe5', 'ilike', self)]"/>-->
+<!--            </field>-->
+<!--        </field>-->
+<!--     </record>-->
+
+    <record id="crm_opportunity_action_crm_kpi_company" model="ir.actions.act_window">
+        <field name="name">KPI  cabinets</field>
+        <field name="res_model">crm.lead</field>
+        <field name="view_mode">pivot</field>
+        <field name="view_id" ref=""/>
+        <field name="context">{'add_company':True}</field>
+        <field name="search_view_id" ref="crm.view_crm_case_opportunities_filter"/>
+    </record>
+
+        <record id="crm_opportunity_action_crm_kpi_partner" model="ir.actions.act_window">
+        <field name="name">KPI  clients</field>
+        <field name="res_model">crm.lead</field>
+        <field name="view_mode">pivot</field>
+        <field name="view_id" ref=""/>
+        <field name="context">{'add_partner':True}</field>
+        <field name="search_view_id" ref="crm.view_crm_case_opportunities_filter"/>
+    </record>
+
+         <!-- Top menu item -->
+      <menuitem name="KPI"
+          id="menu_kpi_root"
+          web_icon="aaa_crm,static/description/odoo_icon.png"
+          sequence="500"
+                groups="aaa_crm.crm_kpi_groupe"/>
+
+        <menuitem
+    name="KPI  clients"
+    action="aaa_crm.crm_opportunity_action_crm_kpi_partner"
+    id="menu_crm_kpi_partner"
+    parent="aaa_crm.menu_kpi_root"
+    groups="aaa_crm.crm_kpi_groupe"
+    sequence="2"
+    />
+
+    <menuitem
+    name="KPI  cabinets"
+    action="aaa_crm.crm_opportunity_action_crm_kpi_company"
+    id="menu_crm_kpi_company"
+    parent="aaa_crm.menu_kpi_root"
+    groups="aaa_crm.crm_kpi_groupe"
+    sequence="1"
+    />
+
 
     </data>
 </odoo>

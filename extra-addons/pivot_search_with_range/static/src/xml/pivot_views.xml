@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+        <t t-name="button_for_company">
+            <div class="search-range_company">
+            <div class="row">
+                <div class="col-md-4">
+                    <span>
+                           <span style="font-weight: bold;">Cabinet :</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                     <span>
+                            <select id="id_input_field_company" style="width: 255px;" class="input_field_company form-control">
+                                <option t-foreach="values_field" t-as="value" t-att-value="value[0]">
+                                <t t-esc="value[1]"/>
+                                </option>
+                            </select>
+                    </span>
+                </div>
+            </div>
+        </div>
+ </t>
+
+     <t t-name="button_for_partner">
+            <div class="search-range_partner" >
+            <div class="row">
+                 <div class="col-md-4">
+                    <span>
+                           <span style="font-weight: bold;">Groupe client :</span>
+                    </span>
+                 </div>
+                <div class="col-md-8">
+                     <span>
+                            <select id="id_input_field_partner" style="width: 255px;" class="input_field_partner form-control">
+                                <option t-foreach="values_field" t-as="value" t-att-value="value[0]">
+                                <t t-esc="value[1]"/>
+                                </option>
+                            </select>
+                    </span>
+                </div>
+            </div>
+        </div>
+ </t>
+	<!--for date-->
+ <t t-name="buttons_for_date">
+     <div class="search-range" >
+         <div class="row">
+             <div class="col-md-4">
+                 <span style="float: left;">
+                     <span style="font-weight: bold;">Date du clôture:</span>
+                 </span>
+             </div>
+             <div class="col-md-7" style="width:200px;">
+                 <div class="row">
+                     <div class="col-md-6">
+                         <span>
+                             <input id="field_start_date" type="text" name="field_start_date" size="10" class="field_start_date form-control" data-toggle="datetimepicker" data-target="#field_start_date" style="height: 30px;text-align: center;"/>
+                         </span>
+                     </div>
+                     <div class="col-md-6">
+                         <span>
+                             <input id="field_end_date" type="text" name="field_end_date" size="10" class="field_end_date form-control" data-toggle="datetimepicker" data-target="#field_end_date" style="height: 30px;text-align: center;"/>
+                         </span>
+                     </div>
+                 </div>
+             </div>
+         </div>
+     </div>
+ </t>
+
+
+     <t t-name="button_for_axe1">
+            <div class="search-range_axe1" >
+            <div class="row">
+                <div class="col-md-4">
+                    <span>
+                           <span style="font-weight: bold;">Domaine :</span>
+                    </span>
+                </div>
+                 <div class="col-md-8">
+                     <span>
+                            <select id="id_input_field_axe1" style="width: 255px;" class="input_field_axe1 form-control">
+                                <option t-foreach="values_field" t-as="value" t-att-value="value[0]">
+                                <t t-esc="value[1]"/>
+                                </option>
+                            </select>
+                    </span>
+                 </div>
+            </div>
+        </div>
+ </t>
+
+     <t t-name="button_for_axe2">
+         <div class="search-range_axe2" >
+            <div class="row">
+                <div class="col-md-4">
+                    <span>
+                       <span style="font-weight: bold;">Type :</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                     <span>
+                         <select id="id_input_field_axe2" style="width: 255px;" class="input_field_axe2 form-control">
+                            <option t-foreach="values_field" t-as="value" t-att-value="value[0]">
+                            <t t-esc="value[1]"/>
+                            </option>
+                        </select>
+                    </span>
+                </div>
+            </div>
+        </div>
+ </t>
+
+         <t t-name="button_for_axe3">
+            <div class="search-range_axe3" >
+            <div class="row">
+                <div class="col-md-4">
+                    <span>
+                           <span style="font-weight: bold;">Périmètre :</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                     <span>
+                            <select id="id_input_field_axe3" style="width: 255px;" class="input_field_axe3 form-control">
+                                <option t-foreach="values_field" t-as="value" t-att-value="value[0]">
+                                <t t-esc="value[1]"/>
+                                </option>
+                            </select>
+                    </span>
+                </div>
+            </div>
+        </div>
+ </t>
+
+             <t t-name="button_for_axe4">
+            <div class="search-range_axe4" >
+            <div class="row">
+                <div class="col-md-4">
+                    <span>
+                           <span style="font-weight: bold;">Engagement :</span>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                     <span>
+                            <select id="id_input_field_axe4" style="width: 255px;" class="input_field_axe4 form-control">
+                                <option t-foreach="values_field" t-as="value" t-att-value="value[0]">
+                                <t t-esc="value[1]"/>
+                                </option>
+                            </select>
+                    </span>
+                </div>
+                <div class="offset-md-7 col-md-4">
+                    <span class="pull-right">
+                        <button class="btn btn-sm btn-primary btn-icon fa fa-search search_button"></button>
+                        <button class="btn btn-sm btn-icon fa fa-remove clear_button"></button>
+                    </span>
+                </div>
+            </div>
+        </div>
+ </t>
+
+     <t t-name="new_options">
+            <option value=""></option>
+            <option t-foreach="values_field" t-as="value" t-att-value="value[0]">
+            <t t-esc="value[1]"/>
+            </option>
+    </t>
+</templates>

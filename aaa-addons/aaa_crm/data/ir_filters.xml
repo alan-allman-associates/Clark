@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="crm_kpi_filter_company_amount" model="ir.filters">
+            <field name="name">Revenue Cabinet</field>
+            <field name="model_id">crm.lead</field>
+            <field name="user_id" eval="False"/>
+            <field name="action_id" ref="aaa_crm.crm_opportunity_action_crm_kpi_company"/>
+            <field name="is_default" eval="False"/>
+            <field name="context">
+                {'pivot_measures': ['amount_stage_10', 'amount_stage_25', 'amount_stage_50', 'amount_stage_100', 'stage_10', 'stage_25', 'stage_50', 'stage_100', 'stage_all', '__computed_1617283783363', '__computed_1617284028754', '__computed_1617284107072', '__computed_1617284407511'], 'pivot_column_groupby': [], 'pivot_row_groupby': ['company_id', 'team_id', 'user_id'], 'pivot_computed_measures': [{'field1': 'stage_25', 'field2': 'stage_all', 'operation': 'stage_25/stage_all', 'name': 'Taux de réponse', 'id': '__computed_1617283783363', 'format': 'percentage'}, {'field1': 'stage_25', 'field2': 'stage_100', 'operation': 'stage_25/stage_100', 'name': 'Taux de transformation', 'id': '__computed_1617283989814', 'format': 'percentage'}, {'field1': 'stage_25', 'field2': 'stage_100', 'operation': 'stage_25/stage_100', 'name': 'Taux de transformation', 'id': '__computed_1617284028754', 'format': 'percentage'}, {'field1': 'stage_50', 'field2': 'stage_100', 'operation': 'stage_50/stage_100', 'name': 'Taux de closing', 'id': '__computed_1617284107072', 'format': 'percentage'}, {'field1': 'stage_100', 'field2': 'stage_all', 'operation': 'stage_100/stage_all', 'name': "Taux d'efficacité globale", 'id': '__computed_1617284407511', 'format': 'percentage'}]}
+            </field>
+        </record>
+
+         <record id="crm_kpi_filter_company_count" model="ir.filters">
+            <field name="name">Comptage Cabinet</field>
+            <field name="model_id">crm.lead</field>
+            <field name="user_id" eval="False"/>
+            <field name="action_id" ref="aaa_crm.crm_opportunity_action_crm_kpi_company"/>
+            <field name="is_default" eval="True"/>
+            <field name="context">
+                {'pivot_measures': ['stage_10', 'stage_25', 'stage_50', 'stage_100', 'stage_all', '__computed_1617283783363', '__computed_1617284028754', '__computed_1617284107072', '__computed_1617284407511'], 'pivot_column_groupby': [], 'pivot_row_groupby': ['company_id', 'team_id', 'user_id'], 'pivot_computed_measures': [{'field1': 'stage_25', 'field2': 'stage_all', 'operation': 'stage_25/stage_all', 'name': 'Taux de réponse', 'id': '__computed_1617283783363', 'format': 'percentage'}, {'field1': 'stage_25', 'field2': 'stage_100', 'operation': 'stage_25/stage_100', 'name': 'Taux de transformation', 'id': '__computed_1617283989814', 'format': 'percentage'}, {'field1': 'stage_25', 'field2': 'stage_100', 'operation': 'stage_25/stage_100', 'name': 'Taux de transformation', 'id': '__computed_1617284028754', 'format': 'percentage'}, {'field1': 'stage_50', 'field2': 'stage_100', 'operation': 'stage_50/stage_100', 'name': 'Taux de closing', 'id': '__computed_1617284107072', 'format': 'percentage'}, {'field1': 'stage_100', 'field2': 'stage_all', 'operation': 'stage_100/stage_all', 'name': "Taux d'efficacité globale", 'id': '__computed_1617284407511', 'format': 'percentage'}]}
+            </field>
+        </record>
+
+
+          <record id="crm_kpi_filter_partner_amount" model="ir.filters">
+            <field name="name">Revenue client</field>
+            <field name="model_id">crm.lead</field>
+            <field name="user_id" eval="False"/>
+            <field name="action_id" ref="aaa_crm.crm_opportunity_action_crm_kpi_partner"/>
+            <field name="is_default" eval="False"/>
+            <field name="context">
+                {'pivot_measures': ['amount_stage_10', 'amount_stage_25', 'amount_stage_50', 'amount_stage_100', 'stage_10', 'stage_25', 'stage_50', 'stage_100', 'stage_all', '__computed_1617283783363', '__computed_1617284028754', '__computed_1617284107072', '__computed_1617284407511'], 'pivot_column_groupby': [], 'pivot_row_groupby': ['parent_id', 'partner_id', 'company_id'], 'pivot_computed_measures': [{'field1': 'stage_25', 'field2': 'stage_all', 'operation': 'stage_25/stage_all', 'name': 'Taux de réponse', 'id': '__computed_1617283783363', 'format': 'percentage'},{'field1': 'stage_25', 'field2': 'stage_100', 'operation': 'stage_25/stage_100', 'name': 'Taux de transformation', 'id': '__computed_1617284028754', 'format': 'percentage'}, {'field1': 'stage_50', 'field2': 'stage_100', 'operation': 'stage_50/stage_100', 'name': 'Taux de closing', 'id': '__computed_1617284107072', 'format': 'percentage'}, {'field1': 'stage_100', 'field2': 'stage_all', 'operation': 'stage_100/stage_all', 'name': "Taux d'efficacité globale", 'id': '__computed_1617284407511', 'format': 'percentage'}]}
+            </field>
+        </record>
+
+         <record id="crm_kpi_filter_partner_count" model="ir.filters">
+            <field name="name">Comptage Client</field>
+            <field name="model_id">crm.lead</field>
+            <field name="user_id" eval="False"/>
+            <field name="action_id" ref="aaa_crm.crm_opportunity_action_crm_kpi_partner"/>
+            <field name="is_default" eval="True"/>
+            <field name="context">
+                {'pivot_measures': ['stage_10', 'stage_25', 'stage_50', 'stage_100', 'stage_all', '__computed_1617283783363', '__computed_1617284028754', '__computed_1617284107072', '__computed_1617284407511'], 'pivot_column_groupby': [], 'pivot_row_groupby': ['parent_id', 'partner_id', 'company_id'], 'pivot_computed_measures': [{'field1': 'stage_25', 'field2': 'stage_all', 'operation': 'stage_25/stage_all', 'name': 'Taux de réponse', 'id': '__computed_1617283783363', 'format': 'percentage'}, {'field1': 'stage_25', 'field2': 'stage_100', 'operation': 'stage_25/stage_100', 'name': 'Taux de transformation', 'id': '__computed_1617284028754', 'format': 'percentage'}, {'field1': 'stage_50', 'field2': 'stage_100', 'operation': 'stage_50/stage_100', 'name': 'Taux de closing', 'id': '__computed_1617284107072', 'format': 'percentage'}, {'field1': 'stage_100', 'field2': 'stage_all', 'operation': 'stage_100/stage_all', 'name': "Taux d'efficacité globale", 'id': '__computed_1617284407511', 'format': 'percentage'}]}            </field>
+        </record>
+
+    </data>
+</odoo>
