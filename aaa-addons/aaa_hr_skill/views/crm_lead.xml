@@ -28,6 +28,7 @@
                         <field name="price_subtotal" invisible="True"/>
 	                </tree>
 	           </field>
+			    <field name="number_of_days"/>
          	</xpath>
              
              
