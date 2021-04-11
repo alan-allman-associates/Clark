@@ -4,5 +4,9 @@
       <record id="axe5_sous_domain" model="res.groups">
             <field name="name">Sous domain</field>
         </record>
+
+        <record id="crm_kpi_groupe" model="res.groups">
+            <field name="name">crm kpi</field>
+        </record>
     </data>
 </odoo>

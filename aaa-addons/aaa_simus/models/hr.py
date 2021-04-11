@@ -100,7 +100,8 @@ class HrEmployee(models.Model):
                                      'employee_id': employee_id,
                                      'date_start': datetime.strptime(line[14], '%Y-%m-%d').strftime('%Y-%m-%d %H:%M:%S'),
                                      'date_end': date_end,
-                                     'state': 'open'}
+                                     'state': 'open',
+                                    'company_id': company_id }
                     contracts = employee.contract_ids.filtered(lambda contract: contract.active
                                                                ).sorted(lambda contract:
                                                                         contract.date_start, reverse=True)

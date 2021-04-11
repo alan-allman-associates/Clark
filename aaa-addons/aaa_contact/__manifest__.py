@@ -18,6 +18,8 @@ AAA Calendar
         ],
     'data': [
         'data/scheduler.xml',
+        'data/mail_template.xml',
+        'data/ir_config_parameter.xml',
     ],
     'demo': [
     ],
