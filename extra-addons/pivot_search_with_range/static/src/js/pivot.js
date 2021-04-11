@@ -214,7 +214,7 @@ PivotController.include({
             format : time.strftime_to_moment_format(l10n.date_format),
         }
         // company
-        if (context.add_company){
+        if (context && context.add_company){
            var res = rpc.query({
             model: 'res.company',
             method: 'search_read',
@@ -238,7 +238,7 @@ PivotController.include({
          }
 
          // partner
-        if (context.add_partner){
+        if (context && context.add_partner){
            var res = rpc.query({
             model: 'res.partner',
             method: 'search_read',
@@ -261,7 +261,7 @@ PivotController.include({
          self.$search_int_partner.appendTo($node);
          }
         // Date field
-         if (context.add_company || context.add_partner){
+         if (context && (context.add_company || context.add_partner)){
         self.$search_date = $(QWeb.render('buttons_for_date'))
         self.$search_date.find('.field_start_date').datetimepicker(datepickers_options);
         self.$search_date.find('.field_end_date').datetimepicker(datepickers_options);
