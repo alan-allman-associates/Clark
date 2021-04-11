@@ -139,6 +139,12 @@ PivotController.include({
                 searchview.search_domain.push([['company_id', '=', parseInt(start_int)]]);
             }
         }
+        if (self.$search_int_partner) {
+            var start_int  = self.$search_int_partner.find('.input_field_partner').val();
+            if (start_int) {
+                searchview.search_domain.push(['|',['parent_id', '=', parseInt(start_int)],['partner_id', '=', parseInt(start_int)]]);
+            }
+        }
         self.searchView.query.trigger('reset');
         return true;
     },
@@ -175,7 +181,12 @@ PivotController.include({
             self.$search_int_axe2.find('#id_input_field_axe2').val('');
             self.$search_int_axe3.find('#id_input_field_axe3').val('');
             self.$search_int_axe4.find('#id_input_field_axe4').val('');
-            self.$search_int_company.find('#id_input_field_company').val('');
+            if (self.$search_int_company) {
+             self.$search_int_company.find('#id_input_field_company').val('');
+            }
+            if (self.$search_int_partner){
+             self.$search_int_partner.find('#id_input_field_partner').val('');
+            }
         }
         return self.search_by_range();
     },
@@ -183,6 +194,8 @@ PivotController.include({
 
     renderButtons: function ($node) {
      var self = this;
+        var state = self.model.get(self.handle, {raw: true});
+        var context = state.context;
         this._super.apply(this, arguments);
          var l10n = _t.database.parameters;
          self.values_field = []
@@ -201,6 +214,7 @@ PivotController.include({
             format : time.strftime_to_moment_format(l10n.date_format),
         }
         // company
+        if (context.add_company){
            var res = rpc.query({
             model: 'res.company',
             method: 'search_read',
@@ -221,7 +235,33 @@ PivotController.include({
          var values_field = [];
          self.$search_int_company = $(QWeb.render('button_for_company', {'values_field': values_field}))
          self.$search_int_company .appendTo($node);
+         }
+
+         // partner
+        if (context.add_partner){
+           var res = rpc.query({
+            model: 'res.partner',
+            method: 'search_read',
+            args: [[['parent_id','=',false],['is_company','=',true],['name', 'like','%[%']], ['id', 'name']],
+            /* args: args */
+        }).then(function (result) {
+         var values_field = [];
+        _.each(result, function(elment, id, list){
+            if (elment.name && elment.id) {
+                values_field.push([elment.id, elment.name]);
+            }
+             });
+             if (values_field.length > 0) {
+
+           $('select#id_input_field_partner').html($(QWeb.render('new_options', {'values_field': values_field})));
+         }
+            });
+         var values_field = [];
+         self.$search_int_partner = $(QWeb.render('button_for_partner', {'values_field': values_field}))
+         self.$search_int_partner.appendTo($node);
+         }
         // Date field
+         if (context.add_company || context.add_partner){
         self.$search_date = $(QWeb.render('buttons_for_date'))
         self.$search_date.find('.field_start_date').datetimepicker(datepickers_options);
         self.$search_date.find('.field_end_date').datetimepicker(datepickers_options);
@@ -315,6 +355,7 @@ PivotController.include({
         self.$search_int_axe4.find('.clear_button').on('click', function() {
             self.do_clear();
         });
+        }
     },
 
 });
