@@ -73,6 +73,11 @@ class ResPartner(models.Model):
                             'user_id': user_id.id or False}
                 employee = self.env['hr.employee'].create(data)
                 res.employee_id = employee.id
+        if res and values.get('company_type') == 'company':
+            if '[' in res.name and ']' in  res.name:
+                pass
+            else:
+                raise UserError(_("You can not CREATE the company without defining the name of the mother company [MOTHER_COMPANY]"))
         return res
         
     
@@ -80,6 +85,11 @@ class ResPartner(models.Model):
     def write(self, values):
         for record in self:
             res = super(ResPartner, self).write(values)
+            if record.company_type == 'company':
+                if '[' in record.name and ']' in record.name:
+                    pass
+                else:
+                    raise UserError(_("You can not UPDATE the company without defining the name of the mother company [MOTHER_COMPANY]"))
             if not record.employee_id and self.env.user.id != 1 and not self.env.context.get('create_or_update_employee'):
                 job_name = ''
                 user_id = self.env['res.users']
