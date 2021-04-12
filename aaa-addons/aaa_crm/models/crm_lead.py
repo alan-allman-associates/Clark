@@ -78,6 +78,7 @@ class CrmLead(models.Model):
             self.with_context(update_axes_value=True).update_axes_inducator()
         return res
 
+    @api.model
     def create(self, vals):
         res = super(CrmLead, self).create(vals)
         if 'stage_id' in vals and vals.get('stage_id') and not res.env.context.get('update_axes_value'):
