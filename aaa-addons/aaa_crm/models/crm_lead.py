@@ -28,27 +28,32 @@ class CrmLead(models.Model):
     axe3 = fields.Many2one('crm.axes', string="Axe 3", domain="[('axe_type', '=', 'axe3')]")
     axe4 = fields.Many2one('crm.axes', string="Axe 4", domain="[('axe_type', '=', 'axe4')]")
     axe5 = fields.Many2one('crm.axes', string="Axe 5", domain="[('axe_type', '=', 'axe5')]")
-    stage_10 = fields.Integer(string="Comptage - AO (10%)")
-    stage_25 = fields.Integer(string="Comptage - Proposition (25%)")
-    stage_50 = fields.Integer(string="Comptage - Short list (50%)")
-    stage_100 = fields.Integer(string="Comptage - Gagné (100%)")
-    stage_all = fields.Integer(string="Nbre enjeux")
+    stage_10 = fields.Integer(string="Comptage - AO")
+    stage_25 = fields.Integer(string="Nb propositions émises")
+    stage_50 = fields.Integer(string="Nb de qualif")
+    stage_80 = fields.Integer(string="Nb de Accord verbal")
+    stage_100 = fields.Integer(string="Nb de Gagné")
+    stage_all = fields.Integer(string="Nbre AO total")
+
     amount_stage_10 = fields.Integer(string="Revenue - AO (10%)")
-    amount_stage_25 = fields.Integer(string="Revenue - Proposition (25%)")
-    amount_stage_50 = fields.Integer(string="Revenue - Short list (50%)")
-    amount_stage_100 = fields.Integer(string="Revenue - Gagné (100%)")
+    amount_stage_25 = fields.Integer(string="Revenue - propositions émises (25%)")
+    amount_stage_50 = fields.Integer(string="Revenue - qualif")
+    amount_stage_80 = fields.Integer(string="Revenue - Accord verbal")
+    amount_stage_100 = fields.Integer(string="Revenue - Gagné")
+    laststage_id = fields.Many2one('crm.stage', string="Dernière étape")
+
     parent_id = fields.Many2one('res.partner', string="Groupe client", related="partner_id.parent_id", store=True)
 
     @api.multi
     def action_set_lost(self):
         """ Lost semantic: probability = 0, active = False """
         for rec in self:
-            rec.amount_stage_10 = rec.planned_revenue
-        return self.write({'active': False,  'stage_10': 1, 'stage_all': 1})
+            rec.update_axes_inducator()
+        return self.write({'active': False})
 
     def fields_to_search(self):
         return [
-            'stage_10',
+            'stage_80',
             'stage_25',
             'stage_50',
             'stage_100',
@@ -57,7 +62,8 @@ class CrmLead(models.Model):
     def update_axes_inducator(self):
         #TODO imporve this function delete id verification
         for rec in self:
-            if rec.stage_id and rec.stage_id.probability and int(rec.stage_id.probability) in [25, 50, 100] and rec.stage_id.id in [5, 7, 4]:
+            if rec.stage_id and rec.stage_id.probability and int(rec.stage_id.probability) in [25, 80, 50, 100] and rec.stage_id.id in [8 ,5, 7, 4]:
+                rec.laststage_id = rec.stage_id
                 for field in rec.fields_to_search():
                     rec.stage_all = 0
                     rec[field] = 0
@@ -73,14 +79,15 @@ class CrmLead(models.Model):
 
     @api.multi
     def write(self, vals):
-        res = super(CrmLead, self).write(vals)
-        if 'stage_id' in vals and vals.get('stage_id') and not self.env.context.get('update_axes_value'):
+        if 'stage_id' in vals and vals.get('stage_id') and vals.get('stage_id') in [14, 11, 4] and not self.env.context.get('update_axes_value'):
             self.with_context(update_axes_value=True).update_axes_inducator()
-        return res
+        return super(CrmLead, self).write(vals)
 
+
+    @api.model
     def create(self, vals):
         res = super(CrmLead, self).create(vals)
-        if 'stage_id' in vals and vals.get('stage_id') and not res.env.context.get('update_axes_value'):
+        if 'stage_id' in vals and vals.get('stage_id') and vals.get('stage_id') in [14, 11, 4] and not res.env.context.get('update_axes_value'):
             res.with_context(update_axes_value=True).update_axes_inducator()
         return res
 
