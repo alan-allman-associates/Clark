@@ -117,6 +117,7 @@
         <field name="res_model">crm.lead</field>
         <field name="view_mode">pivot</field>
         <field name="view_id" ref=""/>
+        <field name="domain">[('active','in',[True, False])]</field>
         <field name="context">{'add_company':True}</field>
         <field name="search_view_id" ref="crm.view_crm_case_opportunities_filter"/>
     </record>
@@ -126,6 +127,7 @@
         <field name="res_model">crm.lead</field>
         <field name="view_mode">pivot</field>
         <field name="view_id" ref=""/>
+        <field name="domain">[('active','in',[True, False])]</field>
         <field name="context">{'add_partner':True}</field>
         <field name="search_view_id" ref="crm.view_crm_case_opportunities_filter"/>
     </record>
