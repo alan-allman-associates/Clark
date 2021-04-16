@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 {
     'name': 'AAA CRM',
-    'installed_version': '12.0.1.1',
+    'installed_version': '12.0.1.2',
     'author': 'Auguria SAS',
     'licence': 'LGPL Version 3',
     'summary': 'AAA CRM',
