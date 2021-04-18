@@ -41,7 +41,7 @@ class CrmLead(models.Model):
     amount_stage_50 = fields.Integer(string="Revenue - qualif")
     amount_stage_80 = fields.Integer(string="Revenue - Accord verbal")
     amount_stage_100 = fields.Integer(string="Revenue - Gagné")
-    laststage_id = fields.Many2one('crm.stage', string="Dernière étape")
+    laststage_id = fields.Many2one('crm.stage', string="Dernière étape", store=True)
 
     parent_id = fields.Many2one('res.partner', string="Groupe client", related="partner_id.parent_id", store=True)
 
