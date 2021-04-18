@@ -106,13 +106,13 @@ class CrmLead(models.Model):
             else:
                 order.user_is_subdomain = current_user.has_group(group)
 
-    @api.multi
-    def write(self, vals):
-        for rec in self:
-            if vals.get('stage_id'):
-                if rec.stage_id.is_proposal:
-                    if not rec.order_ids:
-                        raise UserError(_("You can not change to this stage if you don't have an order created"))
+#    @api.multi
+#    def write(self, vals):
+#        for rec in self:
+#            if vals.get('stage_id'):
+#                if rec.stage_id.is_proposal:
+#                    if not rec.order_ids:
+#                        raise UserError(_("You can not change to this stage if you don't have an order created"))
 
 
 class ActivityReport(models.Model):
