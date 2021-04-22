@@ -94,8 +94,8 @@ class CrmLead(models.Model):
         if 'stage_id' in vals and vals.get('stage_id') and vals.get('stage_id') in [14, 11, 4] and not self.env.context.get('update_axes_value'):
             self.with_context(update_axes_value=True).update_axes_inducator()
         if vals.get('stage_id'):
-                if rec.stage_id.is_proposal:
-                    if not rec.order_ids:
+                if self.stage_id.is_proposal:
+                    if not self.order_ids:
                         raise UserError(_("You can not change to this stage if you don't have an order created"))
         return super(CrmLead, self).write(vals)
 
