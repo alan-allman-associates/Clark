@@ -9,6 +9,7 @@
         <field name="arch" type="xml">
             <field name="fold" position="after">
                 <field name="is_proposal"/>
+                <field name="lost_stage"/>
             </field>
         </field>
     </record>
