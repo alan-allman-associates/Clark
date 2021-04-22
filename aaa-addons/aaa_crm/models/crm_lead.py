@@ -47,7 +47,7 @@ class CrmLead(models.Model):
 
     def activate_lost_leads(self):
         lost_stage_id = self.env['crm.stage'].search([('lost_stage', '=', True)], limit=1)
-        lost_leads = self.env['crm.lead'].search([('probability', '=', 0)])
+        lost_leads = self.env['crm.lead'].search([('probability', '=', 0), ('active', '=', False)])
         for lead in lost_leads:
             lead.write({
                 'laststage_id' : lead.stage_id.id,
