@@ -45,12 +45,23 @@ class CrmLead(models.Model):
 
     parent_id = fields.Many2one('res.partner', string="Groupe client", related="partner_id.parent_id", store=True)
 
+    def activate_lost_leads(self):
+        lost_stage_id = self.env['crm.stage'].search([('lost_stage', '=', True)], limit=1)
+        lost_leads = self.env['crm.lead'].search([('stage_id', '=', lost_stage_id.id)])
+        for lead in lost_leads:
+            lead.write({
+                'laststage_id' : lead.stage_id.id,
+                'stage_id': 14,
+                'active' : True,
+            })
+
     @api.multi
     def action_set_lost(self):
         """ Lost semantic: probability = 0, active = False """
         for rec in self:
             rec.update_axes_inducator()
-        return self.write({'active': False})
+        lost_stage_id = self.env['crm.stage'].search([('lost_stage', '=', True)], limit=1)
+        return self.write({'active': True, 'probability': 0, 'laststage_id' : self.stage_id.id, 'stage_id': lost_stage_id.id})
 
     def fields_to_search(self):
         return [
@@ -82,6 +93,10 @@ class CrmLead(models.Model):
     def write(self, vals):
         if 'stage_id' in vals and vals.get('stage_id') and vals.get('stage_id') in [14, 11, 4] and not self.env.context.get('update_axes_value'):
             self.with_context(update_axes_value=True).update_axes_inducator()
+        if vals.get('stage_id'):
+                if rec.stage_id.is_proposal:
+                    if not rec.order_ids:
+                        raise UserError(_("You can not change to this stage if you don't have an order created"))
         return super(CrmLead, self).write(vals)
 
 
