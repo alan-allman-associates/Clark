@@ -23,7 +23,7 @@ AAA CRM
              'security/res_groups.xml',
              'security/ir_rule.xml',
              'data/ir_config_parameter.xml',
-             'data/ircrn.xml',
+             'data/ir_cron.xml',
              'views/crm_lead_view.xml',
              'views/crm_stage.xml',
              'views/crm_team_view.xml',
