@@ -63,6 +63,9 @@
                 <field name="company_id" invisible="1"/>
                 <field name="axe5" widget="selection" attrs="{'required': [('user_is_subdomain', '=',True)]}" domain="[('axe_type','=','axe5'),'|',('company_ids','in',[company_id]),('company_ids','=',False)]" groups="aaa_crm.axe5_sous_domain"/>
             </field>
+	<xpath expr="//sheet//div[2]" position="replace">
+              <div class="badge-pill badge-danger float-right" attrs="{'invisible': [ ('probability', '&gt;', 0)]}">Lost</div>
+            </xpath>
         </field>
     </record>
 	
