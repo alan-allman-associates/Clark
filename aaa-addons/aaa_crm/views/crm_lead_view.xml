@@ -80,6 +80,16 @@
             </xpath>
         </field>
     </record>
+<record id="crm_lead_search_field" model="ir.ui.view">
+        <field name="name">crm.lead.search.filter</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.view_crm_case_leads_filter"/>
+        <field name="arch" type="xml">
+            <xpath expr="//filter[@name='lost']" position="replace">
+		    <filter string="Lost" name="lost" domain="[ ('probability', '=', 0)]"/>
+            </xpath>
+        </field>
+    </record>
 
     <record id="res_config_settings_auto_view_form" model="ir.ui.view">
         <field name="name">res.config.settings.view.form.inherit.crm.auto</field>
