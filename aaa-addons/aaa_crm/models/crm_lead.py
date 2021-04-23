@@ -54,6 +54,13 @@ class CrmLead(models.Model):
                 'stage_id': lost_stage_id.id,
                 'active' : True,
             })
+            if lead.last_stage_id.id in [14, 11]:
+                values = elf.env['mail.message'].search([('res_id', '=', lead.id), ('author_id', '!=', 2)], order='date desc').mapped('tracking_value_ids')
+                stage_value_ids = values.filtered(lambda r: r.field == 'stage_id' and r.old_value_integer not in [21, 10])
+                if stage_value_ids:
+                    lead.write({'laststage_id': stage_value_ids[0].old_value_integer})
+         
+            
 
     @api.multi
     def action_set_lost(self):
