@@ -96,6 +96,7 @@ class CrmLead(models.Model):
                 rec.stage_all = 1
 
 
+    
     @api.multi
     def write(self, vals):
         if 'stage_id' in vals and vals.get('stage_id') and vals.get('stage_id') in [14, 11, 4] and not self.env.context.get('update_axes_value'):
@@ -105,8 +106,10 @@ class CrmLead(models.Model):
             if stage_id.is_proposal:
                     if not self.order_ids:
                         raise UserError(_("You can not change to this stage if you don't have an order created"))
+            if stage_id.lost_stage and vals.get('probability') != 0:
+                if self.probability != 0:
+                    raise UserError(_("You can not change to this stage if the probability is different than 0"))
         return super(CrmLead, self).write(vals)
-
 
     @api.model
     def create(self, vals):
