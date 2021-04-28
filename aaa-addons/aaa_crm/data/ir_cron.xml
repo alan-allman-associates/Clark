@@ -16,5 +16,20 @@
             <field name="user_id" ref="base.user_root" />
         </record>
 
+
+        <record id="ir_cron_aaa_crm_kpi" model="ir.cron" forcecreate="True">
+            <field name="name">Update KPI</field>
+            <field name="model_id" ref="crm.model_crm_lead"/>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="numbercall">-1</field>
+            <field name="doall" eval="False"/>
+            <field name="state">code</field>
+            <field name="code">model.update_kpi_crm()</field>
+            <field name="active" eval="False"/>
+            <field name="nextcall">2021-04-22 00:00:01</field>
+            <field name="user_id" ref="base.user_root" />
+        </record>
+
     </data>
 </odoo>

@@ -78,11 +78,35 @@ class CrmLead(models.Model):
             'stage_100',
         ]
 
+
+    def update_kpi_crm(self):
+        lead_all = self.env['crm.lead'].search([])
+        lead_all.write({'stage_25': 0, 'stage_80': 0, 'stage_50': 0, 'stage_100': 0, 'stage_all': 0})
+        lead_all.write({'amount_stage_25': 0, 'amount_stage_80': 0, 'amount_stage_50': 0, 'amount_stage_100': 0})
+        lead_80 = self.env['crm.lead'].search([('laststage_id', 'in', [8])])
+        lead_80.write({'stage_80': 1, 'stage_all': 1})
+        for lead in lead_80:
+            lead.write({'amount_stage_80': lead.planned_revenue})
+        lead_25 = self.env['crm.lead'].search([('laststage_id', '=', 5)])
+        lead_25.write({'stage_25': 1, 'stage_all': 1})
+        for lead in lead_25:
+            lead.write({'amount_stage_25': lead.planned_revenue})
+
+        lead_50 = self.env['crm.lead'].search([('laststage_id', '=', 7)])
+        lead_50.write({'stage_50': 1, 'stage_all': 1})
+        for lead in lead_50:
+            lead.write({'amount_stage_50': lead.planned_revenue})
+
+        lead_100 = self.env['crm.lead'].search([('stage_id', '=', 4)])
+        lead_100.write({'stage_100': 1, 'stage_all': 1})
+        for lead in lead_100:
+            lead.write({'amount_stage_100': lead.planned_revenue})
+
     def update_axes_inducator(self):
         #TODO imporve this function delete id verification
         for rec in self:
+            rec.laststage_id = rec.stage_id
             if rec.stage_id and rec.stage_id.probability and int(rec.stage_id.probability) in [25, 80, 50, 100] and rec.stage_id.id in [8 ,5, 7, 4]:
-                rec.laststage_id = rec.stage_id
                 for field in rec.fields_to_search():
                     rec.stage_all = 0
                     rec[field] = 0
@@ -99,8 +123,8 @@ class CrmLead(models.Model):
     
     @api.multi
     def write(self, vals):
-        if 'stage_id' in vals and vals.get('stage_id') and vals.get('stage_id') in [14, 11, 4] and not self.env.context.get('update_axes_value'):
-            self.with_context(update_axes_value=True).update_axes_inducator()
+        # if 'stage_id' in vals and vals.get('stage_id') and vals.get('stage_id') in [14, 11, 4] and not self.env.context.get('update_axes_value'):
+        #     self.with_context(update_axes_value=True).update_axes_inducator()
         if vals.get('stage_id'):
             stage_id = self.env['crm.stage'].browse(vals.get('stage_id'))
             if stage_id.is_proposal:
