@@ -46,6 +46,7 @@ class CrmLead(models.Model):
     parent_id = fields.Many2one('res.partner', string="Groupe client", related="partner_id.parent_id", store=True)
 
     def activate_lost_leads(self):
+        all_stages = self.env['crm.stage'].search([])
         lost_stage_id = self.env['crm.stage'].search([('lost_stage', '=', True)], limit=1)
         lost_leads = self.env['crm.lead'].search([('probability', '=', 0), ('active', '=', False)])
         for lead in lost_leads:
@@ -57,8 +58,17 @@ class CrmLead(models.Model):
             if lead.laststage_id.id in [14, 11]:
                 values = self.env['mail.message'].search([('res_id', '=', lead.id), ('author_id', '!=', 2)], order='date desc').mapped('tracking_value_ids')
                 stage_value_ids = values.filtered(lambda r: r.field == 'stage_id' and r.old_value_integer not in [21, 10])
-                if stage_value_ids:
+                if stage_value_ids and stage_value_ids[0].old_value_integer in all_stages.ids:
                     lead.write({'laststage_id': stage_value_ids[0].old_value_integer})
+        lost_leads_sec = self.env['crm.lead'].search([('stage_id', '=', lost_stage_id.id)])
+        lost_leads_sec = lost_leads_sec.filtered(lambda r: not r.laststage_id)
+        for lead_sec in lost_leads_sec:
+            values = self.env['mail.message'].search([('res_id', '=', lead_sec.id), ('author_id', '!=', 2)], order='date desc').mapped('tracking_value_ids')
+            stage_value_ids = values.filtered(lambda r: r.field == 'stage_id' and r.old_value_integer not in [21, 10])
+            if stage_value_ids and stage_value_ids[0].old_value_integer in all_stages.ids:
+                    lead_sec.write({'laststage_id': stage_value_ids[0].old_value_integer})
+            
+          
          
             
 
