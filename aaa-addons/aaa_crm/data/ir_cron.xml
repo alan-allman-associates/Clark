@@ -4,7 +4,7 @@
 
         <record id="ir_cron_aaa_crm" model="ir.cron" forcecreate="True">
             <field name="name">AAA CRM Activate lost leads</field>
-            <field name="model_id" ref="crm.view_crm_case_opportunities_filter"/>
+            <field name="model_id" ref="crm.model_crm_lead"/>
             <field name="interval_number">1</field>
             <field name="interval_type">days</field>
             <field name="numbercall">-1</field>
