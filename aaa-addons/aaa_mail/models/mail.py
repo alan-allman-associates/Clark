@@ -49,9 +49,10 @@ class MailMessage(models.Model):
 
     @api.model
     def create(self, vals):
-        data = get_mail_datas(self, vals)
-        if data:
-            vals.update(data)
+        if not self.env.context.get('mass_mailing_server'):
+            data = get_mail_datas(self, vals)
+            if data:
+                vals.update(data)
         return super(MailMessage, self).create(vals)
 
 class MailMail(models.Model):
@@ -59,7 +60,26 @@ class MailMail(models.Model):
 
     @api.model
     def create(self, vals):
-        data = get_mail_datas(self, vals)
-        if data:
-            vals.update(data)
-        return  super(MailMail, self).create(vals)
+        if not self.env.context.get('mass_mailing_server'):
+            data = get_mail_datas(self, vals)
+            if data:
+                vals.update(data)
+        return super(MailMail, self).create(vals)
+
+class MassMailing(models.Model):
+    """ MassMailing models a wave of emails for a mass mailign campaign.
+    A mass mailing is an occurence of sending emails. """
+
+    _inherit = 'mail.mass_mailing'
+
+    @api.model
+    def _process_mass_mailing_queue(self):
+        super(MassMailing, self.with_context(mass_mailing_server=True))._process_mass_mailing_queue()
+
+
+class TestMassMailing(models.TransientModel):
+    _inherit = 'mail.mass_mailing.test'
+
+    @api.multi
+    def send_mail_test(self):
+        return super(TestMassMailing, self.with_context(mass_mailing_server=True)).send_mail_test()
