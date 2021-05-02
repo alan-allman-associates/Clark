@@ -13,6 +13,8 @@ AAA Mail
     'website': 'https://www.auguria.fr',
     'images': [],
     'depends': ['mail',
+                'mass_mailing',
+
                 ],
     'data': ['views/res_config_view.xml',
              'views/ir_mail_server_view.xml',
