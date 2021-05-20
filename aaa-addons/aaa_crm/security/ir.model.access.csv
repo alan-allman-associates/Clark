@@ -1,3 +1,5 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 access.crm.axes.all,crm_axes_all,model_crm_axes,base.group_user,1,1,1,1
 access.crm.opportunity.report,crm_opportunity_report_all,model_crm_opportunity_report,,1,1,1,1
+access.crm.lead.kpi.customer,crm_crm_lead_kpi_customer_all,model_crm_lead_kpi_customer,,1,1,1,1
+access.crm.lead.kpi.company,crm_crm_lead_kpi_company_all,model_crm_lead_kpi_company,,1,1,1,1

@@ -67,10 +67,52 @@ class CrmLead(models.Model):
             stage_value_ids = values.filtered(lambda r: r.field == 'stage_id' and r.old_value_integer not in [21, 10])
             if stage_value_ids and stage_value_ids[0].old_value_integer in all_stages.ids:
                     lead_sec.write({'laststage_id': stage_value_ids[0].old_value_integer})
-            
-          
-         
-            
+
+    def update_kpi_crm_stage(self):
+        for rec in self:
+            rec.write({'stage_25': 0, 'stage_80': 0, 'stage_50': 0, 'stage_100': 0, 'stage_all': 0})
+            rec.write({'amount_stage_25': 0, 'amount_stage_80': 0, 'amount_stage_50': 0, 'amount_stage_100': 0})
+            if rec.laststage_id.id == 8:
+                rec.write({
+                    'stage_80': 1,
+                    'stage_all': 1,
+                    'stage_25': 1,
+                    'stage_50': 1,
+                    'amount_stage_80': rec.planned_revenue,
+                    'amount_stage_50': rec.planned_revenue,
+                    'amount_stage_25': rec.planned_revenue
+                })
+            elif rec.laststage_id.id == 5:
+                rec.write({
+                    'stage_all': 1,
+                    'stage_25': 1,
+                    'amount_stage_25': rec.planned_revenue
+                })
+            if rec.laststage_id.id == 7:
+                rec.write({
+                    'stage_all': 1,
+                    'stage_25': 1,
+                    'stage_50': 1,
+                    'amount_stage_50': rec.planned_revenue,
+                    'amount_stage_25': rec.planned_revenue
+                })
+
+            elif rec.stage_id.id == 4:
+                rec.write({
+                    'stage_all': 1,
+                    'stage_25': 1,
+                    'stage_50': 1,
+                    'stage_100': 1,
+                    'amount_stage_50': rec.planned_revenue,
+                    'amount_stage_25': rec.planned_revenue,
+                    'amount_stage_100': rec.planned_revenue
+                })
+            if rec.laststage_id.id == 6:
+                rec.write({
+                    'stage_all': 1,
+                    'stage_10': 1,
+                    'amount_stage_10': rec.planned_revenue
+                })
 
     @api.multi
     def action_set_lost(self):
@@ -78,39 +120,14 @@ class CrmLead(models.Model):
         for rec in self:
             rec.update_axes_inducator()
         lost_stage_id = self.env['crm.stage'].search([('lost_stage', '=', True)], limit=1)
-        return self.write({'active': True, 'probability': 0, 'laststage_id' : self.stage_id.id, 'stage_id': lost_stage_id.id})
+        res = self.write({'active': True, 'probability': 0, 'laststage_id' : self.stage_id.id, 'stage_id': lost_stage_id.id})
+        self.update_kpi_crm_stage()
+        return res
 
-    def fields_to_search(self):
-        return [
-            'stage_80',
-            'stage_25',
-            'stage_50',
-            'stage_100',
-        ]
-
-    def update_axes_inducator(self):
-        #TODO imporve this function delete id verification
-        for rec in self:
-            if rec.stage_id and rec.stage_id.probability and int(rec.stage_id.probability) in [25, 80, 50, 100] and rec.stage_id.id in [8 ,5, 7, 4]:
-                rec.laststage_id = rec.stage_id
-                for field in rec.fields_to_search():
-                    rec.stage_all = 0
-                    rec[field] = 0
-                    rec["amount_%s" %(field)] = 0
-                rec["stage_%s"%(int(rec.stage_id.probability))] = 1
-                rec.stage_all = 1
-                rec["amount_stage_%s" % (int(rec.stage_id.probability))] = rec.planned_revenue
-            if rec.stage_id.id in [4 ,14]:
-                rec.stage_10 = 1
-                rec.amount_stage_10 = rec.planned_revenue
-                rec.stage_all = 1
-
-
-    
     @api.multi
     def write(self, vals):
-        if 'stage_id' in vals and vals.get('stage_id') and vals.get('stage_id') in [14, 11, 4] and not self.env.context.get('update_axes_value'):
-            self.with_context(update_axes_value=True).update_axes_inducator()
+        if 'stage_id' in vals and vals.get('stage_id') and vals.get('stage_id') in [4] and not self.env.context.get('update_axes_value'):
+            self.with_context(update_axes_value=True).update_kpi_crm_stage()
         if vals.get('stage_id'):
             stage_id = self.env['crm.stage'].browse(vals.get('stage_id'))
             if stage_id.is_proposal:
@@ -124,8 +141,8 @@ class CrmLead(models.Model):
     @api.model
     def create(self, vals):
         res = super(CrmLead, self).create(vals)
-        if 'stage_id' in vals and vals.get('stage_id') and vals.get('stage_id') in [14, 11, 4] and not res.env.context.get('update_axes_value'):
-            res.with_context(update_axes_value=True).update_axes_inducator()
+        if 'stage_id' in vals and vals.get('stage_id') and vals.get('stage_id') in [4] and not res.env.context.get('update_axes_value'):
+            res.with_context(update_axes_value=True).update_kpi_crm_stage()
         return res
 
 

@@ -217,8 +217,8 @@ PivotController.include({
         if (context.add_company){
            var res = rpc.query({
             model: 'res.company',
-            method: 'search_read',
-            args: [[], ['id', 'name']],
+            method: 'search_company_read',
+            args: ['', []],
             /* args: args */
         }).then(function (result) {
          var values_field = [];
