@@ -195,7 +195,7 @@ PivotController.include({
     renderButtons: function ($node) {
      var self = this;
         var state = self.model.get(self.handle, {raw: true});
-        var context = state.context;
+        var context = state.context || false;
         this._super.apply(this, arguments);
          var l10n = _t.database.parameters;
          self.values_field = []
@@ -213,8 +213,12 @@ PivotController.include({
             language : moment.locale(),
             format : time.strftime_to_moment_format(l10n.date_format),
         }
+        if ((context && context.add_company) || (context && context.add_partner)){
+         self.$formule_calcul = $(QWeb.render('formule_calcul', {}))
+         self.$formule_calcul.appendTo($node);
+         }
         // company
-        if (context.add_company){
+        if (context && context.add_company){
            var res = rpc.query({
             model: 'res.company',
             method: 'search_company_read',
@@ -238,7 +242,7 @@ PivotController.include({
          }
 
          // partner
-        if (context.add_partner){
+        if (context && context.add_partner){
            var res = rpc.query({
             model: 'res.partner',
             method: 'search_read',
