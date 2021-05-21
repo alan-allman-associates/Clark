@@ -41,7 +41,7 @@ class CrmLead(models.Model):
     amount_stage_50 = fields.Integer(string="Revenue - qualif")
     amount_stage_80 = fields.Integer(string="Revenue - Accord verbal")
     amount_stage_100 = fields.Integer(string="Revenue - Gagné")
-    laststage_id = fields.Many2one('crm.stage', string="Dernière étape", store=True)
+    laststage_id = fields.Many2one('crm.stage', string="Dernière étape")
 
     parent_id = fields.Many2one('res.partner', string="Groupe client", related="partner_id.parent_id", store=True)
 
@@ -70,10 +70,10 @@ class CrmLead(models.Model):
 
     def update_kpi_crm_stage(self):
         for rec in self:
-            rec.write({'stage_25': 0, 'stage_80': 0, 'stage_50': 0, 'stage_100': 0, 'stage_all': 0})
-            rec.write({'amount_stage_25': 0, 'amount_stage_80': 0, 'amount_stage_50': 0, 'amount_stage_100': 0})
+            vals = {'stage_25': 0, 'stage_80': 0, 'stage_50': 0, 'stage_100': 0, 'stage_all': 0,
+                    'amount_stage_25': 0, 'amount_stage_80': 0, 'amount_stage_50': 0, 'amount_stage_100': 0}
             if rec.laststage_id.id == 8:
-                rec.write({
+                vals.update({
                     'stage_80': 1,
                     'stage_all': 1,
                     'stage_25': 1,
@@ -83,13 +83,13 @@ class CrmLead(models.Model):
                     'amount_stage_25': rec.planned_revenue
                 })
             elif rec.laststage_id.id == 5:
-                rec.write({
+                vals.update({
                     'stage_all': 1,
                     'stage_25': 1,
                     'amount_stage_25': rec.planned_revenue
                 })
             if rec.laststage_id.id == 7:
-                rec.write({
+                vals.update({
                     'stage_all': 1,
                     'stage_25': 1,
                     'stage_50': 1,
@@ -98,7 +98,7 @@ class CrmLead(models.Model):
                 })
 
             elif rec.stage_id.id == 4:
-                rec.write({
+                vals.update({
                     'stage_all': 1,
                     'stage_25': 1,
                     'stage_50': 1,
@@ -108,11 +108,12 @@ class CrmLead(models.Model):
                     'amount_stage_100': rec.planned_revenue
                 })
             if rec.laststage_id.id == 6:
-                rec.write({
+                vals.update({
                     'stage_all': 1,
                     'stage_10': 1,
                     'amount_stage_10': rec.planned_revenue
                 })
+            rec.write(vals)
 
     @api.multi
     def action_set_lost(self):
@@ -126,8 +127,6 @@ class CrmLead(models.Model):
 
     @api.multi
     def write(self, vals):
-        if 'stage_id' in vals and vals.get('stage_id') and vals.get('stage_id') in [4] and not self.env.context.get('update_axes_value'):
-            self.with_context(update_axes_value=True).update_kpi_crm_stage()
         if vals.get('stage_id'):
             stage_id = self.env['crm.stage'].browse(vals.get('stage_id'))
             if stage_id.is_proposal:
@@ -136,7 +135,10 @@ class CrmLead(models.Model):
             if stage_id.lost_stage and vals.get('probability') != 0:
                 if self.probability != 0:
                     raise UserError(_("You can not change to this stage if the probability is different than 0"))
-        return super(CrmLead, self).write(vals)
+        res = super(CrmLead, self).write(vals)
+        if (('laststage_id' in vals) or ('stage_id' in vals and vals.get('stage_id') and vals.get('stage_id') in [4])) and not self.env.context.get('update_axes_value'):
+            self.with_context(update_axes_value=True).update_kpi_crm_stage()
+        return res
 
     @api.model
     def create(self, vals):
