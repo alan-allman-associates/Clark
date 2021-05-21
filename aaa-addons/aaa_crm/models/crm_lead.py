@@ -148,8 +148,6 @@ class CrmLead(models.Model):
     @api.multi
     def action_set_lost(self):
         """ Lost semantic: probability = 0, active = False """
-        for rec in self:
-            rec.update_axes_inducator()
         lost_stage_id = self.env['crm.stage'].search([('lost_stage', '=', True)], limit=1)
         res = self.write({'active': True, 'probability': 0, 'laststage_id' : self.stage_id.id, 'stage_id': lost_stage_id.id})
         self.update_kpi_crm_stage()

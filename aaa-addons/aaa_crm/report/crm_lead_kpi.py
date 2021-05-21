@@ -10,7 +10,7 @@ class CrmLeadKpiCompany(models.Model):
 
     _name = "crm.lead.kpi.company"
     _auto = False
-    _description = "Crm Lead Kpi Company"
+    _description = "KPI Cabinet"
 
     date_closed = fields.Datetime('Date du clôture', readonly=True)
     axe1 = fields.Many2one('crm.axes', string="Domaine", domain="[('axe_type', '=', 'axe1')]")
@@ -136,7 +136,7 @@ class CrmLeadKpiCustomer(models.Model):
 
     _name = "crm.lead.kpi.customer"
     _auto = False
-    _description = "Crm Lead Kpi Customer"
+    _description = "KPI clientr"
 
     date_closed = fields.Datetime('Date du clôture', readonly=True)
     axe1 = fields.Many2one('crm.axes', string="Domaine", domain="[('axe_type', '=', 'axe1')]")
