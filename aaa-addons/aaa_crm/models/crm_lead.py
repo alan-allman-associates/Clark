@@ -115,6 +115,36 @@ class CrmLead(models.Model):
                 })
             rec.write(vals)
 
+    def update_kpi_crm(self):
+        lead_all = self.env['crm.lead'].search([])
+        lead_all.write({'stage_10': 0, 'stage_25': 0, 'stage_80': 0, 'stage_50': 0, 'stage_100': 0, 'stage_all': 0})
+        lead_all.write({'amount_stage_25': 0, 'amount_stage_80': 0, 'amount_stage_50': 0, 'amount_stage_100': 0})
+        lead_80 = self.env['crm.lead'].search([('laststage_id', 'in', [8])])
+        lead_80.write({'stage_80': 1, 'stage_all': 1, 'stage_25': 1, 'stage_50': 1})
+        for lead in lead_80:
+            lead.write({'amount_stage_80': lead.planned_revenue, 'amount_stage_50': lead.planned_revenue,
+                        'amount_stage_25': lead.planned_revenue})
+        lead_25 = self.env['crm.lead'].search([('laststage_id', '=', 5)])
+        lead_25.write({'stage_25': 1, 'stage_all': 1})
+        for lead in lead_25:
+            lead.write({'amount_stage_25': lead.planned_revenue})
+
+        lead_50 = self.env['crm.lead'].search([('laststage_id', '=', 7)])
+        lead_50.write({'stage_50': 1, 'stage_all': 1, 'stage_25': 1})
+        for lead in lead_50:
+            lead.write({'amount_stage_50': lead.planned_revenue, 'amount_stage_25': lead.planned_revenue})
+
+        lead_100 = self.env['crm.lead'].search([('stage_id', '=', 4)])
+        lead_100.write({'stage_100': 1, 'stage_25': 1, 'stage_50': 1, 'stage_all': 1})
+        for lead in lead_100:
+            lead.write({'amount_stage_100': lead.planned_revenue, 'amount_stage_25': lead.planned_revenue,
+                        'amount_stage_50': lead.planned_revenue})
+
+        lead_10 = self.env['crm.lead'].search([('laststage_id', '=', 6)])
+        lead_10.write({'stage_10': 1, 'stage_all': 1})
+        for lead in lead_10:
+            lead.write({'amount_stage_10': lead.planned_revenue})
+
     @api.multi
     def action_set_lost(self):
         """ Lost semantic: probability = 0, active = False """
