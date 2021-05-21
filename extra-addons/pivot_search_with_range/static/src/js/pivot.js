@@ -195,7 +195,7 @@ PivotController.include({
     renderButtons: function ($node) {
      var self = this;
         var state = self.model.get(self.handle, {raw: true});
-        var context = state.context;
+        var context = state.context || false;
         this._super.apply(this, arguments);
          var l10n = _t.database.parameters;
          self.values_field = []
@@ -213,12 +213,16 @@ PivotController.include({
             language : moment.locale(),
             format : time.strftime_to_moment_format(l10n.date_format),
         }
+        if ((context && context.add_company) || (context && context.add_partner)){
+         self.$formule_calcul = $(QWeb.render('formule_calcul', {}))
+         self.$formule_calcul.appendTo($node);
+         }
         // company
         if (context && context.add_company){
            var res = rpc.query({
             model: 'res.company',
-            method: 'search_read',
-            args: [[], ['id', 'name']],
+            method: 'search_company_read',
+            args: ['', []],
             /* args: args */
         }).then(function (result) {
          var values_field = [];
@@ -261,7 +265,7 @@ PivotController.include({
          self.$search_int_partner.appendTo($node);
          }
         // Date field
-         if (context && (context.add_company || context.add_partner)){
+         if (context.add_company || context.add_partner){
         self.$search_date = $(QWeb.render('buttons_for_date'))
         self.$search_date.find('.field_start_date').datetimepicker(datepickers_options);
         self.$search_date.find('.field_end_date').datetimepicker(datepickers_options);

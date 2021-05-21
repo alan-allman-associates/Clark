@@ -18,7 +18,7 @@ class ResPartner(models.Model):
         for partner in partners:
             deactive = True
             attendees = self.env['calendar.attendee'].search([('partner_id','=', partner.id)])
-            if attendees: 
+            if attendees:
                 for attendee in attendees:
                     events = self.env['calendar.event'].search([('id','=', attendee.event_id.id)])
                     if events:

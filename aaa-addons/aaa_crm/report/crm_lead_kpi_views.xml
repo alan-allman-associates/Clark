@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="crm_lead_kpi_customer_action" model="ir.actions.act_window">
+        <field name="name">KPI client</field>
+        <field name="res_model">crm.lead.kpi.customer</field>
+        <field name="view_type">tree</field>
+        <field name="view_mode">pivot</field>
+        <field name="context">{'add_partner':True}</field>
+    </record>
+
+            <record id="crm_lead_kpi_customer_tree" model="ir.ui.view">
+            <field name="name">crm.lead.kpi.customer.tree</field>
+            <field name="model">crm.lead.kpi.customer</field>
+            <field name="arch" type="xml">
+                <tree string="KPI client">
+                    <field name="company_id"/>
+                    <field name="parent_id"/>
+                </tree>
+            </field>
+        </record>
+    <record id="crm_lead_kpi_customer_form" model="ir.ui.view">
+            <field name="name">crm.lead.kpi.customer.form</field>
+            <field name="model">crm.lead.kpi.customer</field>
+            <field name="arch" type="xml">
+                <form string="KPI client">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="company_id"/>
+                            </group>
+                            <group>
+                                <field name="parent_id"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+    <record id="crm_lead_kpi_company_action" model="ir.actions.act_window">
+        <field name="name">KPI Cabinet</field>
+        <field name="res_model">crm.lead.kpi.company</field>
+        <field name="view_type">tree</field>
+        <field name="view_mode">pivot</field>
+        <field name="context">{'add_company':True}</field>
+    </record>
+
+
+    <record id="crm_lead_kpi_company_tree" model="ir.ui.view">
+            <field name="name">crm.lead.kpi.company.tree</field>
+            <field name="model">crm.lead.kpi.company</field>
+            <field name="arch" type="xml">
+                <tree string="KPI Cabinet">
+                    <field name="company_id"/>
+                    <field name="team_id"/>
+                     <field name="user_id"/>
+                </tree>
+            </field>
+        </record>
+
+    <record id="crm_lead_kpi_company_form" model="ir.ui.view">
+            <field name="name">crm.lead.kpi.company.form</field>
+            <field name="model">crm.lead.kpi.company</field>
+            <field name="arch" type="xml">
+                <form string="KPI Cabinet">
+                    <sheet>
+                         <group>
+                            <group>
+                                <field name="company_id"/>
+                            </group>
+                            <group>
+                                <field name="team_id"/>
+                                <field name="user_id"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+
+
+
+
+    <menuitem
+    name="KPI clients"
+    action="aaa_crm.crm_lead_kpi_customer_action"
+    id="menu_crm_kpi_partner_crm"
+    parent="aaa_crm.menu_kpi_root"
+    groups="aaa_crm.crm_kpi_groupe"
+    sequence="2"
+    />
+
+    <menuitem
+    name="KPI cabinets"
+    action="aaa_crm.crm_lead_kpi_company_action"
+    id="menu_crm_kpi_company_crm"
+    parent="aaa_crm.menu_kpi_root"
+    groups="aaa_crm.crm_kpi_groupe"
+    sequence="1"
+    />
+
+
+</odoo>

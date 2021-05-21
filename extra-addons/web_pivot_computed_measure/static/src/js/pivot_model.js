@@ -130,7 +130,11 @@ odoo.define('web_pivot_computed_measure.PivotModel', function (require) {
                     if (dataPoint.__count === 0) {
                         dataPoint[cm.id] = false;
                     } else {
-                        dataPoint[cm.id] = py.eval(cm.operation, dataPoint);
+                    var py_eval = py.eval(cm.operation, dataPoint);
+                    if (parseInt(py_eval) || parseFloat(py_eval)){
+                    py_eval = py_eval.toFixed(2);
+                    }
+                        dataPoint[cm.id] = py_eval;
                     }
                 }
             });

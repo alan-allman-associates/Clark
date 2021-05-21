@@ -63,6 +63,9 @@
                 <field name="company_id" invisible="1"/>
                 <field name="axe5" widget="selection" attrs="{'required': [('user_is_subdomain', '=',True)]}" domain="[('axe_type','=','axe5'),'|',('company_ids','in',[company_id]),('company_ids','=',False)]" groups="aaa_crm.axe5_sous_domain"/>
             </field>
+	<xpath expr="//sheet//div[2]" position="replace">
+              <div class="badge-pill badge-danger float-right" attrs="{'invisible': [ ('probability', '&gt;', 0)]}">Lost</div>
+            </xpath>
         </field>
     </record>
 	
@@ -74,6 +77,16 @@
             <xpath expr="//kanban" position="attributes">
                 <attribute name="create">true</attribute>
                 <attribute name="quick_create">false</attribute>
+            </xpath>
+        </field>
+    </record>
+<record id="crm_lead_search_field" model="ir.ui.view">
+        <field name="name">crm.lead.search.filter</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.view_crm_case_leads_filter"/>
+        <field name="arch" type="xml">
+            <xpath expr="//filter[@name='lost']" position="replace">
+		    <filter string="Lost" name="lost" domain="[ ('probability', '=', 0)]"/>
             </xpath>
         </field>
     </record>
@@ -117,6 +130,7 @@
         <field name="res_model">crm.lead</field>
         <field name="view_mode">pivot</field>
         <field name="view_id" ref=""/>
+        <field name="domain">['|',('stage_id','in',[4]),('laststage_id','in',[5,7,8])]</field>
         <field name="context">{'add_company':True}</field>
         <field name="search_view_id" ref="crm.view_crm_case_opportunities_filter"/>
     </record>
@@ -126,6 +140,7 @@
         <field name="res_model">crm.lead</field>
         <field name="view_mode">pivot</field>
         <field name="view_id" ref=""/>
+        <field name="domain">['|',('stage_id','in',[4]),('laststage_id','in',[5,7,8])]</field>
         <field name="context">{'add_partner':True}</field>
         <field name="search_view_id" ref="crm.view_crm_case_opportunities_filter"/>
     </record>
@@ -137,23 +152,23 @@
           sequence="500"
                 groups="aaa_crm.crm_kpi_groupe"/>
 
-        <menuitem
-    name="KPI  clients"
-    action="aaa_crm.crm_opportunity_action_crm_kpi_partner"
-    id="menu_crm_kpi_partner"
-    parent="aaa_crm.menu_kpi_root"
-    groups="aaa_crm.crm_kpi_groupe"
-    sequence="2"
-    />
+<!--        <menuitem-->
+<!--    name="KPI  clients"-->
+<!--    action="aaa_crm.crm_opportunity_action_crm_kpi_partner"-->
+<!--    id="menu_crm_kpi_partner"-->
+<!--    parent="aaa_crm.menu_kpi_root"-->
+<!--    groups="aaa_crm.crm_kpi_groupe"-->
+<!--    sequence="2"-->
+<!--    />-->
 
-    <menuitem
-    name="KPI  cabinets"
-    action="aaa_crm.crm_opportunity_action_crm_kpi_company"
-    id="menu_crm_kpi_company"
-    parent="aaa_crm.menu_kpi_root"
-    groups="aaa_crm.crm_kpi_groupe"
-    sequence="1"
-    />
+<!--    <menuitem-->
+<!--    name="KPI  cabinets"-->
+<!--    action="aaa_crm.crm_opportunity_action_crm_kpi_company"-->
+<!--    id="menu_crm_kpi_company"-->
+<!--    parent="aaa_crm.menu_kpi_root"-->
+<!--    groups="aaa_crm.crm_kpi_groupe"-->
+<!--    sequence="1"-->
+<!--    />-->
 
 
     </data>
