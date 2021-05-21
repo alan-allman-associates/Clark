@@ -152,23 +152,23 @@
           sequence="500"
                 groups="aaa_crm.crm_kpi_groupe"/>
 
-        <menuitem
-    name="KPI  clients"
-    action="aaa_crm.crm_opportunity_action_crm_kpi_partner"
-    id="menu_crm_kpi_partner"
-    parent="aaa_crm.menu_kpi_root"
-    groups="aaa_crm.crm_kpi_groupe"
-    sequence="2"
-    />
+<!--        <menuitem-->
+<!--    name="KPI  clients"-->
+<!--    action="aaa_crm.crm_opportunity_action_crm_kpi_partner"-->
+<!--    id="menu_crm_kpi_partner"-->
+<!--    parent="aaa_crm.menu_kpi_root"-->
+<!--    groups="aaa_crm.crm_kpi_groupe"-->
+<!--    sequence="2"-->
+<!--    />-->
 
-    <menuitem
-    name="KPI  cabinets"
-    action="aaa_crm.crm_opportunity_action_crm_kpi_company"
-    id="menu_crm_kpi_company"
-    parent="aaa_crm.menu_kpi_root"
-    groups="aaa_crm.crm_kpi_groupe"
-    sequence="1"
-    />
+<!--    <menuitem-->
+<!--    name="KPI  cabinets"-->
+<!--    action="aaa_crm.crm_opportunity_action_crm_kpi_company"-->
+<!--    id="menu_crm_kpi_company"-->
+<!--    parent="aaa_crm.menu_kpi_root"-->
+<!--    groups="aaa_crm.crm_kpi_groupe"-->
+<!--    sequence="1"-->
+<!--    />-->
 
 
     </data>

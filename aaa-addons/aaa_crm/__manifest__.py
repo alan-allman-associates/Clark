@@ -29,6 +29,7 @@ AAA CRM
              'views/crm_team_view.xml',
              'views/mail_message_view.xml',
              'report/crm_opportunity_report_views.xml',
+             'report/crm_lead_kpi_views.xml',
              'data/ir_filters.xml',
              ],
     'demo': [
