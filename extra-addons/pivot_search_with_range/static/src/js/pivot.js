@@ -17,10 +17,12 @@ var _lt = core._lt;
 var QWeb = core.qweb;
 
 SearchView.include({
-    build_search_data: function () {
-        var res = this._super();
+    build_search_data: function (noDomainEvaluation) {
+        var res = this._super(noDomainEvaluation);
         // console.log(this.tm723_domain);
-        res.domains = res.domains.concat(this.search_domain || []);
+        if (this.search_domain){
+            res.domains = res.domains.concat(this.search_domain || [[]]);
+        }
         return res;
     },
 });
