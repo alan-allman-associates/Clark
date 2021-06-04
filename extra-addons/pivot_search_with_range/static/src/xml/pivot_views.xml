@@ -156,6 +156,7 @@
                     </span>
                 </div>
             </div>
+                <br/>
         </div>
  </t>
 
@@ -167,29 +168,28 @@
     </t>
 
      <t t-name="formule_calcul">
-         <div class="row" style="margin-left:14cm;position: absolute;">
+         <div class="row" style="margin-left:20cm;position: absolute;">
                 <div class="col-md-3">
                     <span>
-                           <span style="font-weight: bold;">Taux de réponse  = </span> NB Propositions / Nb Enjeux
+                           <span style="font-weight: bold;">Taux de réponse  = </span> <br/>NB Propositions / Nb Enjeux
                     </span>
                 </div>
                 <div class="col-md-3">
                     <span>
-                           <span style="font-weight: bold;">Taux de transformation  = </span> NB gagnés / Nb Propositions
+                           <span style="font-weight: bold;">Taux de transformation  = </span> <br/>NB gagnés / Nb Propositions
                     </span>
                 </div>
                 <div class="col-md-3">
                     <span>
-                           <span style="font-weight: bold;">Taux de closing  = </span> NB gagnés / Nb qualifs
+                           <span style="font-weight: bold;">Taux de closing  = </span> <br/>NB gagnés / Nb qualifs
                     </span>
                 </div>
                 <div class="col-md-3">
                     <span>
-                           <span style="font-weight: bold;">Taux d'efficacité globale  = </span> NB gagnés / Nb Enjeux
+                           <span style="font-weight: bold;">Taux d'efficacité globale  = </span> <br/>NB gagnés / Nb Enjeux
                     </span>
                 </div>
          </div>
 
      </t>
-
 </templates>

@@ -102,7 +102,9 @@ class CrmLead(models.Model):
                     'stage_all': 1,
                     'stage_25': 1,
                     'stage_50': 1,
+                    'stage_80': 1,
                     'stage_100': 1,
+                    'amount_stage_80': rec.planned_revenue,
                     'amount_stage_50': rec.planned_revenue,
                     'amount_stage_25': rec.planned_revenue,
                     'amount_stage_100': rec.planned_revenue
@@ -135,10 +137,10 @@ class CrmLead(models.Model):
             lead.write({'amount_stage_50': lead.planned_revenue, 'amount_stage_25': lead.planned_revenue})
 
         lead_100 = self.env['crm.lead'].search([('stage_id', '=', 4)])
-        lead_100.write({'stage_100': 1, 'stage_25': 1, 'stage_50': 1, 'stage_all': 1})
+        lead_100.write({'stage_100': 1, 'stage_25': 1, 'stage_50': 1, 'stage_80': 1, 'stage_all': 1})
         for lead in lead_100:
             lead.write({'amount_stage_100': lead.planned_revenue, 'amount_stage_25': lead.planned_revenue,
-                        'amount_stage_50': lead.planned_revenue})
+                        'amount_stage_80': lead.planned_revenue,'amount_stage_50': lead.planned_revenue})
 
         lead_10 = self.env['crm.lead'].search([('laststage_id', '=', 6)])
         lead_10.write({'stage_10': 1, 'stage_all': 1})
