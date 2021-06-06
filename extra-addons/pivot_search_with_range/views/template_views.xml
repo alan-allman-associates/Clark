@@ -4,6 +4,8 @@
 	  <template id="assets_backend" inherit_id="web.assets_backend">
 	    <xpath expr="." position="inside">
 		    <script type="text/javascript" src="/pivot_search_with_range/static/src/js/pivot.js"></script>
+			<script type="text/javascript" src="/pivot_search_with_range/static/src/lib/jquery.stickytableheaders_pivot.js"/>
+			<script type="text/javascript" src="/pivot_search_with_range/static/src/js/ks_stick_headers.js"/>
 	    </xpath>
 	  </template>
 	</data>
