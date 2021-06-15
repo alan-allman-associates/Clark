@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
 {
     'name': 'AAA Contact',
-    'installed_version': '12.0.1.1',
-    'version': '12.0.1.2',
+    'version': '12.0.1.4',
     'author': 'Auguria SAS',
     'licence': 'LGPL Version 3',
     'summary': 'AAA Contact',

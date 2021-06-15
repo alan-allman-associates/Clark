@@ -61,12 +61,7 @@ def migrate(cr, version):
         a2f_id = 2
         gb_id = 14
         actm_F_id = 6
-        env = api.Environment(cr, SUPERUSER_ID, {})
-        ResUsers = env['res.users']
-        ResPartner = env['res.partner']
-        ResCompany = env['res.company']
-        CrmTeam = env['crm.team']
-        CrmLead = env['crm.lead']
+
 
         accele_record = ResCompany.browse(a2f_id)  # res.company(4) => objet
         accele_record.write({
@@ -135,6 +130,19 @@ def migrate(cr, version):
             mwa_record.active = False
             _logger.info("the act M france company is not active")
 
+        alph2f_ko1 = 24
+        alph2f_ko2 = 1
+        alph2f_ok = 18
 
+        leads_aplh2f_ko12 = CrmLead.search([('team_id', 'in', [alph2f_ko1, alph2f_ko2])])
+        if leads_aplh2f_ko12:
+            leads_aplh2f_ko12.write({'team_id': alph2f_ok})
+
+
+        team_accele_id = 19
+        team_mwa_id = 26
+        leads_mwa_ids = CrmLead.search([('team_id', 'in', [team_mwa_id])])
+        if leads_mwa_ids:
+            leads_mwa_ids.write({'team_id': team_accele_id})
 
         _logger.warning('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! end sript !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
