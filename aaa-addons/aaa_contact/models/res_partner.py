@@ -38,7 +38,7 @@ class ResPartner(models.Model):
              ('name', 'not like', '[%'),
              '|',
              ('name', 'not like', '%]%'),
-             ('name', 'like', '%@%')], limit=20)
+             ('name', 'like', '%@%')], limit=40)
         partners and partners[0].log("Nbre de contact est %s" %(len(partners)))
         partners and partners[0].log("Les contacts sont %s" %(partners.mapped('name')))
         for partner in partners:
@@ -58,7 +58,8 @@ class ResPartner(models.Model):
         if partners_deactivate:
             partner_to = self.env['ir.config_parameter'].sudo().get_param('partner_to.send_deactivate_partner')
             email_from = self.env['ir.config_parameter'].sudo().get_param('email_from.send_deactivate_partner')
-            partners_deactivate.write({'active': False, 'archive_script':True})
+            partners_deactivate.write({'archive_script':True})
+            partners_deactivate.write({'active': False})
             if template and partner_to and email_from:
                 template.with_context(partner_to=int(partner_to), email_from = email_from, partner_ids = partners_deactivate.ids).send_mail(self.id, email_values={'subject' : "La liste des contacts archivés", })
                 _logger.info('Contact Scheduler: Successfully deactivate partner')
