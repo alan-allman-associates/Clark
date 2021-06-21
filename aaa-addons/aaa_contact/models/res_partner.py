@@ -38,7 +38,7 @@ class ResPartner(models.Model):
              ('name', 'not like', '[%'),
              '|',
              ('name', 'not like', '%]%'),
-             ('name', 'like', '%@%')], limit=40)
+             ('name', 'like', '%@%')], limit=400)
         partners and partners[0].log("Nbre de contact est %s" %(len(partners)))
         partners and partners[0].log("Les contacts sont %s" %(partners.mapped('name')))
         for partner in partners:
