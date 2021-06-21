@@ -11,7 +11,7 @@ _logger = logging.getLogger(__name__)
 class ResPartner(models.Model):
     _inherit = 'res.partner'
     
-    archive_script = fields.Boolean(string="Archive avec le script", default=False)
+    archive_script = fields.Boolean(string="Archive avec le script")
 
     def log(self, message, level="info"):
         with self.pool.cursor() as cr:
@@ -52,13 +52,13 @@ class ResPartner(models.Model):
                             if event.start > nowDatetime:
                                 deactive = False
                 if deactive:
+                    partners_deactivate.archive_script = True
                     partners_deactivate += partner
                     _logger.info('Contact desactive: {}'.format(partner.name))
         template = self.env.ref('aaa_contact.partner_active_false', raise_if_not_found=False)
         if partners_deactivate:
             partner_to = self.env['ir.config_parameter'].sudo().get_param('partner_to.send_deactivate_partner')
             email_from = self.env['ir.config_parameter'].sudo().get_param('email_from.send_deactivate_partner')
-            partners_deactivate.write({'archive_script':True})
             partners_deactivate.write({'active': False})
             if template and partner_to and email_from:
                 template.with_context(partner_to=int(partner_to), email_from = email_from, partner_ids = partners_deactivate.ids).send_mail(self.id, email_values={'subject' : "La liste des contacts archivés", })
