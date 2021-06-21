@@ -7,3 +7,4 @@ class CrmTeam(models.Model):
     _inherit = "crm.team"
 
     simus_code = fields.Char(string="Simus code")
+    active = fields.Boolean(string="Active")
