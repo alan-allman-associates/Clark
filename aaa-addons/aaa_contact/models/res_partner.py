@@ -10,6 +10,8 @@ _logger = logging.getLogger(__name__)
 
 class ResPartner(models.Model):
     _inherit = 'res.partner'
+    
+    archive_script = fields.Boolean(string="Archive avec le script", default=False)
 
     def log(self, message, level="info"):
         with self.pool.cursor() as cr:
@@ -36,7 +38,7 @@ class ResPartner(models.Model):
              ('name', 'not like', '[%'),
              '|',
              ('name', 'not like', '%]%'),
-             ('name', 'like', '%@%')])
+             ('name', 'like', '%@%')], limit=100)
         partners and partners[0].log("Nbre de contact est %s" %(len(partners)))
         partners and partners[0].log("Les contacts sont %s" %(partners.mapped('name')))
         for partner in partners:
@@ -56,7 +58,7 @@ class ResPartner(models.Model):
         if template and partners_deactivate:
             partner_to = self.env['ir.config_parameter'].sudo().get_param('partner_to.send_deactivate_partner')
             email_from = self.env['ir.config_parameter'].sudo().get_param('email_from.send_deactivate_partner')
-            partners_deactivate.write({'active': False})
+            partners_deactivate.write({'active': False, 'archive_script':True})
             template.with_context(partner_to=int(partner_to),
                                   email_from = email_from,
                                   partner_ids = partners_deactivate.ids).send_mail(self.id,
