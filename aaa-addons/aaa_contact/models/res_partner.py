@@ -51,7 +51,7 @@ class ResPartner(models.Model):
                         for event in events:
                             if event.start > nowDatetime:
                                 deactive = False
-                if deactive and not partner.user_ids:
+                if deactive and (not partner.user_ids and not partner.activity_ids and not partner.opportunity_ids):
                     partners_deactivate += partner
                     _logger.info('Contact desactive: {}'.format(partner.name))
         template = self.env.ref('aaa_contact.partner_active_false', raise_if_not_found=False)
