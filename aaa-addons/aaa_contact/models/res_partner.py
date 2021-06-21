@@ -52,7 +52,7 @@ class ResPartner(models.Model):
                             if event.start > nowDatetime:
                                 deactive = False
                 if deactive:
-                    partners_deactivate.archive_script = True
+                    partner.archive_script = True
                     partners_deactivate += partner
                     _logger.info('Contact desactive: {}'.format(partner.name))
         template = self.env.ref('aaa_contact.partner_active_false', raise_if_not_found=False)
