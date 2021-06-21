@@ -51,7 +51,7 @@ class ResPartner(models.Model):
                         for event in events:
                             if event.start > nowDatetime:
                                 deactive = False
-                if deactive:
+                if deactive and not partner.user_ids:
                     partner.archive_script = True
                     partners_deactivate += partner
                     _logger.info('Contact desactive: {}'.format(partner.name))
